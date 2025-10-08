@@ -71,17 +71,18 @@
         nav ul {
             display: flex;
             list-style: none;
-            gap: 2rem;
+            gap: 1.2rem;
         }
 
         nav a {
             color: white;
             text-decoration: none;
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 1rem;
             padding: 0.5rem 1rem;
             border-radius: 25px;
             transition: all 0.3s ease;
+            white-space: nowrap;
         }
 
         nav a:hover {
@@ -106,7 +107,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="30" r="3" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="70" r="2.5" fill="rgba(255,255,255,0.1)"/><circle cx="90" cy="80" r="1.5" fill="rgba(255,255,255,0.1)"/></svg>');
+            background: url('image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="30" r="3" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="70" r="2.5" fill="rgba(255,255,255,0.1)"/><circle cx="90" cy="80" r="1.5" fill="rgba(255,255,255,0.1)"/></svg>');
             opacity: 0.3;
         }
 
@@ -302,6 +303,134 @@
             font-size: 0.95rem;
         }
 
+        /* Subpage Content */
+        .subpage-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .subpage-content.active {
+            display: block;
+        }
+
+        .subpage-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .subpage-title {
+            font-size: 3rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+
+        .subpage-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .subpage-description {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            text-align: center;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .content-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .content-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .content-card p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        /* About Page */
+        .about-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .about-image {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+        }
+
+        /* Contact Page */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
         /* Footer */
         footer {
             background: linear-gradient(135deg, var(--dark), #1a2530);
@@ -398,6 +527,11 @@
             50% { transform: scale(1.1); }
         }
 
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .header-container {
@@ -406,7 +540,7 @@
             }
             
             nav ul {
-                gap: 1rem;
+                gap: 0.8rem;
                 flex-wrap: wrap;
                 justify-content: center;
             }
@@ -431,6 +565,10 @@
             .section-title {
                 font-size: 2rem;
             }
+            
+            .subpage-title {
+                font-size: 2.2rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -449,6 +587,15 @@
             .facts-section {
                 padding: 2rem 1rem;
             }
+            
+            nav ul {
+                gap: 0.5rem;
+            }
+            
+            nav a {
+                font-size: 0.9rem;
+                padding: 0.4rem 0.8rem;
+            }
         }
     </style>
 </head>
@@ -462,141 +609,411 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="#home">Trang Chủ</a></li>
-                    <li><a href="#emotions">Cảm Xúc</a></li>
-                    <li><a href="#facts">Sự Thật</a></li>
-                    <li><a href="#about">Giới Thiệu</a></li>
-                    <li><a href="#contact">Liên Hệ</a></li>
+                    <li><a href="#" data-page="home">Trang Chủ</a></li>
+                    <li><a href="#" data-page="happy">Hạnh Phúc</a></li>
+                    <li><a href="#" data-page="sad">Buồn Bã</a></li>
+                    <li><a href="#" data-page="angry">Tức Giận</a></li>
+                    <li><a href="#" data-page="excited">Hào Hứng</a></li>
+                    <li><a href="#" data-page="peaceful">Bình Yên</a></li>
+                    <li><a href="#" data-page="emotions">Cảm Xúc</a></li>
+                    <li><a href="#" data-page="facts">Sự Thật Thú Vị</a></li>
+                    <li><a href="#" data-page="about">Giới Thiệu</a></li>
+                    <li><a href="#" data-page="contact">Liên Hệ</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- Hero Banner -->
-    <section class="hero-banner" id="home">
-        <div class="hero-content">
-            <h1 class="hero-title">THẾ GIỚI CẢM XÚC</h1>
-            <p class="hero-subtitle">Khám phá hành trình đầy màu sắc của những cảm xúc con người - từ vui buồn, giận dữ đến yêu thương và bình yên!</p>
-            
-            <div class="hero-stats">
-                <div class="stat-item">
-                    <div class="stat-number">8</div>
-                    <div class="stat-label">Loại cảm xúc</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">27</div>
-                    <div class="stat-label">Sự thật thú vị</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">100%</div>
-                    <div class="stat-label">Xứng đáng trải nghiệm</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Main Content -->
-    <main class="main-content">
-        <h2 class="section-title" id="emotions">CÁC LOẠI CẢM XÚC</h2>
-        
-        <div class="emotions-grid">
-            <div class="emotion-card happy">
-                <div class="emotion-icon-container">😄</div>
-                <h3 class="emotion-title">Hạnh Phúc</h3>
-                <p class="emotion-description">Cảm giác vui vẻ, mãn nguyện khi mọi thứ diễn ra như mong muốn.</p>
-                <div class="fun-fact">💡 Cười 100 lần = tập thể dục 15 phút!</div>
-            </div>
-
-            <div class="emotion-card sad">
-                <div class="emotion-icon-container">😢</div>
-                <h3 class="emotion-title">Buồn Bã</h3>
-                <p class="emotion-description">Cảm xúc khi mất mát, thất vọng hoặc cô đơn.</p>
-                <div class="fun-fact">💡 Khóc giúp giải tỏa hormone stress!</div>
-            </div>
-
-            <div class="emotion-card angry">
-                <div class="emotion-icon-container">😠</div>
-                <h3 class="emotion-title">Tức Giận</h3>
-                <p class="emotion-description">Phản ứng khi bị đối xử bất công hoặc vi phạm ranh giới.</p>
-                <div class="fun-fact">💡 Tim đập nhanh hơn 30 nhịp/phút!</div>
-            </div>
-
-            <div class="emotion-card excited">
-                <div class="emotion-icon-container">🤩</div>
-                <h3 class="emotion-title">Hào Hứng</h3>
-                <p class="emotion-description">Năng lượng tích cực, tràn đầy hy vọng về tương lai.</p>
-                <div class="fun-fact">💡 Trẻ em học nhanh hơn 40% khi hào hứng!</div>
-            </div>
-
-            <div class="emotion-card confused">
-                <div class="emotion-icon-container">🤔</div>
-                <h3 class="emotion-title">Bối Rối</h3>
-                <p class="emotion-description">Khi đối mặt với quá nhiều lựa chọn hoặc thông tin mâu thuẫn.</p>
-                <div class="fun-fact">💡 Einstein: "Tôi chỉ tò mò đam mê!"</div>
-            </div>
-
-            <div class="emotion-card peaceful">
-                <div class="emotion-icon-container">😌</div>
-                <h3 class="emotion-title">Bình Yên</h3>
-                <p class="emotion-description">Trạng thái tâm trí thư thái, không lo âu.</p>
-                <div class="fun-fact">💡 10 phút thiền = 1 giờ ngủ ngon!</div>
-            </div>
-
-            <div class="emotion-card nervous">
-                <div class="emotion-icon-container">😰</div>
-                <h3 class="emotion-title">Lo Lắng</h3>
-                <p class="emotion-description">Cảm giác bất an về tương lai không chắc chắn.</p>
-                <div class="fun-fact">💡 85% điều lo lắng sẽ KHÔNG xảy ra!</div>
-            </div>
-
-            <div class="emotion-card loved">
-                <div class="emotion-icon-container">🥰</div>
-                <h3 class="emotion-title">Được Yêu Thương</h3>
-                <p class="emotion-description">Cảm giác ấm áp khi được quan tâm, trân trọng.</p>
-                <div class="fun-fact">💡 Ôm 20 giây mỗi ngày giúp sống thọ hơn!</div>
-            </div>
-        </div>
-
-        <!-- Facts Section -->
-        <section class="facts-section" id="facts">
-            <div class="facts-container">
-                <h2 class="section-title">SỰ THẬT THÚ VỊ</h2>
-                <div class="facts-grid">
-                    <div class="fact-card">
-                        <div class="fact-icon">
-                            <i class="fas fa-brain"></i>
-                        </div>
-                        <h3 class="fact-title">Não Bộ</h3>
-                        <p class="fact-text">Não xử lý cảm xúc nhanh hơn 6 lần so với suy nghĩ logic.</p>
+    <!-- Home Page -->
+    <div id="home" class="subpage-content active">
+        <!-- Hero Banner -->
+        <section class="hero-banner">
+            <div class="hero-content">
+                <h1 class="hero-title">THẾ GIỚI CẢM XÚC</h1>
+                <p class="hero-subtitle">Khám phá hành trình đầy màu sắc của những cảm xúc con người - từ vui buồn, giận dữ đến yêu thương và bình yên!</p>
+                
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">Loại cảm xúc</div>
                     </div>
-                    <div class="fact-card">
-                        <div class="fact-icon">
-                            <i class="fas fa-heart"></i>
-                        </div>
-                        <h3 class="fact-title">Tim & Cảm Xúc</h3>
-                        <p class="fact-text">Tim có hệ thần kinh riêng, có thể "cảm nhận" cảm xúc độc lập.</p>
+                    <div class="stat-item">
+                        <div class="stat-number">27</div>
+                        <div class="stat-label">Sự thật thú vị</div>
                     </div>
-                    <div class="fact-card">
-                        <div class="fact-icon">
-                            <i class="fas fa-baby"></i>
-                        </div>
-                        <h3 class="fact-title">Trẻ Sơ Sinh</h3>
-                        <p class="fact-text">Trẻ sơ sinh có thể nhận biết 7 loại cảm xúc cơ bản từ khi mới sinh.</p>
-                    </div>
-                    <div class="fact-card">
-                        <div class="fact-icon">
-                            <i class="fas fa-globe"></i>
-                        </div>
-                        <h3 class="fact-title">Toàn Cầu</h3>
-                        <p class="fact-text">Có 6 cảm xúc cơ bản được công nhận trên toàn thế giới.</p>
+                    <div class="stat-item">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Xứng đáng trải nghiệm</div>
                     </div>
                 </div>
             </div>
         </section>
-    </main>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <h2 class="section-title">CÁC LOẠI CẢM XÚC</h2>
+            
+            <div class="emotions-grid">
+                <div class="emotion-card happy">
+                    <div class="emotion-icon-container">😄</div>
+                    <h3 class="emotion-title">Hạnh Phúc</h3>
+                    <p class="emotion-description">Cảm giác vui vẻ, mãn nguyện khi mọi thứ diễn ra như mong muốn.</p>
+                    <div class="fun-fact">💡 Cười 100 lần = tập thể dục 15 phút!</div>
+                </div>
+
+                <div class="emotion-card sad">
+                    <div class="emotion-icon-container">😢</div>
+                    <h3 class="emotion-title">Buồn Bã</h3>
+                    <p class="emotion-description">Cảm xúc khi mất mát, thất vọng hoặc cô đơn.</p>
+                    <div class="fun-fact">💡 Khóc giúp giải tỏa hormone stress!</div>
+                </div>
+
+                <div class="emotion-card angry">
+                    <div class="emotion-icon-container">😠</div>
+                    <h3 class="emotion-title">Tức Giận</h3>
+                    <p class="emotion-description">Phản ứng khi bị đối xử bất công hoặc vi phạm ranh giới.</p>
+                    <div class="fun-fact">💡 Tim đập nhanh hơn 30 nhịp/phút!</div>
+                </div>
+
+                <div class="emotion-card excited">
+                    <div class="emotion-icon-container">🤩</div>
+                    <h3 class="emotion-title">Hào Hứng</h3>
+                    <p class="emotion-description">Năng lượng tích cực, tràn đầy hy vọng về tương lai.</p>
+                    <div class="fun-fact">💡 Trẻ em học nhanh hơn 40% khi hào hứng!</div>
+                </div>
+
+                <div class="emotion-card confused">
+                    <div class="emotion-icon-container">🤔</div>
+                    <h3 class="emotion-title">Bối Rối</h3>
+                    <p class="emotion-description">Khi đối mặt với quá nhiều lựa chọn hoặc thông tin mâu thuẫn.</p>
+                    <div class="fun-fact">💡 Einstein: "Tôi chỉ tò mò đam mê!"</div>
+                </div>
+
+                <div class="emotion-card peaceful">
+                    <div class="emotion-icon-container">😌</div>
+                    <h3 class="emotion-title">Bình Yên</h3>
+                    <p class="emotion-description">Trạng thái tâm trí thư thái, không lo âu.</p>
+                    <div class="fun-fact">💡 10 phút thiền = 1 giờ ngủ ngon!</div>
+                </div>
+
+                <div class="emotion-card nervous">
+                    <div class="emotion-icon-container">😰</div>
+                    <h3 class="emotion-title">Lo Lắng</h3>
+                    <p class="emotion-description">Cảm giác bất an về tương lai không chắc chắn.</p>
+                    <div class="fun-fact">💡 85% điều lo lắng sẽ KHÔNG xảy ra!</div>
+                </div>
+
+                <div class="emotion-card loved">
+                    <div class="emotion-icon-container">🥰</div>
+                    <h3 class="emotion-title">Được Yêu Thương</h3>
+                    <p class="emotion-description">Cảm giác ấm áp khi được quan tâm, trân trọng.</p>
+                    <div class="fun-fact">💡 Ôm 20 giây mỗi ngày giúp sống thọ hơn!</div>
+                </div>
+            </div>
+
+            <!-- Facts Section -->
+            <section class="facts-section">
+                <div class="facts-container">
+                    <h2 class="section-title">SỰ THẬT THÚ VỊ</h2>
+                    <div class="facts-grid">
+                        <div class="fact-card">
+                            <div class="fact-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h3 class="fact-title">Não Bộ</h3>
+                            <p class="fact-text">Não xử lý cảm xúc nhanh hơn 6 lần so với suy nghĩ logic.</p>
+                        </div>
+                        <div class="fact-card">
+                            <div class="fact-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <h3 class="fact-title">Tim & Cảm Xúc</h3>
+                            <p class="fact-text">Tim có hệ thần kinh riêng, có thể "cảm nhận" cảm xúc độc lập.</p>
+                        </div>
+                        <div class="fact-card">
+                            <div class="fact-icon">
+                                <i class="fas fa-baby"></i>
+                            </div>
+                            <h3 class="fact-title">Trẻ Sơ Sinh</h3>
+                            <p class="fact-text">Trẻ sơ sinh có thể nhận biết 7 loại cảm xúc cơ bản từ khi mới sinh.</p>
+                        </div>
+                        <div class="fact-card">
+                            <div class="fact-icon">
+                                <i class="fas fa-globe"></i>
+                            </div>
+                            <h3 class="fact-title">Toàn Cầu</h3>
+                            <p class="fact-text">Có 6 cảm xúc cơ bản được công nhận trên toàn thế giới.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Happy Page -->
+    <div id="happy" class="subpage-content">
+        <main class="main-content">
+            <div class="subpage-header">
+                <div class="subpage-icon">😄</div>
+                <h2 class="subpage-title">HẠNH PHÚC</h2>
+                <p class="subpage-description">Cảm giác vui vẻ, mãn nguyện khi mọi thứ diễn ra như mong muốn. Hạnh phúc là trạng thái tinh thần tích cực nhất của con người.</p>
+            </div>
+            
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>Siêu Năng Lực</h3>
+                    <p>Làm sáng bừng cả căn phòng! Khi bạn hạnh phúc, não bộ tiết ra endorphin - "thuốc giảm đau tự nhiên" của cơ thể.</p>
+                </div>
+                <div class="content-card">
+                    <h3>Sự Thật Thú Vị</h3>
+                    <p>Cười 100 lần tương đương với 15 phút tập thể dục. Hạnh phúc còn giúp tăng cường hệ miễn dịch và kéo dài tuổi thọ.</p>
+                </div>
+                <div class="content-card">
+                    <h3>Cách Nuôi Dưỡng</h3>
+                    <p>Thực hành lòng biết ơn hàng ngày, dành thời gian cho người thân yêu, và tìm niềm vui trong những điều nhỏ bé.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Sad Page -->
+    <div id="sad" class="subpage-content">
+        <main class="main-content">
+            <div class="subpage-header">
+                <div class="subpage-icon">😢</div>
+                <h2 class="subpage-title">BUỒN BÃ</h2>
+                <p class="subpage-description">Cảm xúc khi mất mát, thất vọng hoặc cô đơn. Buồn bã giúp ta suy ngẫm sâu sắc và trưởng thành hơn.</p>
+            </div>
+            
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>Siêu Năng Lực</h3>
+                    <p>Giúp ta suy ngẫm sâu sắc! Nước mắt chứa hormone stress - khóc giúp giải tỏa độc tố cảm xúc và làm sạch tâm hồn.</p>
+                </div>
+                <div class="content-card">
+                    <h3>Sự Thật Thú Vị</h3>
+                    <p>Người trưởng thành khóc trung bình 72 lần mỗi năm. Phụ nữ khóc nhiều hơn nam giới khoảng 4-5 lần.</p>
+                </div>
+                <div class="content-card">
+                    <h3>Cách Chữa Lành</h3>
+                    <p>Cho phép bản thân cảm nhận nỗi buồn, chia sẻ với người tin cậy, và nhớ rằng mọi cảm xúc đều sẽ qua đi.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Angry Page -->
+    <div id="angry" class="subpage-content">
+        <main class="main-content">
+            <div class="subpage-header">
+                <div class="subpage-icon">😠</div>
+                <h2 class="subpage-title">TỨC GIẬN</h2>
+                <p class="subpage-description">Phản ứng khi bị đối xử bất công hoặc vi phạm ranh giới. Giận dữ là tín hiệu cho thấy ranh giới của bạn đang bị xâm phạm.</p>
+            </div>
+            
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>Siêu Năng Lực</h3>
+                    <p>Tăng sức mạnh tức thời! Khi giận, cơ thể tiết adrenaline - giúp bạn mạnh mẽ như siêu nhân trong 30 giây.</p>
+                </div>
+                <div class="content-card">
+                    <h3>Sự Thật Thú Vị</h3>
+                    <p>Tim đập nhanh hơn 20-30 nhịp/phút khi giận. Nhiệt độ cơ thể cũng tăng lên đáng kể trong cơn giận.</p>
+                </div>
+                <div class="content-card">
+                    <h3>Cách Điều Chỉnh</h3>
+                    <p>Hít thở sâu, đếm đến 10, hoặc rời khỏi tình huống gây giận. Hãy chuyển hóa năng lượng giận dữ thành hành động tích cực.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Excited Page -->
+    <div id="excited" class="subpage-content">
+        <main class="main-content">
+            <div class="subpage-header">
+                <div class="subpage-icon">🤩</div>
+                <h2 class="subpage-title">HÀO HỨNG</h2>
+                <p class="subpage-description">Năng lượng tích cực, tràn đầy hy vọng về tương lai. Hào hứng là chất xúc tác cho sự sáng tạo và học hỏi.</p>
+            </div>
+            
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>Siêu Năng Lực</h3>
+                    <p>Kích hoạt trí tưởng tượng! Não bộ giải phóng dopamine - "hormone hạnh phúc" giúp bạn sáng tạo không giới hạn.</p>
+                </div>
+                <div class="content-card">
+                    <h3>Sự Thật Thú Vị</h3>
+                    <p>Trẻ em hào hứng học nhanh hơn 40%. Hào hứng còn giúp tăng cường trí nhớ và khả năng giải quyết vấn đề.</p>
+                </div>
+                <div class="content-card">
+                    <h3>Cách Duy Trì</h3>
+                    <p>Đặt mục tiêu nhỏ, ăn mừng từng thành công, và luôn tìm kiếm điều mới mẻ để khám phá trong cuộc sống.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Peaceful Page -->
+    <div id="peaceful" class="subpage-content">
+        <main class="main-content">
+            <div class="subpage-header">
+                <div class="subpage-icon">😌</div>
+                <h2 class="subpage-title">BÌNH YÊN</h2>
+                <p class="subpage-description">Trạng thái tâm trí thư thái, không lo âu. Bình yên là nền tảng cho sự sáng suốt và hạnh phúc lâu dài.</p>
+            </div>
+            
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>Siêu Năng Lực</h3>
+                    <p>Tái tạo năng lượng! Trạng thái bình yên giúp cơ thể phục hồi 300% nhanh hơn sau stress và căng thẳng.</p>
+                </div>
+                <div class="content-card">
+                    <h3>Sự Thật Thú Vị</h3>
+                    <p>10 phút thiền mỗi ngày tương đương với 1 giờ ngủ ngon. Bình yên còn giúp giảm huyết áp và cải thiện giấc ngủ.</p>
+                </div>
+                <div class="content-card">
+                    <h3>Cách Tạo Dựng</h3>
+                    <p>Thiền định, đi bộ trong thiên nhiên, nghe nhạc nhẹ nhàng, hoặc đơn giản là ngồi yên và hít thở sâu.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Emotions Page -->
+    <div id="emotions" class="subpage-content">
+        <main class="main-content">
+            <div class="subpage-header">
+                <div class="subpage-icon">🎭</div>
+                <h2 class="subpage-title">THẾ GIỚI CẢM XÚC</h2>
+                <p class="subpage-description">Khám phá toàn bộ phổ cảm xúc của con người - từ cơ bản đến phức tạp, từ tích cực đến tiêu cực.</p>
+            </div>
+            
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>6 Cảm Xúc Cơ Bản</h3>
+                    <p>Vui, buồn, giận, sợ, ngạc nhiên, và ghê tởm. Đây là 6 cảm xúc được công nhận trên toàn thế giới, vượt qua mọi rào cản văn hóa.</p>
+                </div>
+                <div class="content-card">
+                    <h3>Cảm Xúc Phức Tạp</h3>
+                    <p>Ghen tuông, xấu hổ, tự hào, tội lỗi, hy vọng... Những cảm xúc này là sự kết hợp của nhiều cảm xúc cơ bản khác nhau.</p>
+                </div>
+                <div class="content-card">
+                    <h3>Vai Trò Của Cảm Xúc</h3>
+                    <p>Cảm xúc giúp chúng ta đưa ra quyết định, kết nối với người khác, và phản ứng phù hợp với môi trường xung quanh.</p>
+                </div>
+                <div class="content-card">
+                    <h3>Trí Tuệ Cảm Xúc</h3>
+                    <p>Khả năng nhận biết, hiểu và quản lý cảm xúc của bản thân và người khác. Đây là chìa khóa cho thành công trong cuộc sống.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Facts Page -->
+    <div id="facts" class="subpage-content">
+        <main class="main-content">
+            <div class="subpage-header">
+                <div class="subpage-icon">🔍</div>
+                <h2 class="subpage-title">SỰ THẬT THÚ VỊ VỀ CẢM XÚC</h2>
+                <p class="subpage-description">Những điều kỳ diệu mà khoa học đã khám phá về thế giới cảm xúc của con người.</p>
+            </div>
+            
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>Não Bộ & Cảm Xúc</h3>
+                    <p>Não xử lý cảm xúc nhanh hơn 6 lần so với suy nghĩ logic. Hệ limbic là trung tâm điều khiển cảm xúc của não bộ.</p>
+                </div>
+                <div class="content-card">
+                    <h3>Tim Có Trí Tuệ Riêng</h3>
+                    <p>Tim có hệ thần kinh riêng với hơn 40.000 tế bào thần kinh, có thể "cảm nhận" và phản ứng với cảm xúc độc lập.</p>
+                </div>
+                <div class="content-card">
+                    <h3>Trẻ Sơ Sinh</h3>
+                    <p>Trẻ sơ sinh có thể nhận biết 7 loại cảm xúc cơ bản từ khi mới sinh, và bắt đầu thể hiện cảm xúc từ tuần thứ 6.</p>
+                </div>
+                <div class="content-card">
+                    <h3>Văn Hóa & Cảm Xúc</h3>
+                    <p>Một số nền văn hóa có những cảm xúc đặc biệt không tồn tại ở nơi khác, như "Schadenfreude" (vui khi người khác gặp xui) trong tiếng Đức.</p>
+                </div>
+                <div class="content-card">
+                    <h3>Cảm Xúc & Sức Khỏe</h3>
+                    <p>Cảm xúc tiêu cực kéo dài có thể gây ra các vấn đề sức khỏe như tăng huyết áp, suy giảm miễn dịch, và rối loạn tiêu hóa.</p>
+                </div>
+                <div class="content-card">
+                    <h3>Ngôn Ngữ Cảm Xúc</h3>
+                    <p>Có hơn 300 từ tiếng Anh để mô tả cảm xúc, nhưng nhiều nền văn hóa có những từ độc đáo không thể dịch sang ngôn ngữ khác.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- About Page -->
+    <div id="about" class="subpage-content">
+        <main class="main-content">
+            <div class="subpage-header">
+                <div class="about-image">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h2 class="subpage-title">GIỚI THIỆU</h2>
+                <p class="subpage-description">Chúng tôi tin rằng mọi cảm xúc đều có giá trị và xứng đáng được lắng nghe.</p>
+            </div>
+            
+            <div class="about-content">
+                <div class="content-card">
+                    <h3>Sứ Mệnh Của Chúng Tôi</h3>
+                    <p>Thế Giới Cảm Xúc được tạo ra với sứ mệnh giúp mọi người hiểu, chấp nhận và trân trọng tất cả các loại cảm xúc của mình. Chúng tôi tin rằng không có cảm xúc nào là "xấu" hay "tốt" - mỗi cảm xúc đều mang một thông điệp và giá trị riêng.</p>
+                </div>
+                <div class="content-card">
+                    <h3>Tại Sao Cảm Xúc Quan Trọng?</h3>
+                    <p>Cảm xúc là phần cốt lõi làm nên con người chúng ta. Chúng giúp chúng ta kết nối với người khác, đưa ra quyết định, và trải nghiệm cuộc sống một cách trọn vẹn. Hiểu được cảm xúc của bản thân là bước đầu tiên để sống một cuộc đời ý nghĩa và hạnh phúc.</p>
+                </div>
+                <div class="content-card">
+                    <h3>Triết Lý Của Chúng Tôi</h3>
+                    <p>"Hãy để cảm xúc dẫn lối, đừng để chúng điều khiển." Chúng tôi khuyến khích việc lắng nghe cảm xúc, học hỏi từ chúng, và sử dụng chúng như công cụ để phát triển bản thân thay vì bị chúng chi phối.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Contact Page -->
+    <div id="contact" class="subpage-content">
+        <main class="main-content">
+            <div class="subpage-header">
+                <div class="subpage-icon">📞</div>
+                <h2 class="subpage-title">LIÊN HỆ VỚI CHÚNG TÔI</h2>
+                <p class="subpage-description">Chia sẻ cảm xúc, đặt câu hỏi, hoặc góp ý để chúng tôi phục vụ bạn tốt hơn!</p>
+            </div>
+            
+            <div class="contact-form">
+                <div class="form-group">
+                    <label for="name">Họ và Tên</label>
+                    <input type="text" id="name" placeholder="Nhập họ và tên của bạn">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="Nhập địa chỉ email của bạn">
+                </div>
+                <div class="form-group">
+                    <label for="message">Tin Nhắn</label>
+                    <textarea id="message" rows="5" placeholder="Chia sẻ cảm xúc hoặc để lại tin nhắn của bạn..."></textarea>
+                </div>
+                <button class="submit-btn">GỬI TIN NHẮN</button>
+            </div>
+            
+            <div style="text-align: center; margin-top: 3rem;">
+                <h3>Thông Tin Liên Hệ</h3>
+                <p style="margin-top: 1rem; color: #666;">
+                    <i class="fas fa-envelope"></i> info@camxuc.vn<br>
+                    <i class="fas fa-phone"></i> +84 123 456 789<br>
+                    <i class="fas fa-map-marker-alt"></i> Hà Nội, Việt Nam
+                </p>
+            </div>
+        </main>
+    </div>
 
     <!-- Footer -->
-    <footer id="contact">
+    <footer>
         <div class="footer-container">
             <div class="footer-section">
                 <h3>Về Chúng Tôi</h3>
@@ -615,31 +1032,31 @@
             <div class="footer-section">
                 <h3>Liên Kết Nhanh</h3>
                 <ul class="footer-links">
-                    <li><a href="#home">Trang Chủ</a></li>
-                    <li><a href="#emotions">Cảm Xúc</a></li>
-                    <li><a href="#facts">Sự Thật Thú Vị</a></li>
-                    <li><a href="#about">Giới Thiệu</a></li>
-                    <li><a href="#contact">Liên Hệ</a></li>
+                    <li><a href="#" data-page="home">Trang Chủ</a></li>
+                    <li><a href="#" data-page="emotions">Cảm Xúc</a></li>
+                    <li><a href="#" data-page="facts">Sự Thật Thú Vị</a></li>
+                    <li><a href="#" data-page="about">Giới Thiệu</a></li>
+                    <li><a href="#" data-page="contact">Liên Hệ</a></li>
                 </ul>
             </div>
             
             <div class="footer-section">
                 <h3>Danh Mục Cảm Xúc</h3>
                 <ul class="footer-links">
-                    <li><a href="#">Hạnh Phúc</a></li>
-                    <li><a href="#">Buồn Bã</a></li>
-                    <li><a href="#">Tức Giận</a></li>
-                    <li><a href="#">Hào Hứng</a></li>
-                    <li><a href="#">Bình Yên</a></li>
+                    <li><a href="#" data-page="happy">Hạnh Phúc</a></li>
+                    <li><a href="#" data-page="sad">Buồn Bã</a></li>
+                    <li><a href="#" data-page="angry">Tức Giận</a></li>
+                    <li><a href="#" data-page="excited">Hào Hứng</a></li>
+                    <li><a href="#" data-page="peaceful">Bình Yên</a></li>
                 </ul>
             </div>
             
             <div class="footer-section">
                 <h3>Liên Hệ</h3>
                 <ul class="footer-links">
-                    <li><i class="fas fa-envelope"></i> infoGraphic2vn@gmail.com</li>
-                    <li><i class="fas fa-phone"></i> +84 123 456 789 0 0 0 cho</li>
-                    <li><i class="fas fa-map-marker-alt"></i> Việt Nam</li>
+                    <li><i class="fas fa-envelope"></i> infographic2vn@gmail.com</li>
+                    <li><i class="fas fa-phone"></i> +84 123 456 789 - không không có</li>
+                    <li><i class="fas fa-map-marker-alt"></i>Việt Nam</li>
                 </ul>
             </div>
         </div>
@@ -650,18 +1067,32 @@
     </footer>
 
     <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('nav a').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
+        // Page navigation
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.subpage-content').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Add event listeners to navigation links
+        document.querySelectorAll('[data-page]').forEach(link => {
+            link.addEventListener('click', function(e) {
                 e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
+                const pageId = this.getAttribute('data-page');
+                showPage(pageId);
+                
+                // Update active state in navigation
+                document.querySelectorAll('[data-page]').forEach(navLink => {
+                    navLink.classList.remove('active');
+                });
+                this.classList.add('active');
             });
         });
 
@@ -676,7 +1107,14 @@
                 header.style.background = 'linear-gradient(135deg, var(--primary), var(--secondary))';
             }
         });
+
+        // Form submission
+        document.querySelector('.submit-btn')?.addEventListener('click', function() {
+            alert('Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất có thể.');
+            document.getElementById('name').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('message').value = '';
+        });
     </script>
 </body>
 </html>
-
