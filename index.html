@@ -1,0 +1,683 @@
+```html
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thế Giới Cảm Xúc - Infographic Lung Tung</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Fredoka+One&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent1: #ff6b6b;
+            --accent2: #4ecdc4;
+            --accent3: #ffd93d;
+            --dark: #2c3e50;
+            --light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            font-size: 2.2rem;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        .logo-text {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.8rem;
+            color: white;
+            font-weight: 400;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Banner */
+        .hero-banner {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 6rem 2rem;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="30" r="3" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="70" r="2.5" fill="rgba(255,255,255,0.1)"/><circle cx="90" cy="80" r="1.5" fill="rgba(255,255,255,0.1)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-family: 'Fredoka One', cursive;
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            background: linear-gradient(45deg, #ffd93d, #ff6b6b, #4ecdc4, #ffd93d);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 4s ease infinite;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--dark);
+            font-weight: 700;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(45deg, var(--accent1), var(--accent2));
+            border-radius: 2px;
+        }
+
+        /* Emotions Grid */
+        .emotions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .emotion-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .emotion-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border-color: var(--accent2);
+        }
+
+        .emotion-icon-container {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--color1), var(--color2));
+            border-radius: 50%;
+            font-size: 2.5rem;
+            color: white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .emotion-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .emotion-description {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .fun-fact {
+            background: linear-gradient(45deg, var(--color1), var(--color2));
+            color: white;
+            padding: 0.75rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Individual emotion colors */
+        .happy { --color1: #ffd93d; --color2: #ff6b6b; }
+        .sad { --color1: #4169e1; --color2: #1e90ff; }
+        .angry { --color1: #ff4500; --color2: #ff6347; }
+        .excited { --color1: #ff69b4; --color2: #ff1493; }
+        .confused { --color1: #9370db; --color2: #8a2be2; }
+        .peaceful { --color1: #32cd32; --color2: #228b22; }
+        .nervous { --color1: #ffa500; --color2: #ff8c00; }
+        .loved { --color1: #ff1493; --color2: #dc143c; }
+
+        /* Facts Section */
+        .facts-section {
+            background: linear-gradient(135deg, #e3f2fd, #f3e5f5);
+            padding: 4rem 2rem;
+            margin: 4rem 0;
+            border-radius: 30px;
+        }
+
+        .facts-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .facts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .fact-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .fact-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .fact-title {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .fact-text {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--dark), #1a2530);
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--accent2);
+            border-radius: 2px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #b0b0b0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--accent2);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav ul {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .hero-stats {
+                gap: 1.5rem;
+                flex-wrap: wrap;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-banner {
+                padding: 4rem 1rem;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .main-content {
+                padding: 2rem 1rem;
+            }
+            
+            .facts-section {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-heart-pulse logo-icon"></i>
+                <span class="logo-text">CẢM XÚC LUNG TUNG</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Trang Chủ</a></li>
+                    <li><a href="#emotions">Cảm Xúc</a></li>
+                    <li><a href="#facts">Sự Thật</a></li>
+                    <li><a href="#about">Giới Thiệu</a></li>
+                    <li><a href="#contact">Liên Hệ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="hero-banner" id="home">
+        <div class="hero-content">
+            <h1 class="hero-title">THẾ GIỚI CẢM XÚC</h1>
+            <p class="hero-subtitle">Khám phá hành trình đầy màu sắc của những cảm xúc con người - từ vui buồn, giận dữ đến yêu thương và bình yên!</p>
+            
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">Loại cảm xúc</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">27</div>
+                    <div class="stat-label">Sự thật thú vị</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Xứng đáng trải nghiệm</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <h2 class="section-title" id="emotions">CÁC LOẠI CẢM XÚC</h2>
+        
+        <div class="emotions-grid">
+            <div class="emotion-card happy">
+                <div class="emotion-icon-container">😄</div>
+                <h3 class="emotion-title">Hạnh Phúc</h3>
+                <p class="emotion-description">Cảm giác vui vẻ, mãn nguyện khi mọi thứ diễn ra như mong muốn.</p>
+                <div class="fun-fact">💡 Cười 100 lần = tập thể dục 15 phút!</div>
+            </div>
+
+            <div class="emotion-card sad">
+                <div class="emotion-icon-container">😢</div>
+                <h3 class="emotion-title">Buồn Bã</h3>
+                <p class="emotion-description">Cảm xúc khi mất mát, thất vọng hoặc cô đơn.</p>
+                <div class="fun-fact">💡 Khóc giúp giải tỏa hormone stress!</div>
+            </div>
+
+            <div class="emotion-card angry">
+                <div class="emotion-icon-container">😠</div>
+                <h3 class="emotion-title">Tức Giận</h3>
+                <p class="emotion-description">Phản ứng khi bị đối xử bất công hoặc vi phạm ranh giới.</p>
+                <div class="fun-fact">💡 Tim đập nhanh hơn 30 nhịp/phút!</div>
+            </div>
+
+            <div class="emotion-card excited">
+                <div class="emotion-icon-container">🤩</div>
+                <h3 class="emotion-title">Hào Hứng</h3>
+                <p class="emotion-description">Năng lượng tích cực, tràn đầy hy vọng về tương lai.</p>
+                <div class="fun-fact">💡 Trẻ em học nhanh hơn 40% khi hào hứng!</div>
+            </div>
+
+            <div class="emotion-card confused">
+                <div class="emotion-icon-container">🤔</div>
+                <h3 class="emotion-title">Bối Rối</h3>
+                <p class="emotion-description">Khi đối mặt với quá nhiều lựa chọn hoặc thông tin mâu thuẫn.</p>
+                <div class="fun-fact">💡 Einstein: "Tôi chỉ tò mò đam mê!"</div>
+            </div>
+
+            <div class="emotion-card peaceful">
+                <div class="emotion-icon-container">😌</div>
+                <h3 class="emotion-title">Bình Yên</h3>
+                <p class="emotion-description">Trạng thái tâm trí thư thái, không lo âu.</p>
+                <div class="fun-fact">💡 10 phút thiền = 1 giờ ngủ ngon!</div>
+            </div>
+
+            <div class="emotion-card nervous">
+                <div class="emotion-icon-container">😰</div>
+                <h3 class="emotion-title">Lo Lắng</h3>
+                <p class="emotion-description">Cảm giác bất an về tương lai không chắc chắn.</p>
+                <div class="fun-fact">💡 85% điều lo lắng sẽ KHÔNG xảy ra!</div>
+            </div>
+
+            <div class="emotion-card loved">
+                <div class="emotion-icon-container">🥰</div>
+                <h3 class="emotion-title">Được Yêu Thương</h3>
+                <p class="emotion-description">Cảm giác ấm áp khi được quan tâm, trân trọng.</p>
+                <div class="fun-fact">💡 Ôm 20 giây mỗi ngày giúp sống thọ hơn!</div>
+            </div>
+        </div>
+
+        <!-- Facts Section -->
+        <section class="facts-section" id="facts">
+            <div class="facts-container">
+                <h2 class="section-title">SỰ THẬT THÚ VỊ</h2>
+                <div class="facts-grid">
+                    <div class="fact-card">
+                        <div class="fact-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3 class="fact-title">Não Bộ</h3>
+                        <p class="fact-text">Não xử lý cảm xúc nhanh hơn 6 lần so với suy nghĩ logic.</p>
+                    </div>
+                    <div class="fact-card">
+                        <div class="fact-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3 class="fact-title">Tim & Cảm Xúc</h3>
+                        <p class="fact-text">Tim có hệ thần kinh riêng, có thể "cảm nhận" cảm xúc độc lập.</p>
+                    </div>
+                    <div class="fact-card">
+                        <div class="fact-icon">
+                            <i class="fas fa-baby"></i>
+                        </div>
+                        <h3 class="fact-title">Trẻ Sơ Sinh</h3>
+                        <p class="fact-text">Trẻ sơ sinh có thể nhận biết 7 loại cảm xúc cơ bản từ khi mới sinh.</p>
+                    </div>
+                    <div class="fact-card">
+                        <div class="fact-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3 class="fact-title">Toàn Cầu</h3>
+                        <p class="fact-text">Có 6 cảm xúc cơ bản được công nhận trên toàn thế giới.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Về Chúng Tôi</h3>
+                <p style="color: #b0b0b0; line-height: 1.8;">
+                    Chúng tôi tin rằng mọi cảm xúc đều có giá trị và xứng đáng được lắng nghe. 
+                    Hãy cùng khám phá thế giới cảm xúc đầy màu sắc!
+                </p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Liên Kết Nhanh</h3>
+                <ul class="footer-links">
+                    <li><a href="#home">Trang Chủ</a></li>
+                    <li><a href="#emotions">Cảm Xúc</a></li>
+                    <li><a href="#facts">Sự Thật Thú Vị</a></li>
+                    <li><a href="#about">Giới Thiệu</a></li>
+                    <li><a href="#contact">Liên Hệ</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Danh Mục Cảm Xúc</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Hạnh Phúc</a></li>
+                    <li><a href="#">Buồn Bã</a></li>
+                    <li><a href="#">Tức Giận</a></li>
+                    <li><a href="#">Hào Hứng</a></li>
+                    <li><a href="#">Bình Yên</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Liên Hệ</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-envelope"></i> infoGraphic2vn@gmail.com</li>
+                    <li><i class="fas fa-phone"></i> +84 123 456 789 0 0 0 cho</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Việt Nam</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2024 Thế Giới Cảm Xúc. Tất cả các quyền được bảo lưu. | Thiết kế với ❤️ cho cộng đồng</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.boxShadow = '0 4px 20px rgba(0,0,0,0.2)';
+                header.style.background = 'linear-gradient(135deg, rgba(102, 126, 234, 0.95), rgba(118, 75, 162, 0.95))';
+            } else {
+                header.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
+                header.style.background = 'linear-gradient(135deg, var(--primary), var(--secondary))';
+            }
+        });
+    </script>
+</body>
+</html>
+```
