@@ -177,12 +177,35 @@
             font-size: 0.85rem;
         }
 
+        /* Style cho nút "Xem thêm" và nội dung rút gọn */
         .post-content {
             color: var(--dark);
             white-space: pre-wrap;
             word-wrap: break-word;
             padding-top: 0.5rem;
             border-top: 1px dashed #eee;
+        }
+        
+        .content-wrapper {
+            max-height: 7.5em; /* Giới hạn chiều cao: khoảng 5 dòng */
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+            position: relative;
+        }
+        
+        .content-wrapper.expanded {
+            max-height: 2000px; /* Chiều cao lớn khi mở rộng */
+        }
+        
+        .read-more-btn {
+            background: none;
+            border: none;
+            color: var(--accent1);
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0;
+            margin-top: 0.5rem;
+            display: block;
         }
 
         .post-icon {
@@ -258,9 +281,6 @@
             <div class="hero-content">
                 <h1 class="hero-title">THẾ GIỚI CẢM XÚC</h1>
                 <p class="hero-subtitle">Khám phá hành trình đầy màu sắc của những cảm xúc con người!</p>
-                
-                <!-- This old CTA button is replaced by the post-input-bar below -->
-                <!-- <a href="public_status_board.html" ...>CHIA SẺ TRẠNG THÁI NGAY!</a> -->
             </div>
         </section>
 
@@ -287,6 +307,21 @@
         </div>
         
         <div id="loading-indicator">Đang tải trạng thái...</div>
+
+        <!-- Nút chuyển đến trang Bức Tường Cảm Xúc -->
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="public_status_board.html" class="submit-btn" style="
+                display: inline-block; 
+                padding: 1rem 2rem; 
+                background: linear-gradient(135deg, var(--accent2), var(--primary)); 
+                text-decoration: none;
+                font-size: 1rem;
+                border-radius: 12px;
+            ">
+                <i class="fas fa-external-link-alt"></i> XEM TẤT CẢ TRẠNG THÁI
+            </a>
+        </div>
+
 
         <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0)); margin: 5rem 0;">
 
@@ -419,7 +454,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { 
             getFirestore, collection, onSnapshot, query, orderBy, where, 
-            Timestamp, addDoc, serverTimestamp 
+            Timestamp, addDoc, serverTimestamp, limit 
         } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // CẤU HÌNH FIREBASE TRỰC TIẾP
@@ -432,8 +467,9 @@
           appId: "1:923244408713:web:d239a0c99722b483913b58"
         };
         // Global environment variables
-        const appId = firebaseConfig.projectId; // Dùng projectId làm appId để đơn giản hóa
-        
+        const appId = firebaseConfig.projectId; 
+        const POST_LIMIT = 5; // Giới hạn 5 bài viết trên trang chủ
+
         let db; 
         let postsCollectionRef;
         let isLoading = false;
@@ -455,17 +491,14 @@
 
 
         // --- UTILITY FUNCTIONS ---
-        /** Shows a temporary success or error message using a custom UI element. */
         function showMessage(message, isError = false) {
             const messageBox = document.createElement('div');
             messageBox.className = `message-box ${isError ? 'error' : ''}`;
             messageBox.textContent = message;
             document.body.appendChild(messageBox);
             
-            // Remove after 3 seconds
             setTimeout(() => {
                 messageBox.style.opacity = '0';
-                // Sử dụng animation CSS nếu có, hoặc chỉ xóa
                 messageBox.remove();
             }, 3000);
         }
@@ -478,19 +511,22 @@
                 hour: '2-digit', minute: '2-digit' 
             });
         }
-        
+
+        function toggleReadMore(button) {
+            const wrapper = button.previousElementSibling;
+            const isExpanded = wrapper.classList.toggle('expanded');
+            button.textContent = isExpanded ? 'Rút gọn' : '... Đọc thêm';
+        }
+
         // --- FIREBASE INITIALIZATION ---
         async function initializeFirebase() {
             try {
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 postsCollectionRef = collection(db, 'artifacts', appId, 'public', 'data', 'statuses');
-                
                 isReady = true;
                 
-                // Load initial posts
                 fetchPosts();
-
             } catch (error) {
                 console.error("Lỗi khi khởi tạo Firebase:", error);
                 loadingIndicator.textContent = "Lỗi kết nối. Không thể tải trạng thái. Vui lòng kiểm tra cấu hình Firebase.";
@@ -499,8 +535,6 @@
         }
 
         // --- DATA FETCHING AND RENDERING ---
-
-        /** Fetches and listens to posts based on current filters. */
         function fetchPosts() {
             if (isLoading) return;
             isLoading = true;
@@ -510,31 +544,29 @@
             let q;
             let baseQuery = postsCollectionRef;
             
-            // 1. Add Date Filtering (if selected)
+            let queryConstraints = [
+                orderBy('timestamp', 'desc'),
+                limit(POST_LIMIT) // CHỈ LẤY 5 BÀI MỚI NHẤT TRÊN TRANG CHỦ
+            ];
+
             if (currentFilterDate) {
                 const startOfDay = currentFilterDate;
                 const endOfDay = new Date(currentFilterDate);
                 endOfDay.setUTCDate(startOfDay.getUTCDate() + 1);
 
-                q = query(
-                    baseQuery, 
+                queryConstraints.unshift(
                     where('timestamp', '>=', Timestamp.fromDate(startOfDay)),
-                    where('timestamp', '<', Timestamp.fromDate(endOfDay)),
-                    orderBy('timestamp', 'desc')
-                );
-            } else {
-                // 2. Default Query (No filtering, just newest first)
-                q = query(
-                    baseQuery, 
-                    orderBy('timestamp', 'desc')
+                    where('timestamp', '<', Timestamp.fromDate(endOfDay))
                 );
             }
+
+            q = query(baseQuery, ...queryConstraints);
 
             // Real-time listener
             onSnapshot(q, (snapshot) => {
                 loadingIndicator.style.display = 'none';
                 isLoading = false;
-                postsContainer.innerHTML = ''; // Clear for fresh update
+                postsContainer.innerHTML = ''; 
 
                 const posts = [];
                 if (snapshot.docs.length === 0) {
@@ -558,7 +590,6 @@
             }, (error) => {
                 console.error("Lỗi khi lắng nghe trạng thái:", error);
                 loadingIndicator.textContent = "Lỗi khi tải trạng thái.";
-                // Cần kiểm tra lại: Nếu lỗi là do thiếu quyền, cần cập nhật Firestore Rules
                 showMessage("Lỗi: Không thể tải trạng thái theo thời gian thực. (Kiểm tra Firestore Rules)", true);
                 isLoading = false;
             });
@@ -573,6 +604,18 @@
                 const displayTime = formatTimestamp(post.timestamp);
                 const displayName = post.name || 'Người Dùng Ẩn Danh';
                 const icon = post.name ? '💌' : '👤';
+                const content = post.content || '';
+                
+                // Logic Read More
+                let contentHTML = `<p class="post-content">${content}</p>`;
+                if (content.length > 200) { // Giới hạn 200 ký tự (khoảng 4-5 dòng)
+                    contentHTML = `
+                        <div class="content-wrapper">
+                            <p class="post-content">${content}</p>
+                        </div>
+                        <button class="read-more-btn" data-action="toggle">... Đọc thêm</button>
+                    `;
+                }
 
                 postElement.innerHTML = `
                     <div class="post-header">
@@ -580,15 +623,20 @@
                         <span class="post-time">${displayTime}</span>
                     </div>
                     <div class="post-icon">${icon}</div>
-                    <p class="post-content">${post.content}</p>
+                    ${contentHTML}
                 `;
                 postsContainer.appendChild(postElement);
+            });
+            
+            // Add listeners for Read More buttons after rendering
+            document.querySelectorAll('.read-more-btn').forEach(button => {
+                button.addEventListener('click', () => toggleReadMore(button));
             });
         }
         
         /** Handles submitting a new post from the modal. */
         async function handlePostSubmit() {
-            if (!isReady || !postsCollectionRef) { // Kiểm tra isReady
+            if (!isReady || !postsCollectionRef) { 
                 showMessage("Hệ thống chưa sẵn sàng. Vui lòng chờ kết nối.", true);
                 return;
             }
@@ -605,12 +653,11 @@
             modalSubmitBtn.textContent = 'Đang đăng...';
 
             try {
-                // Sử dụng userId là một giá trị mặc định (anonymous) vì Auth đã bị loại bỏ
                 const newPost = {
                     name: name,
                     content: content,
                     timestamp: serverTimestamp(), 
-                    userId: crypto.randomUUID() // Sử dụng randomUUID để giả lập user id nếu cần
+                    userId: crypto.randomUUID() 
                 };
 
                 await addDoc(postsCollectionRef, newPost);
@@ -624,7 +671,6 @@
 
             } catch (e) {
                 console.error("Lỗi khi gửi trạng thái:", e);
-                // Thông báo lỗi thân thiện hơn
                 if (e.message.includes("permission-denied")) {
                     showMessage("Lỗi: Không có quyền ghi lên Firestore. Vui lòng xuất bản lại Firestore Rules công khai.", true);
                 } else {
@@ -641,7 +687,6 @@
         // Open Modal
         openModalBtn.addEventListener('click', () => {
             modal.style.display = "block";
-            // Focus on content input for quick entry
             modalContentInput.focus();
         });
 

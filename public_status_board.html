@@ -10,7 +10,7 @@
     <!-- SỬ DỤNG CSS CHUNG để bố cục header/footer hoạt động -->
     <link rel="stylesheet" href="css/styles.css">
     
-    <!-- CSS Tùy chỉnh cho Bức Tường -->
+    <!-- CSS Tùy chỉnh cho Bức Tường và chức năng rút gọn -->
     <style>
         /* Status Board Styles */
         .status-header {
@@ -127,6 +127,7 @@
             font-size: 0.85rem;
         }
 
+        /* Style cho nội dung rút gọn */
         .post-content {
             color: var(--dark);
             white-space: pre-wrap;
@@ -134,6 +135,29 @@
             padding-top: 0.5rem;
             border-top: 1px dashed #eee;
         }
+        
+        .content-wrapper {
+            max-height: 7.5em; /* Giới hạn chiều cao: khoảng 5 dòng */
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+            position: relative;
+        }
+        
+        .content-wrapper.expanded {
+            max-height: 2000px; /* Chiều cao lớn khi mở rộng */
+        }
+        
+        .read-more-btn {
+            background: none;
+            border: none;
+            color: var(--accent1);
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0;
+            margin-top: 0.5rem;
+            display: block;
+        }
+
 
         .post-icon {
             position: absolute;
@@ -230,7 +254,7 @@
             </div>
             <button id="submit-btn" class="submit-btn">ĐĂNG LÊN TƯỜNG</button>
         </div>
-
+        
         <h2 class="section-title">CÁC TRẠNG THÁI ĐÃ ĐĂNG</h2>
         <div id="loading-indicator">Đang tải trạng thái...</div>
         <div id="posts-container">
@@ -250,7 +274,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { 
             getFirestore, collection, addDoc, onSnapshot, query,
-            serverTimestamp 
+            serverTimestamp, orderBy 
         } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // CẤU HÌNH FIREBASE TRỰC TIẾP
@@ -263,7 +287,7 @@
           appId: "1:923244408713:web:d239a0c99722b483913b58"
         };
         // Global variables provided by the environment
-        const appId = firebaseConfig.projectId; // Dùng projectId làm appId để đơn giản hóa
+        const appId = firebaseConfig.projectId; 
 
         let db; 
         let postsCollectionRef;
@@ -285,10 +309,8 @@
             messageBox.textContent = message;
             document.body.appendChild(messageBox);
             
-            // Remove after 3 seconds
             setTimeout(() => {
                 messageBox.style.opacity = '0';
-                // Sử dụng animation CSS nếu có, hoặc chỉ xóa
                 messageBox.remove();
             }, 3000);
         }
@@ -296,12 +318,18 @@
         /** Formats timestamp (number/Date) into a readable string. */
         function formatTimestamp(timestamp) {
             if (!timestamp) return 'Vừa xong';
-            // Check if it's a Firestore Timestamp object or a plain number
             const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
             return date.toLocaleString('vi-VN', { 
                 day: '2-digit', month: '2-digit', year: 'numeric', 
                 hour: '2-digit', minute: '2-digit' 
             });
+        }
+        
+        /** Toggles the read more/collapse function. */
+        function toggleReadMore(button) {
+            const wrapper = button.previousElementSibling;
+            const isExpanded = wrapper.classList.toggle('expanded');
+            button.textContent = isExpanded ? 'Rút gọn' : '... Đọc thêm';
         }
 
         // --- FIREBASE INITIALIZATION ---
@@ -348,16 +376,35 @@
                 const displayTime = formatTimestamp(post.timestamp);
                 const displayName = post.name || 'Người Dùng Ẩn Danh';
                 const icon = post.name ? '💌' : '👤';
+                const content = post.content || '';
+                
+                // Logic Read More
+                let contentHTML = `<p class="post-content">${content}</p>`;
+                if (content.length > 200) { // Giới hạn 200 ký tự (khoảng 4-5 dòng)
+                    contentHTML = `
+                        <div class="content-wrapper">
+                            <p class="post-content">${content}</p>
+                        </div>
+                        <button class="read-more-btn" data-action="toggle">... Đọc thêm</button>
+                    `;
+                }
 
+
+                // Ở trang này, nội dung luôn hiển thị đầy đủ (Không dùng Read More)
                 postElement.innerHTML = `
                     <div class="post-header">
                         <span class="post-name">${displayName}</span>
                         <span class="post-time">${displayTime}</span>
                     </div>
                     <div class="post-icon">${icon}</div>
-                    <p class="post-content">${post.content}</p>
+                    ${contentHTML}
                 `;
                 postsContainer.appendChild(postElement);
+            });
+            
+            // Add listeners for Read More buttons after rendering
+            document.querySelectorAll('.read-more-btn').forEach(button => {
+                button.addEventListener('click', () => toggleReadMore(button));
             });
         }
 
@@ -365,11 +412,11 @@
         function setupRealtimeListener() {
             if (!postsCollectionRef) return;
             
-            // Querying the collection and listening for changes
-            const postsQuery = query(postsCollectionRef);
+            // Querying the collection, ordered by newest first. KHÔNG GIỚI HẠN SỐ LƯỢNG
+            const postsQuery = query(postsCollectionRef, orderBy('timestamp', 'desc'));
 
             onSnapshot(postsQuery, (snapshot) => {
-                loadingIndicator.style.display = 'none'; // Hide loading once data starts flowing
+                loadingIndicator.style.display = 'none'; 
                 
                 const posts = snapshot.docs.map(doc => ({
                     id: doc.id,
@@ -381,7 +428,6 @@
             }, (error) => {
                 console.error("Lỗi khi lắng nghe trạng thái:", error);
                 loadingIndicator.textContent = "Lỗi khi tải trạng thái.";
-                // Cần kiểm tra lại: Nếu lỗi là do thiếu quyền, cần cập nhật Firestore Rules
                 showMessage("Lỗi: Không thể tải trạng thái theo thời gian thực. (Kiểm tra Firestore Rules)", true);
             });
         }
@@ -409,7 +455,6 @@
                     name: name,
                     content: content,
                     timestamp: serverTimestamp(), 
-                    // Tạo ID người dùng ngẫu nhiên cho mục đích truy vết
                     userId: crypto.randomUUID() 
                 };
 
@@ -417,13 +462,11 @@
 
                 showMessage("Đã đăng trạng thái thành công! Cảm ơn bạn đã chia sẻ.");
                 
-                // Clear the inputs
                 nameInput.value = '';
                 contentInput.value = '';
 
             } catch (e) {
                 console.error("Lỗi khi gửi trạng thái:", e);
-                // Nếu lỗi là do Rules, báo cho người dùng
                 if (e.message.includes("permission-denied")) {
                     showMessage("Lỗi: Không có quyền ghi lên Firestore. Vui lòng xuất bản lại Firestore Rules công khai.", true);
                 } else {

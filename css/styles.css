@@ -21,23 +21,22 @@ html {
 }
 
 body {
-    /* mobile-first: use Poppins if available, otherwise fall back to system fonts */
     font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
     color: var(--dark);
     line-height: 1.6;
-    /* Đảm bảo nội dung không bị ẩn sau header */
-    padding-top: 80px; 
     min-height: 100vh;
+    /* Khoảng cách đệm cho Header cố định */
+    padding-top: 80px; 
 }
 
 /* Header Styles */
 header {
     background: linear-gradient(135deg, var(--primary), var(--secondary));
     padding: 1rem 0;
-    /* Dùng fixed để header luôn cố định trên cùng */
+    /* Đảm bảo header luôn cố định trên cùng */
     position: fixed; 
     top: 0;
     width: 100%;
@@ -471,9 +470,8 @@ footer {
 .footer-container {
     max-width: 1400px;
     margin: 0 auto;
-    /* Dùng Grid với hàm repeat và minmax để tự động chuyển bố cục */
     display: grid;
-    /* Tự động tạo cột, tối thiểu 250px cho mỗi cột */
+    /* Dùng Grid với hàm repeat và minmax để tự động chuyển bố cục */
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
     gap: 3rem;
 }
@@ -566,30 +564,29 @@ footer {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    /* Header/Nav */
     .header-container {
-        /* stack logo and nav for narrow screens */
         flex-direction: column;
         gap: 0.6rem;
         padding: 0 1rem;
     }
     
-    /* convert nav links into a compact, wrapping grid to avoid overflow */
-    nav ul {
+    .nav-toggle { display: flex; }
+    nav { width: 100%; }
+    nav ul { display: none; }
+    /* when checked, show nav as a compact column/grid */
+    #nav-toggle:checked + .nav-toggle + nav ul {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
         gap: 0.6rem;
+        padding: 0.75rem 0;
+        background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+        border-radius: 10px;
         width: 100%;
-        justify-items: center;
-        padding: 0;
-        margin: 0.25rem 0 0 0;
     }
-    
-    nav a {
-        font-size: 0.95rem;
-        padding: 0.35rem 0.6rem;
-        border-radius: 18px;
-        white-space: normal;
-        text-align: center;
+    body {
+        /* Tăng khoảng cách đệm cho mobile khi menu mở */
+        padding-top: 120px; 
     }
     
     .hero-title {
@@ -616,10 +613,14 @@ footer {
     .subpage-title {
         font-size: 2.2rem;
     }
-    
-    /* Điều chỉnh body padding trên mobile để header không chiếm quá nhiều chỗ */
-    body {
-        padding-top: 120px; 
+
+    /* Footer: 2 cột trên Tablet */
+    .footer-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem 1rem; 
+    }
+    .footer-section h3 {
+        font-size: 1.3rem; 
     }
 }
 
@@ -640,7 +641,7 @@ footer {
         padding: 2rem 1rem;
     }
     
-    /* tighter grid for very small screens: 2 columns max to keep links readable */
+    /* Nav: 2 cột trên Mobile (giữ nguyên) */
     nav ul {
         grid-template-columns: repeat(2, 1fr);
         gap: 0.4rem;
@@ -654,6 +655,19 @@ footer {
     .logo-text { font-size: 1.2rem; }
     .logo-icon { font-size: 1.6rem; }
     .logo-img { width: 48px; height: 48px; }
+
+    /* Footer: 1 cột trên Mobile */
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 2rem; 
+    }
+    .footer-section {
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+    }
+    .footer-section:last-child {
+        border-bottom: none; 
+    }
 }
 
 /* Hamburger toggle (mobile) */
@@ -670,56 +684,4 @@ footer {
     height: 3px;
     background: white;
     border-radius: 3px;
-}
-
-/* Default: show full nav (desktop). On small screens we hide the nav and show hamburger */
-@media (max-width: 768px) {
-    .nav-toggle { display: flex; }
-    nav { width: 100%; }
-    nav ul { display: none; }
-    /* when checked, show nav as a compact column/grid */
-    #nav-toggle:checked + .nav-toggle + nav ul {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-        gap: 0.6rem;
-        padding: 0.75rem 0;
-        background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-        border-radius: 10px;
-        width: 100%;
-    }
-}
-/* Responsive: Bắt đầu từ màn hình nhỏ */
-@media (max-width: 768px) {
-    .footer-container {
-        /* Trên màn hình nhỏ, chuyển về bố cục 2 cột để gọn gàng hơn */
-        grid-template-columns: repeat(2, 1fr);
-        gap: 2rem 1rem; /* Giảm khoảng cách */
-    }
-    
-    .footer-section h3 {
-        font-size: 1.3rem; /* Giảm kích thước tiêu đề */
-    }
-    
-    .footer-links li {
-        margin-bottom: 0.5rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .footer-container {
-        /* Trên điện thoại dọc, chuyển về bố cục 1 cột */
-        grid-template-columns: 1fr;
-        gap: 2rem; 
-    }
-    
-    .footer-section {
-        padding-bottom: 1.5rem;
-        /* Thêm đường phân cách nhẹ giữa các section */
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
-    }
-    
-    /* Xóa đường phân cách cho section cuối cùng */
-    .footer-section:last-child {
-        border-bottom: none; 
-    }
 }
