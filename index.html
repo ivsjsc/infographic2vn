@@ -11,6 +11,423 @@
     <link rel="stylesheet" href="css/styles.css">
     
     <style>
+        /* ========== HERO MAIN SECTION (Giống hình mẫu) ========== */
+        .hero-main {
+            background: linear-gradient(135deg, #5fedd8 0%, #a8b9ec 50%, #d4a5dd 100%);
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin-top: -2rem; /* Nối liền với header */
+        }
+        
+        /* Decorative stars */
+        .hero-main::after {
+            content: '✨';
+            position: absolute;
+            bottom: 20px;
+            right: 40px;
+            font-size: 3rem;
+            animation: twinkle 2s ease-in-out infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        
+        /* Brand Logo Circle */
+        .hero-branding {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+        }
+        
+        .brand-logo-circle {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .brand-logo-circle i {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .brand-url {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.9);
+            letter-spacing: 0.5px;
+        }
+        
+        /* Main Title */
+        .hero-main-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 3rem;
+            letter-spacing: 1px;
+            line-height: 1.2;
+            animation: fadeInDown 0.8s ease-out;
+        }
+        
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* ========== FEATURE CARDS (3 Cards) ========== */
+        .feature-cards-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            max-width: 900px;
+            margin: 0 auto 3rem;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            padding: 2rem 1.5rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+        
+        /* Feature Icons - CSS Only */
+        .feature-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1.5rem;
+            position: relative;
+        }
+        
+        /* Icon 1: Lock (Khóa) */
+        .feature-icon-lock {
+            background: linear-gradient(135deg, #b8e6d5, #8fd9c3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lock-body {
+            width: 35px;
+            height: 40px;
+            background: white;
+            border-radius: 6px;
+            position: relative;
+            top: 8px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        }
+        
+        .lock-body::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #667eea;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .lock-shackle {
+            width: 25px;
+            height: 25px;
+            border: 5px solid white;
+            border-bottom: 0;
+            border-radius: 25px 25px 0 0;
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* Icon 2: Note with Face (Giấy note cười) */
+        .feature-icon-note {
+            background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .note-lines {
+            width: 45px;
+            height: 50px;
+            background: white;
+            border-radius: 6px;
+            position: relative;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        }
+        
+        .note-lines::before,
+        .note-lines::after {
+            content: '';
+            position: absolute;
+            left: 8px;
+            right: 8px;
+            height: 2px;
+            background: #ddd;
+        }
+        
+        .note-lines::before {
+            top: 12px;
+        }
+        
+        .note-lines::after {
+            top: 20px;
+        }
+        
+        .note-face {
+            position: absolute;
+        }
+        
+        .note-eyes {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+        
+        .note-eyes span {
+            width: 6px;
+            height: 6px;
+            background: #333;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        
+        .note-smile {
+            width: 20px;
+            height: 10px;
+            border: 2px solid #ff6b6b;
+            border-top: 0;
+            border-radius: 0 0 20px 20px;
+            margin: 0 auto;
+        }
+        
+        /* Icon 3: Brain with Emojis */
+        .feature-icon-brain {
+            background: linear-gradient(135deg, #c8b6ff, #b8acf6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .brain-emojis {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 5px;
+        }
+        
+        .brain-emojis span {
+            font-size: 1.5rem;
+            animation: emojiPop 2s ease-in-out infinite;
+        }
+        
+        .brain-emojis span:nth-child(1) { animation-delay: 0s; }
+        .brain-emojis span:nth-child(2) { animation-delay: 0.3s; }
+        .brain-emojis span:nth-child(3) { animation-delay: 0.6s; }
+        .brain-emojis span:nth-child(4) { animation-delay: 0.9s; }
+        
+        @keyframes emojiPop {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        
+        /* Feature Title */
+        .feature-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #2d3436;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* ========== CTA BUTTON ========== */
+        .hero-cta-button {
+            background: linear-gradient(135deg, #ff9a56, #ff6b6b);
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 800;
+            padding: 1.2rem 3rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .hero-cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.6);
+        }
+        
+        .hero-cta-button:active {
+            transform: translateY(-2px);
+        }
+        
+        /* ========== QUICK STATS SECTION ========== */
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+        
+        .stat-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            /* Reduce hero space so it doesn't fill entire first viewport */
+            .hero-main {
+                padding: 2rem 1rem;
+                margin-top: 0; /* avoid overlap on small screens */
+            }
+
+            .hero-main::after {
+                font-size: 2rem;
+                bottom: 12px;
+                right: 20px;
+            }
+
+            .hero-branding {
+                gap: 0.6rem;
+                margin-bottom: 1rem;
+            }
+
+            .brand-logo-circle {
+                width: 40px;
+                height: 40px;
+            }
+
+            .hero-main-title {
+                font-size: 1.6rem;
+                margin-bottom: 1.5rem;
+                padding: 0 0.75rem;
+                line-height: 1.15;
+            }
+
+            .feature-cards-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                padding: 0 1rem;
+                margin-bottom: 2rem;
+            }
+
+            .feature-card {
+                padding: 1.25rem;
+            }
+
+            .feature-icon {
+                width: 84px;
+                height: 84px;
+                margin-bottom: 1rem;
+            }
+
+            .hero-cta-button {
+                font-size: 1rem;
+                padding: 0.9rem 1.75rem;
+            }
+
+            .quick-stats {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+
+        /* Extra small phones - tighten spacing further */
+        @media (max-width: 420px) {
+            .hero-main {
+                padding: 1.2rem 0.8rem;
+            }
+            .brand-url { font-size: 0.8rem; }
+            .brand-logo-circle { width: 36px; height: 36px; }
+            .hero-main-title { font-size: 1.4rem; margin-bottom: 1rem; }
+            .feature-icon { width: 72px; height: 72px; }
+            .feature-card { padding: 1rem; border-radius: 14px; }
+            .hero-cta-button { font-size: 0.95rem; padding: 0.75rem 1.4rem; }
+            .hero-main::after { display: none; } /* hide decorative on very small screens */
+        }
+        
         /* Status List Page Styles */
         .status-page-header {
             text-align: center;
@@ -283,19 +700,78 @@
     <div id="header-placeholder"></div>
 
     <main class="main-content">
-        <!-- 1. HERO BANNER (Khu vực chào mừng) -->
-        <section class="hero-banner" style="padding-bottom: 3rem;">
-            <div class="hero-content">
-                <h1 class="hero-title">THẾ GIỚI CẢM XÚC</h1>
-                <p class="hero-subtitle">Khám phá hành trình đầy màu sắc của những cảm xúc con người!</p>
+        <!-- 1. HERO SECTION - Giống hình mẫu -->
+        <section class="hero-main">
+            <div class="hero-branding">
+                <div class="brand-logo-circle">
+                    <i class="fas fa-smile-beam"></i>
+                </div>
+                <p class="brand-url">infoGraphic.io.vn</p>
             </div>
+            
+            <h1 class="hero-main-title">MONG NHÌN THẤY ĐƯỢC DÒNG TRẠNG THÁI CỦA BẠN Ở ĐÂY</h1>
+            
+            <!-- 3 Feature Cards -->
+            <div class="feature-cards-container">
+                <div class="feature-card feature-card-1">
+                    <div class="feature-icon feature-icon-lock">
+                        <div class="lock-body"></div>
+                        <div class="lock-shackle"></div>
+                    </div>
+                    <h3 class="feature-title">KHÔNG CẦN ĐĂNG NHẬP</h3>
+                </div>
+                
+                <div class="feature-card feature-card-2">
+                    <div class="feature-icon feature-icon-note">
+                        <div class="note-lines"></div>
+                        <div class="note-face">
+                            <div class="note-eyes">
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="note-smile"></div>
+                        </div>
+                    </div>
+                    <h3 class="feature-title">KHÔNG THỂ XÓA</h3>
+                </div>
+                
+                <div class="feature-card feature-card-3">
+                    <div class="feature-icon feature-icon-brain">
+                        <div class="brain-emojis">
+                            <span>😊</span>
+                            <span>🎭</span>
+                            <span>💭</span>
+                            <span>❤️</span>
+                        </div>
+                    </div>
+                    <h3 class="feature-title">THỂ HIỆN CÁ TÍNH RIÊNG</h3>
+                </div>
+            </div>
+            
+            <!-- CTA Button -->
+            <button class="hero-cta-button" id="open-post-modal">
+                Let's do it!
+            </button>
         </section>
 
-        <!-- 2. POST INPUT BAR (Kích hoạt Modal Pop-up) -->
-        <div class="post-input-bar" id="open-post-modal">
-            <i class="fas fa-feather-alt"></i>
-            <span class="post-input-bar-text">Chia sẽ trạng thái, cảm xúc - Không thể xóa!</span>
-        </div>
+        <!-- Quick Stats Section -->
+        <section class="quick-stats">
+            <div class="stat-item">
+                <div class="stat-icon">📝</div>
+                <div class="stat-number" id="total-posts-stat">0</div>
+                <div class="stat-label">Trạng thái đã chia sẻ</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">❤️</div>
+                <div class="stat-number">8</div>
+                <div class="stat-label">Loại cảm xúc</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">🌟</div>
+                <div class="stat-number" id="today-posts-stat">0</div>
+                <div class="stat-label">Hôm nay</div>
+            </div>
+        </section>
         
         <h2 class="section-title" style="margin-bottom: 2rem;">DÒNG THỜI GIAN CẢM XÚC CÔNG KHAI</h2>
         
@@ -401,7 +877,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { 
             getFirestore, collection, onSnapshot, query, orderBy, where, 
-            Timestamp, addDoc, serverTimestamp, limit
+            Timestamp, addDoc, serverTimestamp, limit, getDocs
         } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // CẤU HÌNH FIREBASE TRỰC TIẾP
@@ -482,11 +958,52 @@
                 
                 // Load initial posts
                 fetchPosts();
+                
+                // Fetch total stats separately
+                fetchTotalStats();
 
             } catch (error) {
                 console.error("Lỗi khi khởi tạo Firebase:", error);
                 loadingIndicator.textContent = "Lỗi kết nối. Không thể tải trạng thái.";
                 showMessage("Lỗi: Không thể kết nối với hệ thống trạng thái. Vui lòng kiểm tra cấu hình Firebase.", true);
+            }
+        }
+        
+        /** Fetch total count for stats (separate from timeline). */
+        async function fetchTotalStats() {
+            try {
+                // Query all posts for stats
+                const statsQuery = query(postsCollectionRef, orderBy('timestamp', 'desc'));
+                const snapshot = await getDocs(statsQuery);
+                
+                const totalPostsStat = document.getElementById('total-posts-stat');
+                const todayPostsStat = document.getElementById('today-posts-stat');
+                
+                if (totalPostsStat) {
+                    const totalCount = snapshot.size;
+                    animateNumber(totalPostsStat, totalCount);
+                }
+                
+                if (todayPostsStat) {
+                    const today = new Date();
+                    today.setUTCHours(0, 0, 0, 0);
+                    
+                    let todayCount = 0;
+                    snapshot.docs.forEach(doc => {
+                        const data = doc.data();
+                        if (data.timestamp) {
+                            const postDate = new Date(data.timestamp.toMillis());
+                            postDate.setUTCHours(0, 0, 0, 0);
+                            if (postDate.getTime() === today.getTime()) {
+                                todayCount++;
+                            }
+                        }
+                    });
+                    
+                    animateNumber(todayPostsStat, todayCount);
+                }
+            } catch (error) {
+                console.error("Error fetching stats:", error);
             }
         }
 
@@ -551,6 +1068,25 @@
                 loadingIndicator.textContent = "Lỗi khi tải trạng thái.";
                 showMessage("Lỗi khi tải trạng thái. (Kiểm tra Firestore Rules)", true);
             });
+        }
+        
+        /** Animate number counting up. */
+        function animateNumber(element, target) {
+            const duration = 1000; // 1 second
+            const start = parseInt(element.textContent) || 0;
+            const range = target - start;
+            const increment = range / (duration / 16); // 60fps
+            let current = start;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if ((increment > 0 && current >= target) || (increment < 0 && current <= target)) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.round(current);
+                }
+            }, 16);
         }
         
         /** Renders the list of posts to the UI. */

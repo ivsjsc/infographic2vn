@@ -21,16 +21,17 @@ html {
 }
 
 body {
-    /* Font stack tối ưu cho tiếng Việt */
+    /* Mobile-first compact defaults */
     font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'Noto Sans', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
     color: var(--dark);
-    line-height: 1.6;
+    line-height: 1.5;
     min-height: 100vh;
+    font-size: 15px; /* compact base */
     /* Khoảng cách đệm cho Header cố định */
-    padding-top: 80px; 
+    padding-top: 64px;
 }
 
 /* Header Styles */
@@ -742,4 +743,93 @@ footer {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+/* ========== GLOBAL MOBILE TYPOGRAPHY OVERRIDES (Compact) ==========
+   Applies to all pages to keep text and UI elements compact on small screens */
+@media (max-width: 768px) {
+    /* slightly reduce base font so headings don't dominate */
+    html, body {
+        font-size: 15px; /* compact base */
+    }
+
+    /* headings scale down */
+    h1 { font-size: 1.6rem; }
+    h2 { font-size: 1.25rem; }
+    h3 { font-size: 1.05rem; }
+    h4 { font-size: 0.95rem; }
+
+    /* navigation and header compact */
+    header { padding: 0.6rem 0; }
+    .header-container { padding: 0 1rem; }
+    nav a { font-size: 0.92rem; padding: 0.45rem 0.8rem; }
+
+    /* reduce large logo & images */
+    .logo-img { width: 48px; height: 48px; }
+    .logo-text { font-size: 1.15rem; }
+
+    /* hero-specific adjustments (if any pages still use hero-banner) */
+    .hero-banner { padding: 3rem 1rem; }
+    .hero-banner .hero-title, .hero-main-title { font-size: 1.6rem; }
+
+    /* cards and content spacing */
+    .feature-card, .post-card, .stat-item {
+        padding: 1rem 0.9rem;
+    }
+
+    /* forms / inputs */
+    input, textarea, button { font-size: 0.95rem; }
+
+    /* Compact 3-column quick-stats on mobile */
+    .quick-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.6rem;
+        padding: 0 0.6rem;
+        align-items: stretch;
+    }
+
+    .quick-stats .stat-item {
+        padding: 0.75rem;
+        min-height: 84px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .stat-number { font-size: 1.2rem; font-weight: 800; color: var(--primary); }
+}
+
+@media (max-width: 420px) {
+    /* even more compact for small phones */
+    html, body { font-size: 14px; }
+
+    h1 { font-size: 1.4rem; }
+    h2 { font-size: 1.1rem; }
+    h3 { font-size: 0.98rem; }
+
+    nav a { font-size: 0.88rem; padding: 0.35rem 0.6rem; }
+    .logo-img { width: 40px; height: 40px; }
+    .logo-text { font-size: 1rem; }
+
+    .feature-card, .post-card { padding: 0.8rem; }
+    .feature-icon { width: 64px; height: 64px; }
+    .hero-main-title, .hero-banner .hero-title { font-size: 1.2rem; }
+}
+
+/* ========== DESKTOP (Upgrade from mobile) ==========
+   Restore larger sizes for wider viewports (mobile-first approach) */
+@media (min-width: 769px) {
+    body { font-size: 16px; line-height: 1.6; padding-top: 80px; }
+    header { padding: 1rem 0; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+    .header-container { padding: 0 2rem; }
+    .logo-img { width: 72px; height: 72px; }
+    .logo-text { font-size: 1.8rem; }
+    nav a { font-size: 1rem; padding: 0.5rem 1rem; }
+    .hero-banner { padding: 6rem 2rem; }
+    .hero-title { font-size: 4rem; }
+    .feature-cards-container { max-width: 900px; gap: 1.5rem; }
+    .feature-card { padding: 2rem 1.5rem; border-radius: 16px; }
+    .stat-number { font-size: 2.5rem; }
 }
