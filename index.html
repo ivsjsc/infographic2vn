@@ -46,8 +46,8 @@
         }
         
         .brand-logo-circle {
-            width: 50px;
-            height: 50px;
+            width: 100px; /* <-- Chỉnh kích thước chiều rộng ở đây */
+            height: 100px; /* <-- và chiều cao ở đây */
             background: white;
             border-radius: 50%;
             display: flex;
@@ -57,24 +57,17 @@
             animation: float 3s ease-in-out infinite;
         }
         
+        .hero-logo-img {
+            width: 100%;
+            height: 100%;
+            padding: 10px; /* Khoảng đệm để logo không bị sát viền */
+            object-fit: contain;
+            border-radius: 50%;
+        }
+        
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
-        }
-        
-        .brand-logo-circle i {
-            font-size: 1.8rem;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .brand-url {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: rgba(255,255,255,0.9);
-            letter-spacing: 0.5px;
         }
         
         /* Main Title */
@@ -1197,4 +1190,5 @@
     </script>
 </body>
 </html>
+
 

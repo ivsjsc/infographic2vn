@@ -123,6 +123,87 @@
 
     <!-- Firebase SDK & Custom Scripts -->
     <script src="js/script.js"></script>
+    <!-- Header helpers: ensure body padding equals header height and inject CTAs -->
+    <script>
+        (function(){
+            function adjustBodyPadding() {
+                const header = document.querySelector('header');
+                if (!header) return;
+                const h = Math.ceil(header.getBoundingClientRect().height);
+                document.body.style.paddingTop = h + 'px';
+            }
+
+            function injectHeaderCTAs() {
+                const header = document.querySelector('header');
+                if (!header) return;
+                // avoid duplicate
+                if (document.getElementById('header-cta-row')) return;
+
+                const container = document.createElement('div');
+                container.id = 'header-cta-row';
+                container.setAttribute('aria-hidden', 'false');
+                container.style.display = 'flex';
+                container.style.gap = '8px';
+                container.style.alignItems = 'center';
+                container.style.position = 'absolute';
+                container.style.right = '12px';
+                container.style.top = '50%';
+                container.style.transform = 'translateY(-50%)';
+
+                // Write button (prominent)
+                const writeBtn = document.createElement('a');
+                writeBtn.href = 'write.html';
+                writeBtn.className = 'header-cta-write';
+                writeBtn.textContent = 'Viết bài';
+                writeBtn.style.padding = '6px 10px';
+                writeBtn.style.borderRadius = '8px';
+                writeBtn.style.background = '#4f46e5';
+                writeBtn.style.color = '#fff';
+                writeBtn.style.fontWeight = '700';
+                writeBtn.style.textDecoration = 'none';
+                writeBtn.style.fontSize = '0.9rem';
+
+                // Share button (secondary)
+                const shareBtn = document.createElement('a');
+                shareBtn.href = 'public_status_board.html';
+                shareBtn.className = 'header-cta-share';
+                shareBtn.textContent = 'Chia sẻ cảm xúc';
+                shareBtn.style.padding = '6px 10px';
+                shareBtn.style.borderRadius = '8px';
+                shareBtn.style.background = 'rgba(255,255,255,0.95)';
+                shareBtn.style.color = '#4f46e5';
+                shareBtn.style.fontWeight = '700';
+                shareBtn.style.textDecoration = 'none';
+                shareBtn.style.fontSize = '0.9rem';
+                shareBtn.style.border = '1px solid rgba(79,70,229,0.12)';
+
+                container.appendChild(writeBtn);
+                container.appendChild(shareBtn);
+
+                // append to header: ensure header is positioned relative for absolute child
+                header.style.position = header.style.position || 'fixed';
+                header.appendChild(container);
+            }
+
+            // Observe header-placeholder for insertion (header may be injected)
+            const placeholder = document.getElementById('header-placeholder');
+            if (placeholder) {
+                const mo = new MutationObserver((m) => {
+                    for (const rec of m) {
+                        if (rec.addedNodes && rec.addedNodes.length) {
+                            adjustBodyPadding();
+                            injectHeaderCTAs();
+                        }
+                    }
+                });
+                mo.observe(placeholder, { childList: true, subtree: true });
+            }
+
+            // run on load and resize in case header already present
+            window.addEventListener('load', () => { setTimeout(() => { adjustBodyPadding(); injectHeaderCTAs(); }, 60); });
+            window.addEventListener('resize', () => adjustBodyPadding());
+        })();
+    </script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getFirestore, collection, query, orderBy, onSnapshot, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
