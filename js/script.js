@@ -24,3 +24,36 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('footer-placeholder').innerHTML = data;
         });
 });
+
+// After header/footer are loaded, wire up mobile menu accessibility & behavior
+document.addEventListener('DOMContentLoaded', function setupMobileMenu() {
+    // Use a short delay to ensure injected HTML is parsed; if pages are large this still runs quickly
+    setTimeout(() => {
+        const navToggle = document.getElementById('nav-toggle');
+        const mainNav = document.getElementById('main-nav');
+        if (!navToggle || !mainNav) return;
+
+        // Reflect initial ARIA state
+        navToggle.setAttribute('aria-expanded', 'false');
+        mainNav.setAttribute('aria-hidden', 'true');
+
+        // When checkbox changes, update ARIA attributes
+        navToggle.addEventListener('change', function() {
+            const expanded = this.checked;
+            this.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+            mainNav.setAttribute('aria-hidden', expanded ? 'false' : 'true');
+        });
+
+        // Auto-close menu when a nav link is clicked (useful for single-page or multi-page)
+        const links = mainNav.querySelectorAll('a');
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                // If menu is open, close it
+                if (navToggle.checked) {
+                    navToggle.checked = false;
+                    navToggle.dispatchEvent(new Event('change'));
+                }
+            });
+        });
+    }, 60);
+});
