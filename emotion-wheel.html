@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bánh Xe Cảm Xúc - Thế Giới Cảm Xúc</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Fredoka+One&family=Comic+Neue:wght@400;700&display=swap&subset=vietnamese" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .emotion-wheel-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        .wheel-layer {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            border-radius: 15px;
+            border-left: 5px solid;
+        }
+        .wheel-layer.primary {
+            background: linear-gradient(135deg, #fff5f5, #ffe4e6);
+            border-color: var(--accent1);
+        }
+        .wheel-layer.secondary {
+            background: linear-gradient(135deg, #fff7ed, #ffedd5);
+            border-color: var(--accent3);
+        }
+        .wheel-layer.tertiary {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border-color: var(--accent2);
+        }
+        .emotion-tag {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            margin: 0.25rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            font-weight: 600;
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+        .emotion-tag:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .interactive-section {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 20px;
+            color: white;
+        }
+        .emotion-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .emotion-btn {
+            padding: 1rem;
+            background: rgba(255,255,255,0.2);
+            border: 2px solid white;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        .emotion-btn:hover, .emotion-btn.active {
+            background: white;
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+        #result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 12px;
+            color: var(--dark);
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+
+    <main class="main-content">
+        <div class="subpage-header">
+            <div class="subpage-icon">🎡</div>
+            <h2 class="subpage-title">BÁNH XE CẢM XÚC</h2>
+            <p class="subpage-description">Công cụ mạnh mẽ để hiểu và đặt tên cho cảm xúc của bạn. Được phát triển bởi nhà tâm lý học Robert Plutchik.</p>
+        </div>
+
+        <div class="emotion-wheel-container">
+            <h3 style="text-align: center; color: var(--primary); margin-bottom: 2rem;">
+                <i class="fas fa-layer-group"></i> Cấu Trúc Bánh Xe Cảm Xúc
+            </h3>
+
+            <div class="wheel-layer primary">
+                <h4><i class="fas fa-circle"></i> Tầng 1: Cảm Xúc Cơ Bản (8 loại)</h4>
+                <p style="margin: 1rem 0;">Đây là 8 cảm xúc nền tảng mà tất cả cảm xúc khác được xây dựng từ đó:</p>
+                <div style="margin-top: 1rem;">
+                    <span class="emotion-tag" style="background: #ffd93d;">😊 Vui (Joy)</span>
+                    <span class="emotion-tag" style="background: #4ecdc4;">🤔 Tin Tưởng (Trust)</span>
+                    <span class="emotion-tag" style="background: #ff6b6b;">😨 Sợ (Fear)</span>
+                    <span class="emotion-tag" style="background: #95e1d3;">😲 Ngạc Nhiên (Surprise)</span>
+                    <span class="emotion-tag" style="background: #4a90e2;">😢 Buồn (Sadness)</span>
+                    <span class="emotion-tag" style="background: #f38181;">🤢 Ghê Tởm (Disgust)</span>
+                    <span class="emotion-tag" style="background: #ff4757;">😡 Giận (Anger)</span>
+                    <span class="emotion-tag" style="background: #ffa502;">🔮 Dự Đoán (Anticipation)</span>
+                </div>
+            </div>
+
+            <div class="wheel-layer secondary">
+                <h4><i class="fas fa-adjust"></i> Tầng 2: Cảm Xúc Kết Hợp (Dyads)</h4>
+                <p style="margin: 1rem 0;">Khi 2 cảm xúc cơ bản kế cận nhau kết hợp:</p>
+                <div style="margin-top: 1rem;">
+                    <span class="emotion-tag">❤️ Yêu = Vui + Tin Tưởng</span>
+                    <span class="emotion-tag">😰 Lo Lắng = Sợ + Dự Đoán</span>
+                    <span class="emotion-tag">😞 Thất Vọng = Buồn + Ngạc Nhiên</span>
+                    <span class="emotion-tag">🤬 Căm Ghét = Giận + Ghê Tởm</span>
+                    <span class="emotion-tag">😤 Ghen Tị = Giận + Sợ</span>
+                    <span class="emotion-tag">😔 Hối Tiếc = Buồn + Ghê Tởm</span>
+                </div>
+            </div>
+
+            <div class="wheel-layer tertiary">
+                <h4><i class="fas fa-palette"></i> Tầng 3: Cường Độ Cảm Xúc</h4>
+                <p style="margin: 1rem 0;">Mỗi cảm xúc có 3 mức độ cường độ:</p>
+                <table style="width: 100%; margin-top: 1rem; border-collapse: collapse;">
+                    <tr style="background: #f8f9fa;">
+                        <th style="padding: 0.75rem; text-align: left;">Yếu</th>
+                        <th style="padding: 0.75rem; text-align: left;">Trung Bình</th>
+                        <th style="padding: 0.75rem; text-align: left;">Mạnh</th>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.75rem;">😊 Vui vẻ</td>
+                        <td style="padding: 0.75rem;">😄 Hạnh phúc</td>
+                        <td style="padding: 0.75rem;">🤩 Hoan hỉ</td>
+                    </tr>
+                    <tr style="background: #f8f9fa;">
+                        <td style="padding: 0.75rem;">😐 Bực mình</td>
+                        <td style="padding: 0.75rem;">😠 Tức giận</td>
+                        <td style="padding: 0.75rem;">🤬 Căm phẫn</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.75rem;">😟 Lo lắng</td>
+                        <td style="padding: 0.75rem;">😨 Sợ hãi</td>
+                        <td style="padding: 0.75rem;">😱 Kinh hoàng</td>
+                    </tr>
+                    <tr style="background: #f8f9fa;">
+                        <td style="padding: 0.75rem;">🙁 Buồn</td>
+                        <td style="padding: 0.75rem;">😢 Đau khổ</td>
+                        <td style="padding: 0.75rem;">😭 Tuyệt vọng</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="interactive-section">
+            <h3 style="text-align: center; margin-bottom: 1rem;">
+                <i class="fas fa-hand-pointer"></i> Công Cụ Xác Định Cảm Xúc
+            </h3>
+            <p style="text-align: center; margin-bottom: 1.5rem;">Chọn cảm xúc cơ bản bạn đang cảm thấy. Chúng tôi sẽ giúp bạn hiểu rõ hơn!</p>
+
+            <div class="emotion-selector">
+                <button class="emotion-btn" data-emotion="joy">😊 Vui</button>
+                <button class="emotion-btn" data-emotion="trust">🤝 Tin Tưởng</button>
+                <button class="emotion-btn" data-emotion="fear">😨 Sợ</button>
+                <button class="emotion-btn" data-emotion="surprise">😲 Ngạc Nhiên</button>
+                <button class="emotion-btn" data-emotion="sadness">😢 Buồn</button>
+                <button class="emotion-btn" data-emotion="disgust">🤢 Ghê Tởm</button>
+                <button class="emotion-btn" data-emotion="anger">😡 Giận</button>
+                <button class="emotion-btn" data-emotion="anticipation">🔮 Dự Đoán</button>
+            </div>
+
+            <div id="result-box">
+                <h4 id="result-title" style="color: var(--primary); margin-bottom: 1rem;"></h4>
+                <p id="result-description"></p>
+                <div id="result-tips" style="margin-top: 1rem; padding: 1rem; background: #f0f9ff; border-radius: 8px;"></div>
+            </div>
+        </div>
+
+        <div style="margin-top: 3rem; padding: 2rem; background: white; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);">
+            <h3 style="color: var(--primary); text-align: center; margin-bottom: 1.5rem;">
+                <i class="fas fa-lightbulb"></i> Cách Sử Dụng Bánh Xe Cảm Xúc
+            </h3>
+            <div class="content-grid">
+                <div class="content-card">
+                    <h4>1️⃣ Xác Định Cảm Xúc</h4>
+                    <p>Khi cảm thấy "không ổn", dùng bánh xe để đặt tên chính xác cho cảm xúc. "Tôi cảm thấy tệ" → "Tôi cảm thấy thất vọng".</p>
+                </div>
+                <div class="content-card">
+                    <h4>2️⃣ Hiểu Nguồn Gốc</h4>
+                    <p>Mỗi cảm xúc có nguyên nhân. Giận dữ thường đến từ ranh giới bị vi phạm. Sợ hãi từ mối đe dọa thực/tưởng tượng.</p>
+                </div>
+                <div class="content-card">
+                    <h4>3️⃣ Chấp Nhận & Xử Lý</h4>
+                    <p>Không có cảm xúc nào là "xấu". Chấp nhận nó, sau đó chọn cách phản ứng lành mạnh thay vì ép buộc hay phủ nhận.</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #4ecdc4, #44a08d); border-radius: 15px; color: white;">
+            <h3 style="margin-bottom: 1rem;">📝 Ghi Lại Cảm Xúc Của Bạn</h3>
+            <p style="margin-bottom: 1.5rem;">Viết nhật ký cảm xúc giúp tăng tự nhận thức lên 47%!</p>
+            <a href="public_status_board.html" class="submit-btn" style="display: inline-block; padding: 0.75rem 2rem; background: white; color: var(--accent2); text-decoration: none; border-radius: 25px; font-weight: 700;">
+                <i class="fas fa-pen"></i> Viết Nhật Ký Ngay
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <script src="js/script.js"></script>
+    <script>
+        const emotionData = {
+            joy: {
+                title: "😊 VUI - Cảm Xúc Tích Cực Mạnh Mẽ",
+                description: "Bạn đang cảm thấy vui vẻ! Đây là cảm xúc tuyệt vời giúp tăng sức đề kháng, cải thiện sức khỏe tim mạch và kéo dài tuổi thọ.",
+                tips: "💡 Mẹo: Chia sẻ niềm vui với người khác để nhân đôi hạnh phúc! Nghiên cứu chứng minh nói về điều tích cực tăng mức độ hạnh phúc 23%."
+            },
+            trust: {
+                title: "🤝 TIN TƯỞNG - Nền Tảng Quan Hệ",
+                description: "Tin tưởng là cảm giác an toàn với người hoặc tình huống. Oxytocin - 'hormone tin tưởng' đang được tiết ra trong não bộ bạn.",
+                tips: "💡 Mẹo: Xây dựng lòng tin qua hành động nhỏ nhất quán. Mất 6 tháng xây dựng nhưng chỉ 6 giây để phá hủy lòng tin!"
+            },
+            fear: {
+                title: "😨 SỢ HÃI - Bảo Vệ Bạn",
+                description: "Sợ hãi là cảm xúc sinh tồn. Amygdala trong não đang cảnh báo nguy hiểm. Đây KHÔNG phải điểm yếu - đây là cơ chế bảo vệ!",
+                tips: "💡 Mẹo: Hít thở sâu 4-7-8 (hít 4 giây, giữ 7 giây, thở ra 8 giây). Kỹ thuật này giảm nỗi sợ trong vòng 90 giây!"
+            },
+            surprise: {
+                title: "😲 NGẠC NHIÊN - Cảm Xúc Nhanh Nhất",
+                description: "Ngạc nhiên chỉ kéo dài 2-6 giây! Não đang xử lý thông tin bất ngờ và sắp chuyển sang cảm xúc tiếp theo (vui/sợ/giận...).",
+                tips: "💡 Mẹo: Tạo bất ngờ tích cực cho người khác - quà nhỏ, lời khen bất ngờ. Điều này tăng gắn kết và dopamine!"
+            },
+            sadness: {
+                title: "😢 BUỒN - Cảm Xúc Chữa Lành",
+                description: "Buồn bã cho phép bạn xử lý mất mát và thất vọng. Khóc giải phóng hormone stress và endorphin - 'thuốc giảm đau tự nhiên'.",
+                tips: "💡 Mẹo: Cho phép bản thân buồn. Đừng ép \"phải vui\". Viết nhật ký, nghe nhạc buồn, hoặc khóc - tất cả đều lành mạnh!"
+            },
+            disgust: {
+                title: "🤢 GHÊ TỞM - Bảo Vệ Sức Khỏe",
+                description: "Ghê tởm giúp tránh thực phẩm độc, bệnh tật và vi phạm đạo đức. Đây là phản ứng tiến hóa để bảo vệ cơ thể và xã hội.",
+                tips: "💡 Mẹo: Nếu ghê tởm với ai/điều gì, hãy tự hỏi 'Ranh giới/giá trị nào của tôi đang bị vi phạm?' - đó là thông điệp ẩn!"
+            },
+            anger: {
+                title: "😡 GIẬN DỮ - Năng Lượng Thay Đổi",
+                description: "Giận dữ thường là dấu hiệu ranh giới bị xâm phạm hoặc bất công. Nó cung cấp năng lượng để BẢO VỆ bản thân và THAY ĐỔI tình huống.",
+                tips: "💡 Mẹo: Đếm đến 10, đi bộ 5 phút, hoặc viết ra (không gửi!). Giận là OK - hành động bạo lực thì KHÔNG OK."
+            },
+            anticipation: {
+                title: "🔮 DỰ ĐOÁN - Động Lực Hành Động",
+                description: "Dự đoán là cảm giác chờ đợi và chuẩn bị. Nó giúp bạn lên kế hoạch, tạo động lực và tăng dopamine khi kỳ vọng điều tốt.",
+                tips: "💡 Mẹo: Tạo điều gì đó để mong chờ mỗi tuần - buổi cafe với bạn, phim mới, hobby. Điều này tăng hạnh phúc tổng thể!"
+            }
+        };
+
+        document.querySelectorAll('.emotion-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.emotion-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const emotion = this.dataset.emotion;
+                const data = emotionData[emotion];
+                
+                document.getElementById('result-title').textContent = data.title;
+                document.getElementById('result-description').textContent = data.description;
+                document.getElementById('result-tips').innerHTML = `<strong style="color: var(--primary);">${data.tips}</strong>`;
+                
+                document.getElementById('result-box').style.display = 'block';
+                document.getElementById('result-box').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            });
+        });
+    </script>
+</body>
+</html>

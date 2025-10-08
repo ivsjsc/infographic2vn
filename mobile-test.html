@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Test - Kiểm Tra Font & Menu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Fredoka+One&family=Comic+Neue:wght@400;700&display=swap&subset=vietnamese" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .test-container {
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .test-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.9);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .test-section h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        .font-sample {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+        .vietnamese-chars {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent1);
+            margin: 1rem 0;
+        }
+        .instruction {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+        .checklist li {
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+        .checklist li:before {
+            content: "☐ ";
+            color: var(--primary);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Load header -->
+    <div id="header-placeholder"></div>
+
+    <div class="test-container">
+        <h1 style="text-align: center; color: var(--primary); margin-bottom: 2rem;">
+            📱 Kiểm Tra Mobile
+        </h1>
+
+        <div class="instruction">
+            <strong>🎯 Hướng dẫn kiểm tra:</strong>
+            <ol style="margin: 0.5rem 0 0 1.5rem;">
+                <li>Mở trang này trên điện thoại di động</li>
+                <li>Kiểm tra font tiếng Việt có hiển thị đúng không</li>
+                <li>Nhấn vào nút hamburger ☰ trên header</li>
+                <li>Xem menu có hiện ra không</li>
+            </ol>
+        </div>
+
+        <div class="test-section">
+            <h2>✅ Test 1: Font Tiếng Việt</h2>
+            <p class="font-sample">
+                Đây là mẫu chữ tiếng Việt với dấu thanh đầy đủ.
+            </p>
+            <div class="vietnamese-chars">
+                À Á Ả Ã Ạ Ă Ằ Ắ Ẳ Ẵ Ặ Â Ầ Ấ Ẩ Ẫ Ậ
+            </div>
+            <div class="vietnamese-chars">
+                È É Ẻ Ẽ Ẹ Ê Ề Ế Ể Ễ Ệ
+            </div>
+            <div class="vietnamese-chars">
+                Ì Í Ỉ Ĩ Ị
+            </div>
+            <div class="vietnamese-chars">
+                Ò Ó Ỏ Õ Ọ Ô Ồ Ố Ổ Ỗ Ộ Ơ Ờ Ớ Ở Ỡ Ợ
+            </div>
+            <div class="vietnamese-chars">
+                Ù Ú Ủ Ũ Ụ Ư Ừ Ứ Ử Ữ Ự
+            </div>
+            <div class="vietnamese-chars">
+                Ỳ Ý Ỷ Ỹ Ỵ Đ đ
+            </div>
+            
+            <p style="margin-top: 1rem;">
+                <strong>Các từ thường dùng:</strong><br>
+                Cảm xúc, tình yêu, hạnh phúc, buồn bã, tức giận, sợ hãi, ngạc nhiên, 
+                bình yên, hào hứng, trí tuệ cảm xúc, sức khỏe tinh thần, phát triển bản thân
+            </p>
+        </div>
+
+        <div class="test-section">
+            <h2>✅ Test 2: Hamburger Menu</h2>
+            <p>Nhấn vào nút <strong>☰</strong> (3 gạch ngang) ở góc trên bên phải của header.</p>
+            
+            <div class="instruction" style="background: #d1ecf1; border-color: #0c5460;">
+                <strong>✓ Menu phải:</strong>
+                <ul class="checklist">
+                    <li>Hiện ra khi nhấn vào nút hamburger</li>
+                    <li>Có hiệu ứng animation mượt mà</li>
+                    <li>Hiển thị 2 cột trên mobile</li>
+                    <li>Có background gradient đẹp</li>
+                    <li>Có icon emoji trước mỗi mục menu</li>
+                    <li>Đóng lại khi nhấn vào 1 link</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>✅ Test 3: Responsive Layout</h2>
+            <p>Kiểm tra các kích thước màn hình:</p>
+            <ul class="checklist">
+                <li>📱 Mobile: 320px - 480px (iPhone SE, iPhone 8)</li>
+                <li>📱 Mobile: 481px - 768px (iPhone 14, Galaxy S23)</li>
+                <li>💻 Tablet: 769px - 1024px (iPad)</li>
+                <li>🖥️ Desktop: 1025px+ (Laptop, PC)</li>
+            </ul>
+        </div>
+
+        <div class="test-section">
+            <h2>📊 Kết Quả</h2>
+            <p>Nếu tất cả test đều pass:</p>
+            <div style="text-align: center; font-size: 3rem; margin: 1rem 0;">
+                ✅ 🎉 🚀
+            </div>
+            <p style="text-align: center; font-weight: 600; color: var(--success);">
+                Website đã sẵn sàng cho mobile!
+            </p>
+        </div>
+
+        <div class="test-section" style="background: linear-gradient(135deg, var(--accent1), var(--accent2)); color: white;">
+            <h2 style="color: white;">🔧 Thông Tin Kỹ Thuật</h2>
+            <ul style="line-height: 1.8;">
+                <li><strong>Font chính:</strong> Poppins (Google Fonts với Vietnamese subset)</li>
+                <li><strong>Font fallback:</strong> System fonts (Segoe UI, Roboto, Noto Sans...)</li>
+                <li><strong>Menu toggle:</strong> CSS-only với hidden checkbox</li>
+                <li><strong>Animation:</strong> CSS transforms và keyframes</li>
+                <li><strong>Responsive:</strong> Mobile-first với media queries</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Load footer -->
+    <div id="footer-placeholder"></div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

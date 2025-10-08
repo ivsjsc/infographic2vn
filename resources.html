@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tài Nguyên - Thế Giới Cảm Xúc</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Fredoka+One&family=Comic+Neue:wght@400;700&display=swap&subset=vietnamese" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .resource-category {
+            margin-bottom: 3rem;
+        }
+        .resource-card {
+            padding: 1.5rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin-bottom: 1.5rem;
+            border-left: 5px solid var(--accent2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        .resource-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .resource-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: linear-gradient(135deg, var(--accent2), var(--accent3));
+            color: white;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+
+    <main class="main-content">
+        <div class="subpage-header">
+            <div class="subpage-icon">📚</div>
+            <h2 class="subpage-title">TÀI NGUYÊN HỌC TẬP</h2>
+            <p class="subpage-description">Sách, khóa học, podcast, video và công cụ tốt nhất để phát triển trí tuệ cảm xúc của bạn.</p>
+        </div>
+
+        <!-- SÁCH -->
+        <div class="resource-category">
+            <h3 style="color: var(--primary); margin-bottom: 1.5rem;">
+                <i class="fas fa-book"></i> Sách Nên Đọc
+            </h3>
+            
+            <div class="resource-card">
+                <div class="resource-icon">📖</div>
+                <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Emotional Intelligence - Daniel Goleman</h4>
+                <p style="color: #666; line-height: 1.7;">Cuốn sách kinh điển định nghĩa EQ và giải thích tại sao nó quan trọng hơn IQ. Bắt buộc đọc cho bất kỳ ai muốn hiểu về cảm xúc.</p>
+                <div style="margin-top: 1rem;">
+                    <span class="resource-tag">⭐ Bestseller</span>
+                    <span class="resource-tag">🇻🇳 Có tiếng Việt</span>
+                    <span class="resource-tag">📱 Audiobook</span>
+                </div>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-icon">📘</div>
+                <h4 style="color: var(--primary); margin-bottom: 0.5rem;">The Language of Emotions - Karla McLaren</h4>
+                <p style="color: #666; line-height: 1.7;">Học cách "đọc" cảm xúc như đọc sách. Mỗi cảm xúc mang một thông điệp quan trọng cần lắng nghe.</p>
+                <div style="margin-top: 1rem;">
+                    <span class="resource-tag">🔬 Khoa học</span>
+                    <span class="resource-tag">🛠️ Thực hành</span>
+                </div>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-icon">📙</div>
+                <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Daring Greatly - Brené Brown</h4>
+                <p style="color: #666; line-height: 1.7;">Về sức mạnh của sự dễ bị tổn thương (vulnerability). Cảm xúc khó khăn nhất nhưng cũng là chìa khóa kết nối thật sự.</p>
+                <div style="margin-top: 1rem;">
+                    <span class="resource-tag">💪 Động lực</span>
+                    <span class="resource-tag">❤️ Quan hệ</span>
+                </div>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-icon">📕</div>
+                <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Mindsight - Daniel J. Siegel</h4>
+                <p style="color: #666; line-height: 1.7;">Kết hợp neuroscience và mindfulness để hiểu cách não bộ xử lý cảm xúc. Có bài tập thực hành cụ thể.</p>
+                <div style="margin-top: 1rem;">
+                    <span class="resource-tag">🧠 Neuroscience</span>
+                    <span class="resource-tag">🧘 Mindfulness</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- KHÓA HỌC ONLINE -->
+        <div class="resource-category">
+            <h3 style="color: var(--primary); margin-bottom: 1.5rem;">
+                <i class="fas fa-graduation-cap"></i> Khóa Học Online
+            </h3>
+            
+            <div class="resource-card">
+                <div class="resource-icon">🎓</div>
+                <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Yale: The Science of Well-Being (Coursera)</h4>
+                <p style="color: #666; line-height: 1.7;">Khóa học MIỄN PHÍ phổ biến nhất trên Coursera. Giáo sư Laurie Santos dạy về hạnh phúc từ góc độ khoa học.</p>
+                <div style="margin-top: 1rem;">
+                    <span class="resource-tag">🆓 Miễn phí</span>
+                    <span class="resource-tag">🏆 Top 1 Coursera</span>
+                    <span class="resource-tag">🇻🇳 Phụ đề Việt</span>
+                </div>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-icon">💻</div>
+                <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Emotional Intelligence at Work (LinkedIn Learning)</h4>
+                <p style="color: #666; line-height: 1.7;">Ứng dụng EQ vào môi trường công việc. Cách giao tiếp, lãnh đạo và giải quyết xung đột hiệu quả.</p>
+                <div style="margin-top: 1rem;">
+                    <span class="resource-tag">💼 Công việc</span>
+                    <span class="resource-tag">⏱️ 2 giờ</span>
+                </div>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-icon">🧘</div>
+                <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Mindfulness for Emotional Health (Udemy)</h4>
+                <p style="color: #666; line-height: 1.7;">Kết hợp thiền định và quản lý cảm xúc. Bài tập hàng ngày để tăng cường tự nhận thức.</p>
+                <div style="margin-top: 1rem;">
+                    <span class="resource-tag">🧘 Thiền</span>
+                    <span class="resource-tag">⭐ 4.7/5</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- PODCAST -->
+        <div class="resource-category">
+            <h3 style="color: var(--primary); margin-bottom: 1.5rem;">
+                <i class="fas fa-podcast"></i> Podcast Hay
+            </h3>
+            
+            <div class="resource-card">
+                <div class="resource-icon">🎙️</div>
+                <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Unlocking Us - Brené Brown</h4>
+                <p style="color: #666; line-height: 1.7;">Nghiên cứu viên nổi tiếng chia sẻ về vulnerability, shame, courage. Mỗi tập là một bài học sâu sắc về cảm xúc con người.</p>
+                <div style="margin-top: 1rem;">
+                    <span class="resource-tag">🎧 Spotify</span>
+                    <span class="resource-tag">🍎 Apple Podcasts</span>
+                </div>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-icon">🎤</div>
+                <h4 style="color: var(--primary); margin-bottom: 0.5rem;">The Happiness Lab - Dr. Laurie Santos</h4>
+                <p style="color: #666; line-height: 1.7;">Khoa học về hạnh phúc qua các thí nghiệm và nghiên cứu. Giọng nói dễ nghe, nội dung thực tế.</p>
+                <div style="margin-top: 1rem;">
+                    <span class="resource-tag">🔬 Khoa học</span>
+                    <span class="resource-tag">😊 Hạnh phúc</span>
+                </div>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-icon">🗣️</div>
+                <h4 style="color: var(--primary); margin-bottom: 0.5rem;">On Being - Krista Tippett</h4>
+                <p style="color: #666; line-height: 1.7;">Phỏng vấn sâu với các nhà tâm lý, nhà thơ, nhà tu hành về ý nghĩa cuộc sống và cảm xúc con người.</p>
+                <div style="margin-top: 1rem;">
+                    <span class="resource-tag">🌟 Award-winning</span>
+                    <span class="resource-tag">🎭 Nghệ thuật</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIDEO & TED TALKS -->
+        <div class="resource-category">
+            <h3 style="color: var(--primary); margin-bottom: 1.5rem;">
+                <i class="fas fa-video"></i> Video & TED Talks
+            </h3>
+            
+            <div class="resource-card">
+                <div class="resource-icon">🎬</div>
+                <h4 style="color: var(--primary); margin-bottom: 0.5rem;">The Power of Vulnerability - Brené Brown (TED)</h4>
+                <p style="color: #666; line-height: 1.7;">Video TED được xem nhiều nhất mọi thời đại (60M+ views). 20 phút thay đổi cách bạn nhìn nhận cảm xúc.</p>
+                <div style="margin-top: 1rem;">
+                    <span class="resource-tag">🔥 Viral</span>
+                    <span class="resource-tag">⏱️ 20 phút</span>
+                    <span class="resource-tag">🇻🇳 Phụ đề Việt</span>
+                </div>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-icon">📹</div>
+                <h4 style="color: var(--primary); margin-bottom: 0.5rem;">How to Speak So People Want to Listen - Julian Treasure (TED)</h4>
+                <p style="color: #666; line-height: 1.7;">Kỹ năng giao tiếp cảm xúc hiệu quả. Cách dùng giọng nói và lời nói để tạo kết nối.</p>
+                <div style="margin-top: 1rem;">
+                    <span class="resource-tag">💬 Giao tiếp</span>
+                    <span class="resource-tag">⭐ 4.9/5</span>
+                </div>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-icon">🎥</div>
+                <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Inside Out (Pixar Movie)</h4>
+                <p style="color: #666; line-height: 1.7;">Phim hoạt hình TỐT NHẤT về cảm xúc! Cả trẻ em và người lớn đều học được nhiều điều. Tư vấn bởi các nhà tâm lý thực thụ.</p>
+                <div style="margin-top: 1rem;">
+                    <span class="resource-tag">🏆 Oscar</span>
+                    <span class="resource-tag">👨‍👩‍👧‍👦 Gia đình</span>
+                    <span class="resource-tag">🇻🇳 Lồng tiếng Việt</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ỨNG DỤNG & CÔNG CỤ -->
+        <div class="resource-category">
+            <h3 style="color: var(--primary); margin-bottom: 1.5rem;">
+                <i class="fas fa-mobile-alt"></i> Ứng Dụng & Công Cụ
+            </h3>
+            
+            <div class="resource-card">
+                <div class="resource-icon">📱</div>
+                <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Headspace</h4>
+                <p style="color: #666; line-height: 1.7;">App thiền định và mindfulness hàng đầu. Có chương trình riêng về quản lý stress, anxiety, giận dữ.</p>
+                <div style="margin-top: 1rem;">
+                    <span class="resource-tag">📱 iOS & Android</span>
+                    <span class="resource-tag">🆓 Free trial</span>
+                </div>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-icon">💭</div>
+                <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Daylio</h4>
+                <p style="color: #666; line-height: 1.7;">Nhật ký cảm xúc đơn giản. Chỉ cần 30 giây/ngày để track mood, tìm pattern và hiểu bản thân hơn.</p>
+                <div style="margin-top: 1rem;">
+                    <span class="resource-tag">📊 Phân tích</span>
+                    <span class="resource-tag">⭐ 4.8/5</span>
+                </div>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-icon">🧠</div>
+                <h4 style="color: var(--primary); margin-bottom: 0.5rem;">MoodPath</h4>
+                <p style="color: #666; line-height: 1.7;">App đánh giá sức khỏe tinh thần, theo dõi depression/anxiety patterns. Có tư vấn bởi chuyên gia tâm lý.</p>
+                <div style="margin-top: 1rem;">
+                    <span class="resource-tag">🏥 Y tế</span>
+                    <span class="resource-tag">🔒 Riêng tư</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 15px; color: white; text-align: center;">
+            <h3 style="margin-bottom: 1rem;">🤝 Chia Sẻ Tài Nguyên Của Bạn</h3>
+            <p style="margin-bottom: 1.5rem; max-width: 600px; margin-left: auto; margin-right: auto;">Bạn có sách, khóa học hoặc công cụ tuyệt vời về cảm xúc? Hãy chia sẻ với cộng đồng!</p>
+            <div>
+                <a href="contact.html" class="submit-btn" style="display: inline-block; padding: 0.75rem 2rem; background: white; color: var(--primary); text-decoration: none; border-radius: 25px; font-weight: 700; margin: 0.5rem;">
+                    <i class="fas fa-envelope"></i> Liên Hệ Với Chúng Tôi
+                </a>
+                <a href="public_status_board.html" class="submit-btn" style="display: inline-block; padding: 0.75rem 2rem; background: rgba(255,255,255,0.2); color: white; text-decoration: none; border-radius: 25px; font-weight: 700; margin: 0.5rem; border: 2px solid white;">
+                    <i class="fas fa-comments"></i> Tham Gia Cộng Đồng
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

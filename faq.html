@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Câu Hỏi Thường Gặp - Thế Giới Cảm Xúc</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Fredoka+One&family=Comic+Neue:wght@400;700&display=swap&subset=vietnamese" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .faq-category {
+            margin-bottom: 3rem;
+        }
+        .faq-item {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+            border-left: 4px solid var(--accent2);
+        }
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        .faq-question:hover {
+            background: #f8f9fa;
+        }
+        .faq-question i {
+            color: var(--primary);
+            transition: transform 0.3s;
+        }
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+            padding: 0 1.5rem;
+            color: #666;
+            line-height: 1.8;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 1000px;
+            padding: 0 1.5rem 1.5rem;
+        }
+        .search-box {
+            max-width: 600px;
+            margin: 2rem auto;
+            position: relative;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid #ddd;
+            border-radius: 50px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        .search-box i {
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+
+    <main class="main-content">
+        <div class="subpage-header">
+            <div class="subpage-icon">❓</div>
+            <h2 class="subpage-title">CÂU HỎI THƯỜNG GẶP</h2>
+            <p class="subpage-description">Giải đáp những thắc mắc phổ biến về cảm xúc, trí tuệ cảm xúc và sức khỏe tinh thần.</p>
+        </div>
+
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="faq-search" placeholder="Tìm kiếm câu hỏi...">
+        </div>
+
+        <div class="faq-container">
+            <!-- CƠ BẢN VỀ CẢM XÚC -->
+            <div class="faq-category">
+                <h3 style="color: var(--primary); margin-bottom: 1.5rem;">
+                    <i class="fas fa-heart"></i> Cơ Bản Về Cảm Xúc
+                </h3>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Cảm xúc là gì? Tại sao chúng ta có cảm xúc?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Cảm xúc là phản ứng tâm lý và sinh lý phức tạp của cơ thể đối với các sự kiện, suy nghĩ hoặc tình huống. Chúng bao gồm:</p>
+                        <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
+                            <li><strong>Cảm giác chủ quan:</strong> Điều bạn trải nghiệm bên trong (vui, buồn...)</li>
+                            <li><strong>Phản ứng sinh lý:</strong> Tim đập nhanh, mồ hôi, hormone...</li>
+                            <li><strong>Biểu hiện hành vi:</strong> Nét mặt, cử chỉ, hành động</li>
+                        </ul>
+                        <p style="margin-top: 1rem;"><strong>Tại sao có cảm xúc?</strong> Chúng là cơ chế sinh tồn tiến hóa giúp:</p>
+                        <ul style="padding-left: 1.5rem;">
+                            <li>Bảo vệ khỏi nguy hiểm (sợ hãi)</li>
+                            <li>Tạo động lực hành động (giận dữ, hào hứng)</li>
+                            <li>Kết nối với người khác (yêu thương, đồng cảm)</li>
+                            <li>Học hỏi và ghi nhớ (cảm xúc mạnh = ký ức sâu)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Có bao nhiêu loại cảm xúc? Chúng được phân loại như thế nào?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Có nhiều cách phân loại cảm xúc:</p>
+                        <p style="margin-top: 1rem;"><strong>1. Cảm xúc cơ bản (Ekman & Plutchik):</strong></p>
+                        <ul style="padding-left: 1.5rem;">
+                            <li>Vui (Joy)</li>
+                            <li>Buồn (Sadness)</li>
+                            <li>Giận (Anger)</li>
+                            <li>Sợ (Fear)</li>
+                            <li>Ngạc nhiên (Surprise)</li>
+                            <li>Ghê tởm (Disgust)</li>
+                            <li>Tin tưởng (Trust)</li>
+                            <li>Dự đoán (Anticipation)</li>
+                        </ul>
+                        <p style="margin-top: 1rem;"><strong>2. Cảm xúc phức tạp:</strong> Là sự kết hợp của cảm xúc cơ bản. Ví dụ: Ghen tuông = Giận + Sợ; Yêu = Vui + Tin tưởng.</p>
+                        <p style="margin-top: 1rem;"><strong>3. Nghiên cứu mới:</strong> Alan Cowen (UC Berkeley) xác định có đến <strong>27 loại cảm xúc riêng biệt</strong> con người có thể trải nghiệm!</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Cảm xúc tiêu cực có phải là "xấu" không?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>KHÔNG!</strong> Không có cảm xúc nào là "xấu" - chỉ có cảm xúc khó chịu hoặc thoải mái.</p>
+                        <p style="margin-top: 1rem;"><strong>Cảm xúc "tiêu cực" rất quan trọng:</strong></p>
+                        <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
+                            <li><strong>Buồn:</strong> Giúp xử lý mất mát, suy ngẫm sâu sắc</li>
+                            <li><strong>Sợ:</strong> Bảo vệ khỏi nguy hiểm</li>
+                            <li><strong>Giận:</strong> Cảnh báo ranh giới bị vi phạm, tạo năng lượng thay đổi</li>
+                            <li><strong>Ghê tởm:</strong> Tránh độc hại (thực phẩm, hành vi)</li>
+                        </ul>
+                        <p style="margin-top: 1rem;"><strong>Vấn đề KHÔNG phải là cảm xúc - mà là cách chúng ta PHẢN ỨNG.</strong> Giận là OK, đánh người thì KHÔNG OK.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TRÍ TUỆ CẢM XÚC (EQ) -->
+            <div class="faq-category">
+                <h3 style="color: var(--primary); margin-bottom: 1.5rem;">
+                    <i class="fas fa-brain"></i> Trí Tuệ Cảm Xúc (EQ)
+                </h3>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>EQ và IQ khác nhau như thế nào? Cái nào quan trọng hơn?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>IQ (Intelligence Quotient):</strong> Đo lường trí thông minh logic, toán học, ngôn ngữ. Tương đối cố định (khó thay đổi sau 20 tuổi).</p>
+                        <p style="margin-top: 1rem;"><strong>EQ (Emotional Quotient):</strong> Đo lường khả năng nhận biết, hiểu và quản lý cảm xúc. CÓ THỂ HỌC và phát triển ở mọi lứa tuổi.</p>
+                        <p style="margin-top: 1rem;"><strong>So sánh:</strong></p>
+                        <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
+                            <li><strong>IQ mở cửa</strong> - giúp vào trường tốt, có công việc</li>
+                            <li><strong>EQ giữ bạn ở lại và thăng tiến</strong> - quyết định 58% hiệu suất công việc</li>
+                            <li>90% top performers có EQ cao, chỉ 20% có IQ cao</li>
+                            <li>EQ quyết định hạnh phúc, quan hệ, sức khỏe tinh thần</li>
+                        </ul>
+                        <p style="margin-top: 1rem; font-weight: 600; color: var(--accent1);">💡 Kết luận: Cả hai đều quan trọng, nhưng EQ có ảnh hưởng lâu dài hơn đến thành công và hạnh phúc!</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Làm thế nào để nâng cao EQ?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>5 bước phát triển EQ từ Daniel Goleman:</strong></p>
+                        <ol style="padding-left: 1.5rem; margin-top: 1rem;">
+                            <li><strong>Tự nhận thức (Self-awareness):</strong>
+                                <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
+                                    <li>Viết nhật ký cảm xúc hàng ngày</li>
+                                    <li>Đặt tên chính xác cho cảm xúc (dùng Bánh Xe Cảm Xúc)</li>
+                                    <li>Nhận biết trigger - điều gì kích hoạt cảm xúc</li>
+                                </ul>
+                            </li>
+                            <li style="margin-top: 1rem;"><strong>Tự điều chỉnh (Self-regulation):</strong>
+                                <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
+                                    <li>Thực hành hít thở sâu, thiền định</li>
+                                    <li>Kỹ thuật STOP: Stop-Take a breath-Observe-Proceed</li>
+                                    <li>Thách thức suy nghĩ tiêu cực</li>
+                                </ul>
+                            </li>
+                            <li style="margin-top: 1rem;"><strong>Động lực (Motivation):</strong>
+                                <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
+                                    <li>Đặt mục tiêu có ý nghĩa</li>
+                                    <li>Tập trung vào growth mindset</li>
+                                    <li>Ăn mừng tiến bộ nhỏ</li>
+                                </ul>
+                            </li>
+                            <li style="margin-top: 1rem;"><strong>Đồng cảm (Empathy):</strong>
+                                <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
+                                    <li>Lắng nghe tích cực không phán xét</li>
+                                    <li>Đặt mình vào vị trí người khác</li>
+                                    <li>Chú ý ngôn ngữ cơ thể</li>
+                                </ul>
+                            </li>
+                            <li style="margin-top: 1rem;"><strong>Kỹ năng xã hội (Social skills):</strong>
+                                <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
+                                    <li>Thực hành giao tiếp cởi mở</li>
+                                    <li>Học cách giải quyết xung đột</li>
+                                    <li>Xây dựng network ý nghĩa</li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUẢN LÝ CẢM XÚC -->
+            <div class="faq-category">
+                <h3 style="color: var(--primary); margin-bottom: 1.5rem;">
+                    <i class="fas fa-hand-holding-heart"></i> Quản Lý Cảm Xúc
+                </h3>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Làm gì khi cảm thấy quá tải cảm xúc?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>Kỹ thuật "RAIN" từ Tara Brach:</strong></p>
+                        <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
+                            <li><strong>R - Recognize (Nhận ra):</strong> "Tôi đang cảm thấy quá tải"</li>
+                            <li><strong>A - Allow (Cho phép):</strong> Đừng chống lại - "Được rồi, cảm xúc này có mặt"</li>
+                            <li><strong>I - Investigate (Khảo sát):</strong> Tò mò không phán xét - "Cảm giác này ở đâu trong cơ thể?"</li>
+                            <li><strong>N - Nurture (Nuôi dưỡng):</strong> Tự an ủi - "Đây là khó khăn, nhưng tôi sẽ ổn"</li>
+                        </ul>
+                        <p style="margin-top: 1rem;"><strong>Công cụ khẩn cấp:</strong></p>
+                        <ul style="padding-left: 1.5rem;">
+                            <li>Hít thở 4-7-8 (10 lần)</li>
+                            <li>Rửa mặt nước lạnh</li>
+                            <li>Đi bộ 10 phút</li>
+                            <li>Gọi điện cho người thân</li>
+                            <li>Viết ra mọi thứ không lọc (không đăng!)</li>
+                        </ul>
+                        <p style="margin-top: 1rem; font-weight: 600; color: var(--accent1);">⚠️ Nếu tình trạng kéo dài > 2 tuần, hãy tìm chuyên gia tâm lý!</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Tôi khóc dễ dàng, có phải tôi yếu đuối?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>HOÀN TOÀN KHÔNG!</strong> Khóc là dấu hiệu của:</p>
+                        <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
+                            <li><strong>Sức mạnh cảm xúc:</strong> Bạn kết nối sâu với cảm xúc</li>
+                            <li><strong>Cơ chế chữa lành:</strong> Nước mắt giải phóng hormone stress</li>
+                            <li><strong>Lòng dũng cảm:</strong> Dám dễ bị tổn thương (vulnerability = strength)</li>
+                        </ul>
+                        <p style="margin-top: 1rem;"><strong>Sự thật khoa học:</strong></p>
+                        <ul style="padding-left: 1.5rem;">
+                            <li>Nước mắt cảm xúc chứa endorphin (thuốc giảm đau tự nhiên)</li>
+                            <li>Khóc giảm 40% stress hormone (cortisol, prolactin)</li>
+                            <li>88% người cảm thấy tốt hơn sau khi khóc</li>
+                            <li>Phụ nữ khóc trung bình 3.5 lần/tháng, nam 1.9 lần (do testosterone ức chế khóc)</li>
+                        </ul>
+                        <p style="margin-top: 1rem; font-weight: 600;">💪 Khóc là dũng cảm. Giấu cảm xúc mới là tự hại bản thân!</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Tôi cảm thấy "vô cảm" - không vui cũng không buồn. Có bình thường không?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Điều này CÓ THỂ bình thường tùy hoàn cảnh:</p>
+                        <p style="margin-top: 1rem;"><strong>✅ Bình thường nếu:</strong></p>
+                        <ul style="padding-left: 1.5rem;">
+                            <li>Sau giai đoạn cảm xúc mạnh (cơ thể cần nghỉ ngơi)</li>
+                            <li>Thỉnh thoảng xảy ra, không kéo dài</li>
+                            <li>Bạn vẫn có thể cảm nhận cảm xúc khi cần</li>
+                        </ul>
+                        <p style="margin-top: 1rem;"><strong>⚠️ Cần chú ý nếu:</strong></p>
+                        <ul style="padding-left: 1.5rem;">
+                            <li>Kéo dài > 2 tuần</li>
+                            <li>Kèm theo mất hứng thú với mọi thứ</li>
+                            <li>Cảm giác trống rỗng, tê liệt cảm xúc</li>
+                            <li>Không thể kết nối với người khác</li>
+                        </ul>
+                        <p style="margin-top: 1rem;"><strong>Có thể là:</strong></p>
+                        <ul style="padding-left: 1.5rem;">
+                            <li><strong>Burnout:</strong> Kiệt sức về mặt cảm xúc</li>
+                            <li><strong>Depression:</strong> Trầm cảm (không phải chỉ là "buồn")</li>
+                            <li><strong>Alexithymia:</strong> Khó nhận biết/mô tả cảm xúc (10% dân số)</li>
+                        </ul>
+                        <p style="margin-top: 1rem; font-weight: 600; color: var(--accent1);">🏥 Hãy tham khảo ý kiến chuyên gia tâm lý để được hỗ trợ!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- THẮC MẮC KHÁC -->
+            <div class="faq-category">
+                <h3 style="color: var(--primary); margin-bottom: 1.5rem;">
+                    <i class="fas fa-question-circle"></i> Thắc Mắc Khác
+                </h3>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Khi nào thì cần gặp chuyên gia tâm lý?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>Bạn KHÔNG CẦN "đủ tệ" mới được gặp therapist!</strong> Giống như gym cho não.</p>
+                        <p style="margin-top: 1rem;"><strong>Nên gặp khi:</strong></p>
+                        <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
+                            <li>Cảm xúc tiêu cực kéo dài > 2 tuần</li>
+                            <li>Ảnh hưởng đến công việc, quan hệ, cuộc sống hàng ngày</li>
+                            <li>Có suy nghĩ tự hại hoặc làm hại người khác</li>
+                            <li>Trải qua chấn thương (mất người thân, tai nạn, bạo lực...)</li>
+                            <li>Cần không gian an toàn để nói chuyện</li>
+                            <li>Muốn phát triển bản thân (không cần có "vấn đề"!)</li>
+                        </ul>
+                        <p style="margin-top: 1rem;"><strong>📞 Hotline khẩn cấp (Việt Nam):</strong></p>
+                        <ul style="padding-left: 1.5rem;">
+                            <li>Tâm lý trẻ em: 111</li>
+                            <li>Phòng chống HIV/AIDS: 1080</li>
+                            <li>Hội Tâm lý giáo dục Hà Nội: 1800 8000</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Tôi có thể kiểm soát hoàn toàn cảm xúc của mình không?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>KHÔNG - và bạn cũng KHÔNG NÊN!</strong></p>
+                        <p style="margin-top: 1rem;">Cảm xúc xuất hiện tự động trong 0.2 giây, nhanh hơn ý thức. Bạn KHÔNG KIỂM SOÁT được cảm xúc nào xuất hiện.</p>
+                        <p style="margin-top: 1rem;"><strong>Nhưng bạn CÓ THỂ:</strong></p>
+                        <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
+                            <li>✅ Chọn cách PHẢN ỨNG với cảm xúc</li>
+                            <li>✅ Điều chỉnh CƯỜNG ĐỘ cảm xúc</li>
+                            <li>✅ Quyết định HÀNH ĐỘNG sau cảm xúc</li>
+                            <li>✅ Thay đổi SUY NGHĨ tạo ra cảm xúc</li>
+                        </ul>
+                        <p style="margin-top: 1rem;"><strong>Mục tiêu:</strong> Emotional REGULATION (điều chỉnh) chứ không phải suppression (ép buộc). Ép buộc cảm xúc chỉ khiến chúng quay lại mạnh hơn!</p>
+                        <blockquote style="margin-top: 1rem; padding: 1rem; background: #f0f9ff; border-left: 4px solid var(--primary); font-style: italic;">
+                            "Giữa kích thích và phản ứng có một khoảng trống. Trong khoảng trống đó là quyền lựa chọn của chúng ta." - Viktor Frankl
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #4ecdc4, #44a08d); border-radius: 15px; color: white; text-align: center;">
+            <h3 style="margin-bottom: 1rem;">❓ Không Tìm Thấy Câu Trả Lời?</h3>
+            <p style="margin-bottom: 1.5rem;">Hãy hỏi chúng tôi hoặc tham gia cộng đồng để được hỗ trợ!</p>
+            <div>
+                <a href="contact.html" class="submit-btn" style="display: inline-block; padding: 0.75rem 2rem; background: white; color: var(--accent2); text-decoration: none; border-radius: 25px; font-weight: 700; margin: 0.5rem;">
+                    <i class="fas fa-envelope"></i> Gửi Câu Hỏi
+                </a>
+                <a href="public_status_board.html" class="submit-btn" style="display: inline-block; padding: 0.75rem 2rem; background: rgba(255,255,255,0.2); color: white; text-decoration: none; border-radius: 25px; font-weight: 700; margin: 0.5rem; border: 2px solid white;">
+                    <i class="fas fa-users"></i> Cộng Đồng
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <script src="js/script.js"></script>
+    <script>
+        // FAQ Toggle
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', function() {
+                const faqItem = this.parentElement;
+                const wasActive = faqItem.classList.contains('active');
+                
+                // Close all
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Open clicked if it wasn't active
+                if (!wasActive) {
+                    faqItem.classList.add('active');
+                }
+            });
+        });
+
+        // Search functionality
+        document.getElementById('faq-search').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            document.querySelectorAll('.faq-item').forEach(item => {
+                const question = item.querySelector('.faq-question span').textContent.toLowerCase();
+                const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+                
+                if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

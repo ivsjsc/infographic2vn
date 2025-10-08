@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trắc Nghiệm EQ - Thế Giới Cảm Xúc</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Fredoka+One&family=Comic+Neue:wght@400;700&display=swap&subset=vietnamese" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .quiz-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        .question-card {
+            padding: 2rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            border-left: 5px solid var(--primary);
+        }
+        .question-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: 700;
+            margin-right: 1rem;
+        }
+        .answer-options {
+            margin-top: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .answer-btn {
+            padding: 1rem 1.5rem;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+        .answer-btn:hover {
+            border-color: var(--primary);
+            background: #f0f9ff;
+            transform: translateX(10px);
+        }
+        .answer-btn.selected {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            font-weight: 600;
+        }
+        .submit-quiz-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--accent1), var(--accent2));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 2rem;
+            transition: transform 0.3s;
+        }
+        .submit-quiz-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .submit-quiz-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .result-section {
+            display: none;
+            padding: 2rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 20px;
+            color: white;
+            text-align: center;
+        }
+        .eq-score {
+            font-size: 4rem;
+            font-weight: 800;
+            margin: 1rem 0;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #ddd;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent2));
+            width: 0%;
+            transition: width 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+
+    <main class="main-content">
+        <div class="subpage-header">
+            <div class="subpage-icon">🧠</div>
+            <h2 class="subpage-title">TRẮC NGHIỆM TRÍ TUỆ CẢM XÚC (EQ)</h2>
+            <p class="subpage-description">Khám phá chỉ số EQ của bạn qua 10 câu hỏi khoa học. IQ mở cửa, EQ giữ bạn ở lại!</p>
+        </div>
+
+        <div class="quiz-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+
+            <div id="quiz-questions">
+                <!-- Questions will be inserted here by JS -->
+            </div>
+
+            <button class="submit-quiz-btn" id="submit-quiz-btn" disabled>
+                <i class="fas fa-check-circle"></i> XEM KẾT QUẢ
+            </button>
+        </div>
+
+        <div class="result-section" id="result-section">
+            <h3 style="margin-bottom: 1rem;">🎉 CHỈSỐ EQ CỦA BẠN</h3>
+            <div class="eq-score" id="eq-score">0</div>
+            <p id="eq-level" style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1.5rem;"></p>
+            <p id="eq-description" style="font-size: 1.1rem; line-height: 1.8; max-width: 600px; margin: 0 auto 2rem;"></p>
+            
+            <div style="background: rgba(255,255,255,0.2); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;">
+                <h4 style="margin-bottom: 1rem;">💡 Lời Khuyên Cá Nhân Hóa</h4>
+                <p id="eq-advice" style="font-size: 1rem; line-height: 1.7;"></p>
+            </div>
+
+            <button onclick="location.reload()" class="submit-btn" style="background: white; color: var(--primary); padding: 0.75rem 2rem; border: none; border-radius: 25px; font-weight: 700; cursor: pointer;">
+                <i class="fas fa-redo"></i> LÀM LẠI
+            </button>
+        </div>
+
+        <div style="margin-top: 3rem; padding: 2rem; background: white; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);">
+            <h3 style="color: var(--primary); text-align: center; margin-bottom: 1.5rem;">
+                <i class="fas fa-brain"></i> Trí Tuệ Cảm Xúc Là Gì?
+            </h3>
+            <div class="content-grid">
+                <div class="content-card">
+                    <h4>🎯 Định Nghĩa</h4>
+                    <p>EQ (Emotional Quotient) là khả năng nhận biết, hiểu, quản lý và sử dụng cảm xúc của bản thân và người khác một cách hiệu quả.</p>
+                </div>
+                <div class="content-card">
+                    <h4>📊 5 Thành Phần EQ</h4>
+                    <ol style="padding-left: 1.5rem; color: #555;">
+                        <li>Tự nhận thức (Self-awareness)</li>
+                        <li>Tự điều chỉnh (Self-regulation)</li>
+                        <li>Động lực (Motivation)</li>
+                        <li>Đồng cảm (Empathy)</li>
+                        <li>Kỹ năng xã hội (Social skills)</li>
+                    </ol>
+                </div>
+                <div class="content-card">
+                    <h4>💼 Tại Sao EQ Quan Trọng?</h4>
+                    <ul style="padding-left: 1.5rem; color: #555;">
+                        <li>90% người thành công có EQ cao</li>
+                        <li>EQ quyết định 58% hiệu suất công việc</li>
+                        <li>Lương cao hơn $29,000/năm</li>
+                        <li>Quan hệ tốt hơn, sức khỏe tốt hơn</li>
+                    </ul>
+                </div>
+                <div class="content-card">
+                    <h4>📈 EQ Có Thể Học!</h4>
+                    <p>Khác với IQ (cố định), EQ có thể phát triển ở mọi lứa tuổi qua thực hành, phản hồi và rèn luyện có ý thức.</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #4ecdc4, #44a08d); border-radius: 15px; color: white;">
+            <h3 style="margin-bottom: 1rem;">📚 Muốn Nâng Cao EQ?</h3>
+            <p style="margin-bottom: 1.5rem;">Khám phá công cụ Bánh Xe Cảm Xúc và Nhật Ký Cảm Xúc!</p>
+            <div>
+                <a href="emotion-wheel.html" class="submit-btn" style="display: inline-block; padding: 0.75rem 2rem; background: white; color: var(--accent2); text-decoration: none; border-radius: 25px; font-weight: 700; margin: 0.5rem;">
+                    <i class="fas fa-compass"></i> Bánh Xe Cảm Xúc
+                </a>
+                <a href="emotions.html" class="submit-btn" style="display: inline-block; padding: 0.75rem 2rem; background: rgba(255,255,255,0.2); color: white; text-decoration: none; border-radius: 25px; font-weight: 700; margin: 0.5rem; border: 2px solid white;">
+                    <i class="fas fa-book"></i> Tìm Hiểu Thêm
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <script src="js/script.js"></script>
+    <script>
+        const questions = [
+            {
+                q: "Bạn dễ dàng nhận ra khi mình đang cảm thấy buồn, vui, giận dữ hay lo lắng không?",
+                answers: [
+                    { text: "Luôn luôn - Tôi biết chính xác mình đang cảm thấy gì", score: 10 },
+                    { text: "Thường xuyên - Hầu hết thời gian tôi biết", score: 7 },
+                    { text: "Đôi khi - Đôi khi tôi bối rối", score: 4 },
+                    { text: "Hiếm khi - Tôi không chú ý đến cảm xúc", score: 1 }
+                ]
+            },
+            {
+                q: "Khi ai đó làm bạn tức giận, bạn xử lý như thế nào?",
+                answers: [
+                    { text: "Tôi bình tĩnh, suy nghĩ rồi phản ứng phù hợp", score: 10 },
+                    { text: "Tôi cố gắng bình tĩnh nhưng đôi khi nổi nóng", score: 7 },
+                    { text: "Tôi thường phản ứng ngay lập tức", score: 4 },
+                    { text: "Tôi nổi giận và la hét hoặc tránh né", score: 1 }
+                ]
+            },
+            {
+                q: "Bạn có dễ dàng nhận ra khi người khác đang buồn hoặc khó chịu không (ngay cả khi họ không nói)?",
+                answers: [
+                    { text: "Luôn luôn - Tôi đọc được người khác rất tốt", score: 10 },
+                    { text: "Thường xuyên - Tôi nhận ra hầu hết trường hợp", score: 7 },
+                    { text: "Đôi khi - Nếu họ rõ ràng thì tôi biết", score: 4 },
+                    { text: "Hiếm khi - Tôi không giỏi đọc người khác", score: 1 }
+                ]
+            },
+            {
+                q: "Khi bạn gặp áp lực hoặc stress, bạn thường làm gì?",
+                answers: [
+                    { text: "Tôi có chiến lược giảm stress (thiền, thể dục, nói chuyện)", score: 10 },
+                    { text: "Tôi cố gắng xử lý nhưng đôi khi quá tải", score: 7 },
+                    { text: "Tôi thường lo lắng và không biết làm gì", score: 4 },
+                    { text: "Tôi né tránh hoặc phản ứng tiêu cực (ăn uống, cáu giận)", score: 1 }
+                ]
+            },
+            {
+                q: "Khi bạn thất bại hoặc phạm sai lầm, bạn nghĩ/làm gì?",
+                answers: [
+                    { text: "Tôi học hỏi từ sai lầm và cố gắng tốt hơn", score: 10 },
+                    { text: "Tôi buồn một lúc nhưng rồi tiếp tục", score: 7 },
+                    { text: "Tôi tự trách mình và lo lắng lâu", score: 4 },
+                    { text: "Tôi đổ lỗi cho người khác hoặc hoàn cảnh", score: 1 }
+                ]
+            },
+            {
+                q: "Bạn có khả năng tạo động lực cho bản thân khi gặp khó khăn không?",
+                answers: [
+                    { text: "Có - Tôi luôn tìm thấy lý do để tiếp tục", score: 10 },
+                    { text: "Thường xuyên - Đôi khi cần động viên từ bên ngoài", score: 7 },
+                    { text: "Khó khăn - Tôi dễ bỏ cuộc", score: 4 },
+                    { text: "Không - Tôi cần người khác thúc đẩy", score: 1 }
+                ]
+            },
+            {
+                q: "Khi ai đó chia sẻ vấn đề với bạn, bạn thường phản ứng như thế nào?",
+                answers: [
+                    { text: "Tôi lắng nghe, đồng cảm và hỗ trợ", score: 10 },
+                    { text: "Tôi cố gắng giúp đỡ nhưng đôi khi vội đưa lời khuyên", score: 7 },
+                    { text: "Tôi không biết nói gì nên im lặng", score: 4 },
+                    { text: "Tôi thay đổi chủ đề hoặc nói về vấn đề của mình", score: 1 }
+                ]
+            },
+            {
+                q: "Bạn có giỏi trong việc giải quyết xung đột với người khác không?",
+                answers: [
+                    { text: "Có - Tôi tìm giải pháp win-win và giao tiếp tốt", score: 10 },
+                    { text: "Khá tốt - Đôi khi cần thời gian nhưng rồi giải quyết được", score: 7 },
+                    { text: "Khó khăn - Tôi thường né tránh xung đột", score: 4 },
+                    { text: "Không - Xung đột thường trở nên tồi tệ hơn", score: 1 }
+                ]
+            },
+            {
+                q: "Bạn có thể điều chỉnh cách giao tiếp tùy theo đối tượng (sếp, bạn bè, trẻ em) không?",
+                answers: [
+                    { text: "Dễ dàng - Tôi linh hoạt trong giao tiếp", score: 10 },
+                    { text: "Khá tốt - Tôi cố gắng điều chỉnh", score: 7 },
+                    { text: "Khó khăn - Tôi giao tiếp giống nhau với mọi người", score: 4 },
+                    { text: "Không - Tôi là chính mình mọi lúc", score: 1 }
+                ]
+            },
+            {
+                q: "Bạn thường phản ứng thế nào với những thay đổi bất ngờ trong cuộc sống?",
+                answers: [
+                    { text: "Tôi linh hoạt và thích ứng nhanh", score: 10 },
+                    { text: "Tôi cần thời gian nhưng rồi điều chỉnh được", score: 7 },
+                    { text: "Tôi stress và mất thời gian lâu để quen", score: 4 },
+                    { text: "Tôi chống lại thay đổi và khó chấp nhận", score: 1 }
+                ]
+            }
+        ];
+
+        let selectedAnswers = new Array(questions.length).fill(null);
+
+        function renderQuiz() {
+            const container = document.getElementById('quiz-questions');
+            questions.forEach((question, qIndex) => {
+                const questionCard = document.createElement('div');
+                questionCard.className = 'question-card';
+                
+                let answersHTML = question.answers.map((answer, aIndex) => 
+                    `<button class="answer-btn" data-q="${qIndex}" data-a="${aIndex}" data-score="${answer.score}">
+                        ${answer.text}
+                    </button>`
+                ).join('');
+                
+                questionCard.innerHTML = `
+                    <div style="display: flex; align-items: flex-start;">
+                        <span class="question-number">${qIndex + 1}</span>
+                        <h4 style="flex: 1; margin: 0; line-height: 1.6;">${question.q}</h4>
+                    </div>
+                    <div class="answer-options">
+                        ${answersHTML}
+                    </div>
+                `;
+                
+                container.appendChild(questionCard);
+            });
+
+            // Add event listeners
+            document.querySelectorAll('.answer-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const qIndex = parseInt(this.dataset.q);
+                    const aIndex = parseInt(this.dataset.a);
+                    const score = parseInt(this.dataset.score);
+                    
+                    // Remove selected class from siblings
+                    document.querySelectorAll(`[data-q="${qIndex}"]`).forEach(b => b.classList.remove('selected'));
+                    this.classList.add('selected');
+                    
+                    // Store answer
+                    selectedAnswers[qIndex] = score;
+                    
+                    // Update progress
+                    const answered = selectedAnswers.filter(a => a !== null).length;
+                    const progress = (answered / questions.length) * 100;
+                    document.getElementById('progress-fill').style.width = progress + '%';
+                    
+                    // Enable submit if all answered
+                    if (answered === questions.length) {
+                        document.getElementById('submit-quiz-btn').disabled = false;
+                    }
+                });
+            });
+        }
+
+        document.getElementById('submit-quiz-btn').addEventListener('click', function() {
+            const totalScore = selectedAnswers.reduce((sum, score) => sum + score, 0);
+            const percentage = Math.round((totalScore / 100) * 100);
+            
+            let level, description, advice;
+            
+            if (percentage >= 85) {
+                level = "🏆 XUẤT SẮC";
+                description = "EQ của bạn ở mức cao! Bạn có khả năng nhận thức và quản lý cảm xúc tuyệt vời, đồng cảm sâu sắc và kỹ năng xã hội mạnh mẽ. Bạn là người mà mọi người muốn làm việc và chia sẻ cùng.";
+                advice = "Tiếp tục duy trì và chia sẻ kỹ năng của bạn với người khác. Hãy trở thành mentor để giúp người khác phát triển EQ!";
+            } else if (percentage >= 70) {
+                level = "⭐ TỐT";
+                description = "EQ của bạn ở mức tốt! Bạn hiểu và quản lý cảm xúc khá tốt, có khả năng đồng cảm và giao tiếp hiệu quả. Với một chút rèn luyện nữa, bạn sẽ đạt đến mức xuất sắc.";
+                advice = "Tập trung vào việc lắng nghe tích cực hơn và thực hành mindfulness để tăng tự nhận thức. Đọc sách về EQ và áp dụng vào thực tế mỗi ngày.";
+            } else if (percentage >= 50) {
+                level = "📊 TRUNG BÌNH";
+                description = "EQ của bạn ở mức trung bình. Bạn có hiểu biết cơ bản về cảm xúc nhưng đôi khi gặp khó khăn trong việc quản lý hoặc đồng cảm. Đây là điểm khởi đầu tốt để phát triển!";
+                advice = "Bắt đầu với việc viết nhật ký cảm xúc hàng ngày. Thực hành đặt tên cho cảm xúc của bạn và tìm hiểu nguyên nhân. Tham gia các khóa học về EQ hoặc đọc sách 'Emotional Intelligence' của Daniel Goleman.";
+            } else {
+                level = "🌱 CẦN PHÁT TRIỂN";
+                description = "EQ của bạn vẫn còn nhiều tiềm năng để phát triển. Bạn có thể gặp khó khăn trong việc nhận biết và quản lý cảm xúc, hoặc hiểu cảm xúc của người khác. Nhưng tin tốt là EQ hoàn toàn có thể học được!";
+                advice = "Bắt đầu bằng việc tập trung vào TỰ NHẬN THỨC - dừng lại 3 lần/ngày và hỏi 'Tôi đang cảm thấy gì?'. Sử dụng Bánh Xe Cảm Xúc để học cách đặt tên cho cảm xúc. Tìm một mentor hoặc therapist để hướng dẫn.";
+            }
+            
+            document.getElementById('eq-score').textContent = percentage + '/100';
+            document.getElementById('eq-level').textContent = level;
+            document.getElementById('eq-description').textContent = description;
+            document.getElementById('eq-advice').textContent = advice;
+            
+            document.getElementById('result-section').style.display = 'block';
+            document.getElementById('result-section').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Initialize quiz
+        renderQuiz();
+    </script>
+</body>
+</html>
