@@ -18,31 +18,74 @@
             <div class="subpage-icon">📞</div>
             <h2 class="subpage-title">LIÊN HỆ VỚI CHÚNG TÔI</h2>
             <p class="subpage-description">Chia sẻ cảm xúc, đặt câu hỏi, hoặc góp ý để chúng tôi phục vụ bạn tốt hơn!</p>
+            <blockquote style="font-style: italic; color: #666; margin-top: 1rem; text-align: center;">
+                "Mỗi liên hệ là một cơ hội để kết nối và phát triển." - Thế Giới Cảm Xúc
+            </blockquote>
         </div>
 
-        <div class="contact-form">
-            <div class="form-group">
-                <label for="name">Họ và Tên</label>
-                <input type="text" id="name" placeholder="Nhập họ và tên của bạn">
+        <div class="content-grid" style="margin-bottom: 3rem;">
+            <div class="content-card">
+                <h3>💬 Chúng Tôi Luôn Lắng Nghe</h3>
+                <p>Bạn có câu hỏi về cảm xúc? Cần hỗ trợ? Hay chỉ muốn chia sẻ trải nghiệm? Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn!</p>
+                <ul style="padding-left: 1.5rem; color: #555;">
+                    <li><strong>Tư vấn cảm xúc:</strong> Hỏi đáp về các loại cảm xúc</li>
+                    <li><strong>Hỗ trợ phát triển:</strong> Tư vấn trí tuệ cảm xúc</li>
+                    <li><strong>Góp ý:</strong> Ý kiến cải thiện website</li>
+                    <li><strong>Hợp tác:</strong> Đối tác và cộng tác</li>
+                </ul>
             </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" placeholder="Nhập địa chỉ email của bạn">
+            <div class="content-card">
+                <h3>⏰ Thời Gian Phản Hồi</h3>
+                <p>Chúng tôi cam kết phản hồi trong vòng 24-48 giờ. Mỗi tin nhắn đều được đọc và trả lời một cách chu đáo.</p>
+                <ul style="padding-left: 1.5rem; color: #555;">
+                    <li><strong>Email:</strong> Phản hồi trong 24 giờ</li>
+                    <li><strong>Liên hệ khẩn cấp:</strong> Ưu tiên cao</li>
+                    <li><strong>Hợp tác:</strong> Phản hồi trong 48 giờ</li>
+                </ul>
             </div>
-            <div class="form-group">
-                <label for="message">Tin Nhắn</label>
-                <textarea id="message" rows="5" placeholder="Chia sẻ cảm xúc hoặc để lại tin nhắn của bạn..."></textarea>
-            </div>
-            <button class="submit-btn">GỬI TIN NHẮN</button>
         </div>
 
-        <div style="text-align: center; margin-top: 3rem;">
-            <h3>Thông Tin Liên Hệ</h3>
-            <p style="margin-top: 1rem; color: #666;">
-                <i class="fas fa-envelope"></i> info@camxuc.vn<br>
-                <i class="fas fa-phone"></i> +84 123 456 789<br>
-                <i class="fas fa-map-marker-alt"></i> Hà Nội, Việt Nam
-            </p>
+        <form name="contact" netlify netlify-honeypot="bot-field" method="POST" style="max-width: 600px; margin: 0 auto;">
+            <input type="hidden" name="form-name" value="contact" />
+            <div class="form-group">
+                <label for="name">Họ và Tên *</label>
+                <input type="text" id="name" name="name" placeholder="Nhập họ và tên của bạn" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email *</label>
+                <input type="email" id="email" name="email" placeholder="Nhập địa chỉ email của bạn" required>
+            </div>
+            <div class="form-group">
+                <label for="subject">Chủ đề</label>
+                <select id="subject" name="subject">
+                    <option value="">Chọn chủ đề (tùy chọn)</option>
+                    <option value="question">Câu hỏi về cảm xúc</option>
+                    <option value="support">Hỗ trợ</option>
+                    <option value="feedback">Góp ý</option>
+                    <option value="collaboration">Hợp tác</option>
+                    <option value="other">Khác</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="message">Tin Nhắn *</label>
+                <textarea id="message" name="message" rows="6" placeholder="Chia sẻ cảm xúc, câu hỏi, hoặc tin nhắn của bạn..." required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">GỬI TIN NHẮN</button>
+        </form>
+
+        <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #f093fb, #f5576c); border-radius: 15px; color: white;">
+            <h3 style="margin-bottom: 1rem;">📍 Thông Tin Liên Hệ</h3>
+            <p style="margin-bottom: 1rem;">Chúng tôi ở đây để hỗ trợ bạn!</p>
+            <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+                <div>
+                    <i class="fas fa-envelope" style="margin-right: 0.5rem;"></i>
+                    <strong>infographic2vn@gmail.com</strong>
+                </div>
+                <div>
+                    <i class="fas fa-map-marker-alt" style="margin-right: 0.5rem;"></i>
+                    <strong>Hà Nội, Việt Nam</strong>
+                </div>
+            </div>
         </div>
     </main>
 
