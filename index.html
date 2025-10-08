@@ -294,7 +294,7 @@
         <!-- 2. POST INPUT BAR (Kích hoạt Modal Pop-up) -->
         <div class="post-input-bar" id="open-post-modal">
             <i class="fas fa-feather-alt"></i>
-            <span class="post-input-bar-text">Bạn đang cảm thấy thế nào? Bấm vào đây để chia sẻ ngay! (Hỗ trợ Markdown)</span>
+            <span class="post-input-bar-text">Chia sẽ trạng thái, cảm xúc - Không thể xóa!</span>
         </div>
         
         <h2 class="section-title" style="margin-bottom: 2rem;">DÒNG THỜI GIAN CẢM XÚC CÔNG KHAI</h2>
@@ -375,11 +375,12 @@
 
             <div class="form-group">
                 <label for="modal-name-input">Tên (Tùy chọn)</label>
-                <input type="text" id="modal-name-input" placeholder="Nhập tên của bạn (hoặc để trống)">
+                <input type="text" id="modal-name-input" placeholder="Nhập tên của bạn (hoặc không)">
             </div>
             <div class="form-group">
-                <label for="modal-content-input">Nội dung Trạng thái * (Hỗ trợ Markdown)</label>
-                <textarea id="modal-content-input" rows="4" placeholder="Ví dụ: **Hôm nay tôi vui** vì *đã hoàn thành* dự án. (Nội dung không thể xóa sau khi đăng)" required></textarea>
+                <label for="content-input">Nội dung Trạng thái</label>
+                <textarea id="content-input" rows="4" placeholder="Ví dụ: **Hôm nay tôi vui** nhưng chẳng biết vì sao tôi vui. Người ta bảo tôi điên. Tôi: 'ừ'.
+                **in đậm**, *in nghiêng*, và [liên kết](https://example.com)" required></textarea>
             </div>
             <button id="modal-submit-btn" class="submit-btn" style="background: linear-gradient(135deg, var(--accent1), var(--accent2));">ĐĂNG LÊN TƯỜNG</button>
         </div>
