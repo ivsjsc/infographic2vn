@@ -1,0 +1,27 @@
+rules_version = '2';
+service cloud.firestore {
+match /databases/{database}/documents {
+// Đường dẫn chung cho dữ liệu công khai (dành cho các ứng dụng không cần đăng nhập)
+match /artifacts/{appId}/public/data/{document=**} {
+// Cho phép BẤT KỲ AI (kể cả chưa đăng nhập) được đọc (read)
+allow read: if true;
+
+  // Cho phép BẤT KỲ AI (kể cả chưa đăng nhập) được tạo (create) tài liệu mới
+  // Điều kiện: kích thước nhỏ hơn 1MB, và dữ liệu chỉ được thêm mới (không được update/delete)
+  allow create: if request.resource.data.keys().hasAll(['name', 'content', 'timestamp', 'userId'])
+                    && request.resource.data.content is string
+                    && request.resource.data.content.size() <= 1500 // Giới hạn kích thước nội dung
+                    && request.resource.data.name.size() <= 100 // Giới hạn tên
+                    && request.resource.data.timestamp == request.time; // Chỉ cho phép serverTimestamp
+  
+  // Không cho phép cập nhật (update) hay xóa (delete) trạng thái công khai
+  allow update, delete: if false; 
+}
+
+// Đường dẫn mặc định cho dữ liệu riêng tư (vẫn cần đăng nhập)
+match /artifacts/{appId}/users/{userId}/{documents=**} {
+  allow read, write: if request.auth.uid != null && request.auth.uid == userId;
+}
+
+}
+}

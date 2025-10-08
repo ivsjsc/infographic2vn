@@ -7,59 +7,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Fredoka+One&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Inline CSS để giữ giao diện nhất quán với styles.css đã upload -->
+    <!-- SỬ DỤNG CSS CHUNG để bố cục header/footer hoạt động -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- CSS Tùy chỉnh cho Bức Tường -->
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #667eea;
-            --secondary: #764ba2;
-            --accent1: #ff6b6b;
-            --accent2: #4ecdc4;
-            --accent3: #ffd93d;
-            --dark: #2c3e50;
-            --light: #f8f9fa;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
-            color: var(--dark);
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-        
-        .main-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: var(--dark);
-            font-weight: 700;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(45deg, var(--accent1), var(--accent2));
-            border-radius: 2px;
-        }
-
         /* Status Board Styles */
         .status-header {
             text-align: center;
@@ -219,8 +171,8 @@
             font-weight: 600;
             opacity: 0;
             transition: opacity 0.3s ease, transform 0.3s ease;
-            animation: slideDown 0.3s forwards;
         }
+        
         .message-box.error {
             background-color: var(--accent1);
         }
@@ -253,8 +205,8 @@
     </style>
 </head>
 <body>
-    <!-- Header (Tạm thời không tải header/footer components để code này là 1 file độc lập, 
-         nhưng sẽ có link trong file index.html) -->
+    <!-- Header Placeholder -->
+    <div id="header-placeholder"></div>
 
     <main class="main-content">
         <div class="status-header">
@@ -287,22 +239,35 @@
         
     </main>
 
-    <!-- Import Firebase SDKs -->
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Import js/script.js để tải header/footer -->
+    <script src="js/script.js"></script> 
+    
+    <!-- Firebase/Firestore Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { 
             getFirestore, collection, addDoc, onSnapshot, query,
             serverTimestamp 
         } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
+        // CẤU HÌNH FIREBASE TRỰC TIẾP
+        const firebaseConfig = {
+          apiKey: "AIzaSyDnOGA4RF7M-AMw4ZYEdhR5csIH2A1NHno",
+          authDomain: "worldofemotions-5ac0a.firebaseapp.com",
+          projectId: "worldofemotions-5ac0a",
+          storageBucket: "worldofemotions-5ac0a.firebasestorage.app",
+          messagingSenderId: "923244408713",
+          appId: "1:923244408713:web:d239a0c99722b483913b58"
+        };
         // Global variables provided by the environment
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+        const appId = firebaseConfig.projectId; // Dùng projectId làm appId để đơn giản hóa
 
-        let db, auth, postsCollectionRef;
-        let isAuthReady = false;
+        let db; 
+        let postsCollectionRef;
+        let isReady = false; 
 
         const postsContainer = document.getElementById('posts-container');
         const loadingIndicator = document.getElementById('loading-indicator');
@@ -323,8 +288,8 @@
             // Remove after 3 seconds
             setTimeout(() => {
                 messageBox.style.opacity = '0';
-                messageBox.style.transform = 'translate(-50%, -20px)';
-                messageBox.addEventListener('transitionend', () => messageBox.remove());
+                // Sử dụng animation CSS nếu có, hoặc chỉ xóa
+                messageBox.remove();
             }, 3000);
         }
 
@@ -339,37 +304,26 @@
             });
         }
 
-        // --- FIREBASE INITIALIZATION & AUTHENTICATION ---
+        // --- FIREBASE INITIALIZATION ---
 
         async function initializeFirebase() {
             try {
-                if (Object.keys(firebaseConfig).length === 0) {
-                    throw new Error("Firebase config not found.");
-                }
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
-                auth = getAuth(app);
                 postsCollectionRef = collection(db, 'artifacts', appId, 'public', 'data', 'statuses');
-
-                // Sign in logic: prefer custom token, fallback to anonymous
-                if (initialAuthToken) {
-                    await signInWithCustomToken(auth, initialAuthToken);
-                } else {
-                    await signInAnonymously(auth);
-                }
                 
-                isAuthReady = true;
-                loadingIndicator.textContent = "Đã kết nối với hệ thống.";
+                isReady = true;
+                loadingIndicator.textContent = "Đã kết nối với hệ thống. Bắt đầu tải trạng thái...";
                 submitBtn.disabled = false;
-                console.log("Firebase initialized and authenticated.");
+                console.log("Firebase initialized and ready.");
 
-                // Start listening for posts after auth is ready
+                // Start listening for posts 
                 setupRealtimeListener();
 
             } catch (error) {
                 console.error("Lỗi khi khởi tạo Firebase:", error);
                 loadingIndicator.textContent = "Lỗi kết nối. Không thể tải trạng thái.";
-                showMessage("Lỗi: Không thể kết nối với hệ thống. Vui lòng thử lại.", true);
+                showMessage("Lỗi: Không thể kết nối với hệ thống. Vui lòng kiểm tra cấu hình Firebase.", true);
                 submitBtn.disabled = true;
             }
         }
@@ -423,17 +377,18 @@
                     timestamp: doc.data().timestamp ? doc.data().timestamp.toMillis() : Date.now() 
                 }));
                 
-                renderPosts(posts);
+                renderPosts(posts); 
             }, (error) => {
                 console.error("Lỗi khi lắng nghe trạng thái:", error);
                 loadingIndicator.textContent = "Lỗi khi tải trạng thái.";
-                showMessage("Lỗi: Không thể tải trạng thái theo thời gian thực.", true);
+                // Cần kiểm tra lại: Nếu lỗi là do thiếu quyền, cần cập nhật Firestore Rules
+                showMessage("Lỗi: Không thể tải trạng thái theo thời gian thực. (Kiểm tra Firestore Rules)", true);
             });
         }
         
         /** Handles submitting a new post. */
         async function handlePostSubmit() {
-            if (!isAuthReady || !postsCollectionRef) {
+            if (!isReady || !postsCollectionRef) { 
                 showMessage("Hệ thống chưa sẵn sàng. Vui lòng chờ kết nối.", true);
                 return;
             }
@@ -453,10 +408,9 @@
                 const newPost = {
                     name: name,
                     content: content,
-                    // Use serverTimestamp for Firestore consistency
                     timestamp: serverTimestamp(), 
-                    // Store userId (anonymous or real) for security rule purposes
-                    userId: auth.currentUser ? auth.currentUser.uid : 'anonymous'
+                    // Tạo ID người dùng ngẫu nhiên cho mục đích truy vết
+                    userId: crypto.randomUUID() 
                 };
 
                 await addDoc(postsCollectionRef, newPost);
@@ -469,7 +423,12 @@
 
             } catch (e) {
                 console.error("Lỗi khi gửi trạng thái:", e);
-                showMessage(`Lỗi: Không thể đăng trạng thái. Chi tiết: ${e.message}`, true);
+                // Nếu lỗi là do Rules, báo cho người dùng
+                if (e.message.includes("permission-denied")) {
+                    showMessage("Lỗi: Không có quyền ghi lên Firestore. Vui lòng xuất bản lại Firestore Rules công khai.", true);
+                } else {
+                    showMessage(`Lỗi: Không thể đăng trạng thái. Chi tiết: ${e.message}`, true);
+                }
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'ĐĂNG LÊN TƯỜNG';

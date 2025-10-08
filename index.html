@@ -417,22 +417,28 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { 
             getFirestore, collection, onSnapshot, query, orderBy, where, 
             Timestamp, addDoc, serverTimestamp 
         } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
+        // CẤU HÌNH FIREBASE TRỰC TIẾP
+        const firebaseConfig = {
+          apiKey: "AIzaSyDnOGA4RF7M-AMw4ZYEdhR5csIH2A1NHno",
+          authDomain: "worldofemotions-5ac0a.firebaseapp.com",
+          projectId: "worldofemotions-5ac0a",
+          storageBucket: "worldofemotions-5ac0a.firebasestorage.app",
+          messagingSenderId: "923244408713",
+          appId: "1:923244408713:web:d239a0c99722b483913b58"
+        };
         // Global environment variables
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-
-        let db, auth;
+        const appId = firebaseConfig.projectId; // Dùng projectId làm appId để đơn giản hóa
+        
+        let db; 
         let postsCollectionRef;
         let isLoading = false;
         let currentFilterDate = null;
-        let isAuthReady = false;
+        let isReady = false; 
 
         const postsContainer = document.getElementById('posts-container');
         const loadingIndicator = document.getElementById('loading-indicator');
@@ -459,8 +465,8 @@
             // Remove after 3 seconds
             setTimeout(() => {
                 messageBox.style.opacity = '0';
-                messageBox.style.transform = 'translate(-50%, -20px)';
-                messageBox.addEventListener('transitionend', () => messageBox.remove());
+                // Sử dụng animation CSS nếu có, hoặc chỉ xóa
+                messageBox.remove();
             }, 3000);
         }
 
@@ -473,32 +479,21 @@
             });
         }
         
-        // --- FIREBASE INITIALIZATION & AUTHENTICATION ---
+        // --- FIREBASE INITIALIZATION ---
         async function initializeFirebase() {
             try {
-                if (Object.keys(firebaseConfig).length === 0) {
-                    throw new Error("Firebase config not found.");
-                }
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
-                auth = getAuth(app);
                 postsCollectionRef = collection(db, 'artifacts', appId, 'public', 'data', 'statuses');
-
-                // Sign in logic
-                if (initialAuthToken) {
-                    await signInWithCustomToken(auth, initialAuthToken);
-                } else {
-                    await signInAnonymously(auth);
-                }
                 
-                isAuthReady = true;
+                isReady = true;
                 
                 // Load initial posts
                 fetchPosts();
 
             } catch (error) {
                 console.error("Lỗi khi khởi tạo Firebase:", error);
-                loadingIndicator.textContent = "Lỗi kết nối. Không thể tải trạng thái.";
+                loadingIndicator.textContent = "Lỗi kết nối. Không thể tải trạng thái. Vui lòng kiểm tra cấu hình Firebase.";
                 showMessage("Lỗi: Không thể kết nối với hệ thống trạng thái.", true);
             }
         }
@@ -563,6 +558,8 @@
             }, (error) => {
                 console.error("Lỗi khi lắng nghe trạng thái:", error);
                 loadingIndicator.textContent = "Lỗi khi tải trạng thái.";
+                // Cần kiểm tra lại: Nếu lỗi là do thiếu quyền, cần cập nhật Firestore Rules
+                showMessage("Lỗi: Không thể tải trạng thái theo thời gian thực. (Kiểm tra Firestore Rules)", true);
                 isLoading = false;
             });
         }
@@ -591,7 +588,7 @@
         
         /** Handles submitting a new post from the modal. */
         async function handlePostSubmit() {
-            if (!isAuthReady || !postsCollectionRef) {
+            if (!isReady || !postsCollectionRef) { // Kiểm tra isReady
                 showMessage("Hệ thống chưa sẵn sàng. Vui lòng chờ kết nối.", true);
                 return;
             }
@@ -608,11 +605,12 @@
             modalSubmitBtn.textContent = 'Đang đăng...';
 
             try {
+                // Sử dụng userId là một giá trị mặc định (anonymous) vì Auth đã bị loại bỏ
                 const newPost = {
                     name: name,
                     content: content,
                     timestamp: serverTimestamp(), 
-                    userId: auth.currentUser ? auth.currentUser.uid : 'anonymous'
+                    userId: crypto.randomUUID() // Sử dụng randomUUID để giả lập user id nếu cần
                 };
 
                 await addDoc(postsCollectionRef, newPost);
@@ -626,7 +624,12 @@
 
             } catch (e) {
                 console.error("Lỗi khi gửi trạng thái:", e);
-                showMessage(`Lỗi: Không thể đăng trạng thái. Chi tiết: ${e.message}`, true);
+                // Thông báo lỗi thân thiện hơn
+                if (e.message.includes("permission-denied")) {
+                    showMessage("Lỗi: Không có quyền ghi lên Firestore. Vui lòng xuất bản lại Firestore Rules công khai.", true);
+                } else {
+                    showMessage(`Lỗi: Không thể đăng trạng thái. Chi tiết: ${e.message}`, true);
+                }
             } finally {
                 modalSubmitBtn.disabled = false;
                 modalSubmitBtn.textContent = 'ĐĂNG LÊN TƯỜNG';
