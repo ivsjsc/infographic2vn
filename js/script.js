@@ -10,14 +10,6 @@ window.addEventListener('scroll', function() {
     }
 });
 
-// Form submission
-document.querySelector('.submit-btn')?.addEventListener('click', function() {
-    alert('Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất có thể.');
-    document.getElementById('name').value = '';
-    document.getElementById('email').value = '';
-    document.getElementById('message').value = '';
-});
-
 // Load header and footer
 document.addEventListener('DOMContentLoaded', function() {
     fetch('components/header.html')

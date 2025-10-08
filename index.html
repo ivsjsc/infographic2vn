@@ -376,21 +376,22 @@
                 <p class="subpage-description">Chia sẻ cảm xúc, đặt câu hỏi, hoặc góp ý để chúng tôi phục vụ bạn tốt hơn!</p>
             </div>
             
-            <div class="contact-form">
+            <form name="contact" netlify netlify-honeypot="bot-field" method="POST">
+                <input type="hidden" name="form-name" value="contact" />
                 <div class="form-group">
                     <label for="name">Họ và Tên</label>
-                    <input type="text" id="name" placeholder="Nhập họ và tên của bạn">
+                    <input type="text" id="name" name="name" placeholder="Nhập họ và tên của bạn" required>
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" placeholder="Nhập địa chỉ email của bạn">
+                    <input type="email" id="email" name="email" placeholder="Nhập địa chỉ email của bạn" required>
                 </div>
                 <div class="form-group">
                     <label for="message">Tin Nhắn</label>
-                    <textarea id="message" rows="5" placeholder="Chia sẻ cảm xúc hoặc để lại tin nhắn của bạn..."></textarea>
+                    <textarea id="message" name="message" rows="5" placeholder="Chia sẻ cảm xúc hoặc để lại tin nhắn của bạn..." required></textarea>
                 </div>
-                <button class="submit-btn">GỬI TIN NHẮN</button>
-            </div>
+                <button type="submit" class="submit-btn">GỬI TIN NHẮN</button>
+            </form>
             
             <div style="text-align: center; margin-top: 3rem;">
                 <h3>Thông Tin Liên Hệ</h3>
