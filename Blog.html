@@ -6,7 +6,6 @@
     <title>Blog Tự Do - Nơi Chia Sẻ Câu Chuyện</title>
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
-    <!-- Theme Color for PWA -->
     <meta name="theme-color" content="#4f46e5"/>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,11 +13,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/feather-icons"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- CSS Chung -->
+    <link rel="stylesheet" href="css/styles.css">
 
     <style>
         :root { --background-light: #f7f8fc; --background-dark: #111827; --text-light: #1f2937; --text-dark: #f9fafb; }
         html.dark { --background-light: #111827; --background-dark: #f7f8fc; --text-light: #f9fafb; --text-dark: #1f2937;}
-        body { font-family: 'Poppins', sans-serif; background-color: var(--background-light); color: var(--text-light); transition: background-color 0.3s, color 0.3s; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--background-light); color: var(--text-light); transition: background-color 0.3s, color 0.3s; padding-top: 80px; } /* Add padding for fixed header */
         .post-content h1, .post-content h2, .post-content h3 { font-weight: 700; margin-top: 1.5rem; margin-bottom: 1rem; }
         .post-content h1 { font-size: 2em; } .post-content h2 { font-size: 1.5em; } .post-content h3 { font-size: 1.25em; }
         .post-content p { margin-bottom: 1em; line-height: 1.7; } .post-content a { color: #4f46e5; text-decoration: underline; }
@@ -49,6 +50,9 @@
     </style>
 </head>
 <body>
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+    
     <!-- Main Container -->
     <div class="container mx-auto max-w-7xl px-4 py-8">
         <header class="text-center mb-8">
@@ -99,18 +103,31 @@
             </header>
             <div class="px-6 pb-8 overflow-y-auto">
                 <img id="detail-image" src="" alt="" class="w-full h-auto max-h-80 object-cover rounded-md mb-6 bg-gray-200 dark:bg-gray-700">
-                <div id="detail-content" class="post-content prose prose-lg max-w-none"></div>
+                <div id="detail-content" class="post-content prose prose-lg max-w-none dark:prose-invert"></div>
+                
+                 <!-- SHARE SECTION -->
+                <div id="share-container" class="mt-8 pt-4 border-t border-gray-200 dark:border-gray-700">
+                    <div class="flex items-center gap-4">
+                        <span class="font-semibold text-gray-700 dark:text-gray-300">Chia sẻ:</span>
+                        <a id="share-facebook" href="#" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-blue-600 transition-colors" aria-label="Share on Facebook"><i data-feather="facebook" class="h-6 w-6"></i></a>
+                        <a id="share-twitter" href="#" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-sky-500 transition-colors" aria-label="Share on Twitter"><i data-feather="twitter" class="h-6 w-6"></i></a>
+                        <button id="copy-link-btn" class="text-gray-500 hover:text-indigo-600 transition-colors" aria-label="Copy link"><i data-feather="copy" class="h-6 w-6"></i></button>
+                    </div>
+                </div>
             </div>
         </article>
     </div>
 
-    <!-- Firebase SDK -->
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Firebase SDK & Custom Scripts -->
+    <script src="js/script.js"></script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getFirestore, collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, query, orderBy, onSnapshot, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         
         const firebaseConfig = {
-          // DÁN CẤU HÌNH FIREBASE CỦA BẠN VÀO ĐÂY
           apiKey: "AIzaSyDnOGA4RF7M-AMw4ZYEdhR5csIH2A1NHno",
           authDomain: "worldofemotions-5ac0a.firebaseapp.com",
           projectId: "worldofemotions-5ac0a",
@@ -138,10 +155,13 @@
             detailMeta: document.getElementById('detail-meta'),
             detailImage: document.getElementById('detail-image'),
             detailContent: document.getElementById('detail-content'),
+            shareFacebook: document.getElementById('share-facebook'),
+            shareTwitter: document.getElementById('share-twitter'),
+            copyLinkBtn: document.getElementById('copy-link-btn'),
         };
 
         const formatContent = (text = '') => {
-            const processEmbeds = (txt) => {
+             const processEmbeds = (txt) => {
                 return txt.split('\n').map(line => {
                     const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
                     const youtubeMatch = line.match(youtubeRegex);
@@ -214,27 +234,6 @@
         };
 
         const blogsCollection = collection(db, `artifacts/${appId}/public/data/blogs`);
-        const q = query(blogsCollection, orderBy('timestamp', 'desc'));
-
-        onSnapshot(q, (snapshot) => {
-            UI.loadingSpinner.style.display = 'none';
-            allPosts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            filterAndRender();
-            renderTopics();
-        }, (error) => {
-            console.error("Firebase connection error: ", error);
-            UI.loadingSpinner.innerHTML = '<p class="text-red-500">Lỗi kết nối Firebase. Vui lòng kiểm tra cấu hình và Firestore rules.</p>';
-        });
-
-        // Event Listeners
-        UI.searchInput.addEventListener('input', filterAndRender);
-        UI.topicsContainer.addEventListener('click', e => {
-            if (e.target.classList.contains('topic-btn')) {
-                document.querySelectorAll('.topic-btn').forEach(btn => btn.classList.remove('active', 'bg-indigo-600', 'text-white'));
-                e.target.classList.add('active', 'bg-indigo-600', 'text-white');
-                filterAndRender();
-            }
-        });
 
         const detailModal = {
             open: (post) => {
@@ -245,32 +244,103 @@
                 UI.detailImage.src = post.imageUrl || placeholderImg;
                 UI.detailImage.style.display = post.imageUrl ? 'block' : 'none';
                 UI.detailContent.innerHTML = formatContent(post.content);
+                
+                // Update share links
+                const postUrl = `${window.location.origin}${window.location.pathname}?post=${post.id}`;
+                const encodedUrl = encodeURIComponent(postUrl);
+                const encodedTitle = encodeURIComponent(post.title);
+                
+                UI.shareFacebook.href = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
+                UI.shareTwitter.href = `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`;
+                UI.copyLinkBtn.dataset.url = postUrl;
+
                 UI.detailModal.classList.remove('hidden');
                 setTimeout(() => UI.detailModalContent.classList.add('modal-enter-active'), 10);
+                feather.replace();
             },
             close: () => {
                 UI.detailModalContent.classList.remove('modal-enter-active');
+                history.pushState(null, '', window.location.pathname); // Clear URL parameter
                 setTimeout(() => UI.detailModal.classList.add('hidden'), 200);
             }
         };
+        
+        const init = async () => {
+            const q = query(blogsCollection, orderBy('timestamp', 'desc'));
+            onSnapshot(q, (snapshot) => {
+                UI.loadingSpinner.style.display = 'none';
+                allPosts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                filterAndRender();
+                renderTopics();
+                
+                // Check if a specific post needs to be opened from URL AFTER all posts are loaded
+                checkUrlForPost(); 
+            }, (error) => {
+                console.error("Firebase connection error: ", error);
+                UI.loadingSpinner.innerHTML = '<p class="text-red-500">Lỗi kết nối Firebase. Vui lòng kiểm tra cấu hình và Firestore rules.</p>';
+            });
 
+            // If URL has post ID, try fetching it directly for faster initial load
+            const urlParams = new URLSearchParams(window.location.search);
+            const postIdFromUrl = urlParams.get('post');
+            if (postIdFromUrl) {
+                try {
+                    const postDoc = await getDoc(doc(blogsCollection, postIdFromUrl));
+                    if (postDoc.exists()) {
+                        detailModal.open({ id: postDoc.id, ...postDoc.data() });
+                    }
+                } catch (e) {
+                    console.error("Error fetching direct post:", e);
+                }
+            }
+        };
+
+        // Function to open modal if post ID is in URL
+        const checkUrlForPost = () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const postId = urlParams.get('post');
+            if (postId && allPosts.length > 0) {
+                if (!UI.detailModal.classList.contains('hidden')) return; // Already open
+                const postToOpen = allPosts.find(p => p.id === postId);
+                if (postToOpen) {
+                    detailModal.open(postToOpen);
+                }
+            }
+        };
+        
+        // Event Listeners
+        UI.searchInput.addEventListener('input', filterAndRender);
+        UI.topicsContainer.addEventListener('click', e => {
+            if (e.target.classList.contains('topic-btn')) {
+                document.querySelectorAll('.topic-btn').forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+                filterAndRender();
+            }
+        });
         UI.postsContainer.addEventListener('click', e => {
             const card = e.target.closest('.post-card-grid');
             if (card) {
                 const post = allPosts.find(p => p.id === card.dataset.id);
-                if (post) detailModal.open(post);
+                if (post) {
+                    history.pushState(null, '', `?post=${post.id}`);
+                    detailModal.open(post);
+                }
             }
         });
         UI.closeDetailModalBtn.addEventListener('click', detailModal.close);
         UI.detailModal.addEventListener('click', e => { if (e.target === UI.detailModal) detailModal.close(); });
+
+        UI.copyLinkBtn.addEventListener('click', function() {
+            navigator.clipboard.writeText(this.dataset.url).then(() => {
+                alert('Đã sao chép liên kết!');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        });
         
         // Dark Mode Logic
         const applyTheme = (theme) => {
-            if (theme === 'dark') {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
+            document.documentElement.classList.toggle('dark', theme === 'dark');
             localStorage.setItem('theme', theme);
             feather.replace();
         };
@@ -280,19 +350,15 @@
         });
         applyTheme(localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
 
-        // PWA Service Worker Registration
+        // PWA Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js').then(registration => {
-                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                }, err => {
-                    console.log('ServiceWorker registration failed: ', err);
-                });
+                navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW registration failed: ', err));
             });
         }
         
+        init();
         feather.replace();
     </script>
 </body>
 </html>
-

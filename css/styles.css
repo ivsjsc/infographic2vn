@@ -69,9 +69,9 @@ header {
 
 .logo-text {
     font-family: 'Fredoka One', cursive;
-    font-size: 1.8rem;
+    font-size: 1.2rem; /* Giảm kích thước để vừa dòng "infoGraphic.io.vn" */
     color: white;
-    font-weight: 400;
+    font-weight: 700; /* Tăng độ đậm */
 }
 
 /* Image logo + accessible helpers */
@@ -98,7 +98,7 @@ header {
 nav ul {
     display: flex;
     list-style: none;
-    gap: 1.2rem;
+    gap: 0.5rem; /* Giảm khoảng cách cho gọn */
 }
 
 nav a {
@@ -110,12 +110,70 @@ nav a {
     border-radius: 25px;
     transition: all 0.3s ease;
     white-space: nowrap;
+    display: flex; /* Cho icon và text thẳng hàng */
+    align-items: center;
+    gap: 0.5rem;
 }
 
 nav a:hover {
     background: rgba(255,255,255,0.2);
     transform: translateY(-2px);
 }
+
+/* Nút Viết Bài nổi bật */
+.cta-nav-link {
+    background: var(--accent1);
+    font-weight: 700 !important;
+}
+.cta-nav-link:hover {
+    background: #ff8a8a; /* Sáng hơn khi hover */
+}
+
+/* === DROPDOWN MENU STYLES (Desktop) === */
+.has-dropdown {
+    position: relative;
+}
+.dropdown-icon {
+    font-size: 0.7em;
+    transition: transform 0.3s ease;
+}
+.has-dropdown:hover .dropdown-icon {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    border-radius: 10px;
+    padding: 0.75rem 0;
+    list-style: none;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    min-width: 240px;
+    z-index: 1001;
+    animation: fadeIn 0.2s ease-out;
+}
+.has-dropdown:hover .dropdown-menu {
+    display: block;
+}
+.dropdown-menu li {
+    width: 100%;
+}
+.dropdown-menu a {
+    color: var(--dark);
+    padding: 0.75rem 1.5rem;
+    width: 100%;
+    border-radius: 0;
+    font-weight: 500;
+}
+.dropdown-menu a:hover {
+    background: #f8f9fa;
+    color: var(--primary);
+    transform: none; /* Bỏ transform trên item con */
+}
+
 
 /* Hero Banner */
 .hero-banner {
@@ -707,23 +765,24 @@ footer {
         padding: 1rem;
         margin: 0;
         box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        max-height: calc(100vh - 100px);
+        max-height: calc(100vh - 90px); /* Điều chỉnh chiều cao tối đa */
         overflow-y: auto;
+        flex-direction: column; /* Chuyển thành cột */
+        gap: 0.5rem;
     }
     
     /* Khi checkbox được check, hiển thị menu */
     #nav-toggle:checked + .nav-toggle + nav ul {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.6rem;
+        display: flex; /* Dùng flex thay grid */
         animation: slideDown 0.3s ease-out;
     }
     
     nav a {
-        font-size: 0.9rem;
-        padding: 0.6rem;
-        text-align: center;
-        display: block;
+        font-size: 1rem;
+        padding: 0.8rem 1rem;
+        text-align: left; /* Căn lề trái cho dễ đọc */
+        display: flex;
+        justify-content: space-between; /* Đẩy icon chevron qua phải */
         border-radius: 8px;
         background: rgba(255,255,255,0.1);
         transition: all 0.2s;
@@ -731,6 +790,45 @@ footer {
     
     nav a:hover {
         background: rgba(255,255,255,0.25);
+    }
+
+    /* === DROPDOWN MENU STYLES (Mobile) === */
+    .has-dropdown > a .dropdown-icon {
+        transition: transform 0.3s ease;
+    }
+    .has-dropdown.submenu-open > a .dropdown-icon {
+        transform: rotate(180deg);
+    }
+
+    .dropdown-menu {
+        display: none; /* Ẩn mặc định */
+        position: static; /* Bỏ position absolute */
+        background: rgba(0,0,0,0.15);
+        border-radius: 8px;
+        padding: 0.5rem;
+        box-shadow: none;
+        min-width: unset;
+        animation: none;
+        margin-top: 0.5rem;
+    }
+
+    .has-dropdown.submenu-open .dropdown-menu {
+        display: block; /* Hiện khi có class */
+    }
+
+    .dropdown-menu li {
+        margin-bottom: 0.25rem;
+    }
+    .dropdown-menu a {
+        font-size: 0.9rem;
+        font-weight: 400;
+        color: #f0f0f0;
+        background: transparent;
+        padding: 0.6rem 1rem;
+    }
+     .dropdown-menu a:hover {
+        background: rgba(255,255,255,0.1);
+        color: white;
     }
 }
 
@@ -833,3 +931,21 @@ footer {
     .feature-card { padding: 2rem 1.5rem; border-radius: 16px; }
     .stat-number { font-size: 2.5rem; }
 }
+
+/* === BỔ SUNG CHO LOGO MỚI Ở HERO SECTION (index.html) === */
+/* Các style này có thể đã tồn tại trong file index.html, 
+việc thêm vào đây để đảm bảo chúng được áp dụng hoặc ghi đè nếu cần. */
+
+.brand-logo-circle {
+    width: 80px;
+    height: 80px;
+}
+
+.hero-logo-img {
+    width: 100%;
+    height: 100%;
+    padding: 8px; /* Thêm chút đệm để logo không bị sát viền */
+    object-fit: contain;
+    border-radius: 50%;
+}
+

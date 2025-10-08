@@ -1,24 +1,42 @@
 rules_version = '2';
 service cloud.firestore {
 match /databases/{database}/documents {
-// Đường dẫn chung cho dữ liệu công khai (dành cho các ứng dụng không cần đăng nhập)
-match /artifacts/{appId}/public/data/{document=**} {
-// Cho phép BẤT KỲ AI (kể cả chưa đăng nhập) được đọc (read)
-allow read: if true;
 
-  // Cho phép BẤT KỲ AI (kể cả chưa đăng nhập) được tạo (create) tài liệu mới
-  // Điều kiện: kích thước nhỏ hơn 1MB, và dữ liệu chỉ được thêm mới (không được update/delete)
+// --- QUY TẮC CŨ: Dành cho Bảng tin Trạng thái (statuses) ---
+match /artifacts/{appId}/public/data/statuses/{document=**} {
+  // Cho phép BẤT KỲ AI (kể cả chưa đăng nhập) được đọc (read)
+  allow read: if true;
+
+  // Cho phép BẤT KỲ AI tạo trạng thái mới với một số điều kiện
   allow create: if request.resource.data.keys().hasAll(['name', 'content', 'timestamp', 'userId'])
                     && request.resource.data.content is string
-                    && request.resource.data.content.size() <= 1500 // Giới hạn kích thước nội dung
-                    && request.resource.data.name.size() <= 100 // Giới hạn tên
-                    && request.resource.data.timestamp == request.time; // Chỉ cho phép serverTimestamp
+                    && request.resource.data.content.size() <= 1500
+                    && request.resource.data.name.size() <= 100
+                    && request.resource.data.timestamp == request.time;
   
-  // Không cho phép cập nhật (update) hay xóa (delete) trạng thái công khai
+  // Không cho phép cập nhật hay xóa
   allow update, delete: if false; 
 }
 
-// Đường dẫn mặc định cho dữ liệu riêng tư (vẫn cần đăng nhập)
+// --- QUY TẮC MỚI: Dành cho Blog (blogs) ---
+match /artifacts/{appId}/public/data/blogs/{document=**} {
+  // Cho phép BẤT KỲ AI đọc bài blog
+  allow read: if true;
+
+  // Cho phép BẤT KỲ AI tạo bài blog mới với một số điều kiện
+  allow create: if request.resource.data.keys().hasAll(['title', 'author', 'content', 'imageUrl', 'topics', 'timestamp'])
+                    && request.resource.data.title is string && request.resource.data.title.size() <= 200
+                    && request.resource.data.author is string && request.resource.data.author.size() <= 100
+                    && request.resource.data.content is string && request.resource.data.content.size() <= 10000 // Giới hạn 10,000 ký tự cho bài blog
+                    && request.resource.data.imageUrl is string && request.resource.data.imageUrl.size() <= 1000
+                    && request.resource.data.topics is list
+                    && request.resource.data.timestamp == request.time;
+
+  // Không cho phép cập nhật hay xóa trong giai đoạn này
+  allow update, delete: if false;
+}
+
+// --- QUY TẮC MẶC ĐỊNH: Dành cho dữ liệu riêng tư (không thay đổi) ---
 match /artifacts/{appId}/users/{userId}/{documents=**} {
   allow read, write: if request.auth.uid != null && request.auth.uid == userId;
 }
