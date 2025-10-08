@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bức Tường Cảm Xúc Công Khai - Không Tài Khoản</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Fredoka+One&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Link to the existing CSS file to maintain theme consistency -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <style>
+        /* Inline CSS for specific component styles */
+        .status-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--accent1), var(--accent3));
+            border-radius: 20px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .status-header h2 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 3px 5px rgba(0,0,0,0.2);
+        }
+
+        /* Form Styles */
+        .post-form-container {
+            max-width: 700px;
+            margin: 0 auto 4rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.3s ease, opacity 0.3s;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Posts Display */
+        #posts-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .post-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            margin-bottom: 1.5rem;
+            border-left: 5px solid var(--accent2);
+            position: relative;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .post-name {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .post-time {
+            color: #999;
+            font-size: 0.85rem;
+        }
+
+        .post-content {
+            color: var(--dark);
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            padding-top: 0.5rem;
+            border-top: 1px dashed #eee;
+        }
+
+        .post-icon {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            opacity: 0.3;
+        }
+
+        #loading-indicator, #message-box {
+            text-align: center;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            border-radius: 10px;
+        }
+        
+        #loading-indicator {
+            background-color: #f0f0f0;
+            color: #666;
+        }
+
+        /* Custom Message Box */
+        .message-box {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 25px;
+            background-color: var(--accent2);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 10000;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            animation: slideDown 0.3s forwards;
+        }
+        .message-box.error {
+            background-color: var(--accent1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translate(-50%, -20px); }
+            to { opacity: 1; transform: translate(-50%, 0); }
+        }
+
+        /* Media Queries for Mobile First */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 2rem 1rem;
+            }
+            .status-header h2 {
+                font-size: 2rem;
+            }
+            .post-form-container, #posts-container {
+                padding: 1rem;
+            }
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+
+    <main class="main-content">
+        <div class="status-header">
+            <i class="fas fa-bullhorn" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+            <h2>BỨC TƯỜNG CẢM XÚC CÔNG KHAI</h2>
+            <p>Chia sẻ trạng thái, suy nghĩ, hoặc cảm xúc của bạn. Hoàn toàn ẩn danh (tên tùy chọn) và không thể xóa.</p>
+        </div>
+
+        <!-- Form Gửi Trạng Thái -->
+        <div class="post-form-container">
+            <h3 class="section-title" style="margin-bottom: 1rem; font-size: 1.5rem; text-align: left;">Gửi Trạng Thái Mới</h3>
+            <div id="form-error-message" class="message-box error" style="display:none; margin-bottom: 1rem; position: static;"></div>
+
+            <div class="form-group">
+                <label for="name-input">Tên (Tùy chọn)</label>
+                <input type="text" id="name-input" placeholder="Nhập tên của bạn (hoặc để trống)">
+            </div>
+            <div class="form-group">
+                <label for="content-input">Nội dung Trạng thái *</label>
+                <textarea id="content-input" rows="4" placeholder="Bạn đang cảm thấy thế nào? (Nội dung không thể xóa sau khi đăng)" required></textarea>
+            </div>
+            <button id="submit-btn" class="submit-btn">ĐĂNG LÊN TƯỜNG</button>
+        </div>
+
+        <h2 class="section-title">CÁC TRẠNG THÁI ĐÃ ĐĂNG</h2>
+        <div id="loading-indicator">Đang tải trạng thái...</div>
+        <div id="posts-container">
+            <!-- Posts will be injected here by JavaScript -->
+        </div>
+        
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <script src="js/script.js"></script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { 
+            getFirestore, collection, addDoc, onSnapshot, query,
+            serverTimestamp 
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global variables provided by the environment
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        let db, auth, postsCollectionRef;
+        let isAuthReady = false;
+
+        const postsContainer = document.getElementById('posts-container');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        const submitBtn = document.getElementById('submit-btn');
+        const nameInput = document.getElementById('name-input');
+        const contentInput = document.getElementById('content-input');
+        const formError = document.getElementById('form-error-message');
+
+        // --- UTILITY FUNCTIONS ---
+
+        /** Shows a temporary success or error message using a custom UI element. */
+        function showMessage(message, isError = false) {
+            const messageBox = document.createElement('div');
+            messageBox.className = `message-box ${isError ? 'error' : ''}`;
+            messageBox.textContent = message;
+            document.body.appendChild(messageBox);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                messageBox.style.opacity = '0';
+                messageBox.style.transform = 'translate(-50%, -20px)';
+                messageBox.addEventListener('transitionend', () => messageBox.remove());
+            }, 3000);
+        }
+
+        /** Formats timestamp (number/Date) into a readable string. */
+        function formatTimestamp(timestamp) {
+            if (!timestamp) return 'Vừa xong';
+            // Check if it's a Firestore Timestamp object or a plain number
+            const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+            return date.toLocaleString('vi-VN', { 
+                day: '2-digit', month: '2-digit', year: 'numeric', 
+                hour: '2-digit', minute: '2-digit' 
+            });
+        }
+
+        // --- FIREBASE INITIALIZATION & AUTHENTICATION ---
+
+        async function initializeFirebase() {
+            try {
+                if (Object.keys(firebaseConfig).length === 0) {
+                    throw new Error("Firebase config not found.");
+                }
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                postsCollectionRef = collection(db, 'artifacts', appId, 'public', 'data', 'statuses');
+
+                // Sign in logic: prefer custom token, fallback to anonymous
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+                
+                isAuthReady = true;
+                loadingIndicator.textContent = "Đã kết nối với hệ thống.";
+                submitBtn.disabled = false;
+                console.log("Firebase initialized and authenticated.");
+
+                // Start listening for posts after auth is ready
+                setupRealtimeListener();
+
+            } catch (error) {
+                console.error("Lỗi khi khởi tạo Firebase:", error);
+                loadingIndicator.textContent = "Lỗi kết nối. Không thể tải trạng thái.";
+                showMessage("Lỗi: Không thể kết nối với hệ thống. Vui lòng thử lại.", true);
+                submitBtn.disabled = true;
+            }
+        }
+
+        // --- DATA LOGIC ---
+
+        /** Renders the list of posts to the UI. */
+        function renderPosts(posts) {
+            postsContainer.innerHTML = '';
+            if (posts.length === 0) {
+                postsContainer.innerHTML = '<p style="text-align: center; color: #888; padding: 2rem;">Chưa có trạng thái nào được đăng. Hãy là người đầu tiên!</p>';
+                return;
+            }
+
+            // Sort by timestamp in descending order (newest first)
+            posts.sort((a, b) => b.timestamp - a.timestamp);
+
+            posts.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.className = 'post-card';
+
+                const displayTime = formatTimestamp(post.timestamp);
+                const displayName = post.name || 'Người Dùng Ẩn Danh';
+                const icon = post.name ? '💌' : '👤';
+
+                postElement.innerHTML = `
+                    <div class="post-header">
+                        <span class="post-name">${displayName}</span>
+                        <span class="post-time">${displayTime}</span>
+                    </div>
+                    <div class="post-icon">${icon}</div>
+                    <p class="post-content">${post.content}</p>
+                `;
+                postsContainer.appendChild(postElement);
+            });
+        }
+
+        /** Sets up the real-time listener for the statuses collection. */
+        function setupRealtimeListener() {
+            if (!postsCollectionRef) return;
+            
+            // Querying the collection and listening for changes. 
+            // NOTE: We only show a limited number of the latest posts here 
+            // since the main display page is now status_list.html
+            const postsQuery = query(postsCollectionRef); 
+
+            onSnapshot(postsQuery, (snapshot) => {
+                loadingIndicator.style.display = 'none'; // Hide loading once data starts flowing
+                
+                const posts = snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data(),
+                    timestamp: doc.data().timestamp ? doc.data().timestamp.toMillis() : Date.now() 
+                }));
+                
+                // Only show the 5 latest posts on the posting page
+                renderPosts(posts.slice(0, 5)); 
+            }, (error) => {
+                console.error("Lỗi khi lắng nghe trạng thái:", error);
+                loadingIndicator.textContent = "Lỗi khi tải trạng thái.";
+                showMessage("Lỗi: Không thể tải trạng thái theo thời gian thực.", true);
+            });
+        }
+        
+        /** Handles submitting a new post. */
+        async function handlePostSubmit() {
+            if (!isAuthReady || !postsCollectionRef) {
+                showMessage("Hệ thống chưa sẵn sàng. Vui lòng chờ kết nối.", true);
+                return;
+            }
+
+            const name = nameInput.value.trim();
+            const content = contentInput.value.trim();
+
+            if (content.length < 5) {
+                showMessage("Nội dung trạng thái phải có ít nhất 5 ký tự.", true);
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Đang đăng...';
+
+            try {
+                const newPost = {
+                    name: name,
+                    content: content,
+                    // Use serverTimestamp for Firestore consistency
+                    timestamp: serverTimestamp(), 
+                    // Store userId (anonymous or real) for security rule purposes
+                    userId: auth.currentUser ? auth.currentUser.uid : 'anonymous'
+                };
+
+                await addDoc(postsCollectionRef, newPost);
+
+                showMessage("Đã đăng trạng thái thành công! Cảm ơn bạn đã chia sẻ.");
+                
+                // Clear the inputs
+                nameInput.value = '';
+                contentInput.value = '';
+
+            } catch (e) {
+                console.error("Lỗi khi gửi trạng thái:", e);
+                showMessage(`Lỗi: Không thể đăng trạng thái. Chi tiết: ${e.message}`, true);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'ĐĂNG LÊN TƯỜNG';
+            }
+        }
+
+        // --- EVENT LISTENERS ---
+        submitBtn.addEventListener('click', handlePostSubmit);
+
+        // Initialize on load
+        initializeFirebase();
+
+    </script>
+</body>
+</html>

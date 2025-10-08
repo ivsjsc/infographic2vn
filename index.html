@@ -3,409 +3,684 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thế Giới Cảm Xúc - Infographic Lung Tung</title>
-    <!-- Preconnect & preload fonts for improved mobile rendering -->
+    <title>Trang Chủ - Dòng Thời Gian Cảm Xúc & Khám Phá</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Fredoka+One&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/styles.css">
     
+    <style>
+        /* Status List Page Styles */
+        .status-page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--accent2), var(--accent3));
+            color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            display: none; /* Hide old header section */
+        }
+
+        /* --- NEW MODAL STYLES --- */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 2000; /* Above header */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+            padding-top: 50px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto; /* 5% from top and centered */
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            max-width: 90%; /* Responsive width */
+            width: 500px;
+            position: relative;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .close-btn {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            transition: color 0.2s;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: var(--accent1);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal h3 {
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        /* --- NEW POST INPUT BAR (Replaces the CTA button on mobile) --- */
+        .post-input-bar {
+            max-width: 800px;
+            margin: 1rem auto 3rem; 
+            padding: 1rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            border: 2px solid var(--accent2);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+        .post-input-bar:hover {
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            transform: translateY(-2px);
+        }
+        .post-input-bar-text {
+            flex-grow: 1;
+            color: #888;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        .post-input-bar i {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+        
+        /* Filter/Search Bar */
+        .filter-bar {
+            max-width: 800px;
+            margin: 0 auto 3rem; 
+            padding: 1.5rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .filter-bar label {
+            font-weight: 600;
+            color: var(--dark);
+            width: 100%; 
+            text-align: center;
+        }
+
+        .filter-bar input[type="date"], .filter-bar button {
+            width: 100%;
+            box-sizing: border-box; 
+            max-width: 250px;
+        }
+
+        .filter-bar input[type="date"] {
+            padding: 0.6rem 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+        
+        .filter-bar input[type="date"]:focus {
+            outline: none;
+            border-color: var(--accent2);
+        }
+
+        /* Posts Container */
+        #posts-container {
+            max-width: 800px;
+            margin: 0 auto;
+            min-height: 50vh;
+        }
+
+        .post-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            margin-bottom: 1.5rem;
+            border-left: 5px solid var(--accent1);
+            position: relative;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .post-name {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .post-time {
+            color: #999;
+            font-size: 0.85rem;
+        }
+
+        .post-content {
+            color: var(--dark);
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            padding-top: 0.5rem;
+            border-top: 1px dashed #eee;
+        }
+
+        .post-icon {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            opacity: 0.3;
+        }
+        
+        #loading-indicator {
+            text-align: center;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            color: #666;
+        }
+        
+        /* Custom Message Box */
+        .message-box {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 25px;
+            background-color: var(--accent2);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 10000;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .message-box.error {
+            background-color: var(--accent1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (min-width: 600px) {
+            .filter-bar input[type="date"], .filter-bar button {
+                width: auto;
+                flex-grow: 1;
+                max-width: 200px;
+            }
+            .filter-bar label {
+                width: auto;
+                margin-right: 1rem;
+            }
+        }
+        @media (max-width: 550px) {
+            .modal-content {
+                margin: 20px auto;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
     <div id="header-placeholder"></div>
 
-    <!-- Home Page -->
-    <div id="home" class="subpage-content active">
-        <!-- Hero Banner -->
-        <section class="hero-banner">
+    <main class="main-content">
+        <!-- 1. HERO BANNER (Khu vực chào mừng) -->
+        <section class="hero-banner" style="padding-bottom: 3rem;">
             <div class="hero-content">
                 <h1 class="hero-title">THẾ GIỚI CẢM XÚC</h1>
-                <p class="hero-subtitle">Khám phá hành trình đầy màu sắc của những cảm xúc con người - từ vui buồn, giận dữ đến yêu thương và bình yên!</p>
+                <p class="hero-subtitle">Khám phá hành trình đầy màu sắc của những cảm xúc con người!</p>
                 
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <div class="stat-number">8</div>
-                        <div class="stat-label">Loại cảm xúc</div>
+                <!-- This old CTA button is replaced by the post-input-bar below -->
+                <!-- <a href="public_status_board.html" ...>CHIA SẺ TRẠNG THÁI NGAY!</a> -->
+            </div>
+        </section>
+
+        <!-- 2. POST INPUT BAR (Kích hoạt Modal Pop-up) -->
+        <div class="post-input-bar" id="open-post-modal">
+            <i class="fas fa-feather-alt"></i>
+            <span class="post-input-bar-text">Bạn đang cảm thấy thế nào? Bấm vào đây để chia sẻ ngay!</span>
+        </div>
+        
+        <h2 class="section-title" style="margin-bottom: 2rem;">DÒNG THỜI GIAN CẢM XÚC CÔNG KHAI</h2>
+        
+        <!-- 3. FILTER BAR (Lọc theo ngày) - Vẫn giữ để tìm kiếm trạng thái cũ -->
+        <div class="filter-bar">
+            <label for="date-filter"><i class="fas fa-calendar-alt"></i> Lọc Trạng Thái Theo Ngày:</label>
+            <input type="date" id="date-filter">
+            <button id="clear-filter" style="background: var(--accent2); color: white; padding: 0.6rem 1rem; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                <i class="fas fa-times"></i> Xóa Lọc
+            </button>
+        </div>
+
+        <!-- 4. POSTS TIMELINE (Danh sách trạng thái) -->
+        <div id="posts-container">
+            <!-- Posts will be loaded here -->
+        </div>
+        
+        <div id="loading-indicator">Đang tải trạng thái...</div>
+
+        <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0)); margin: 5rem 0;">
+
+        <!-- 5. ORIGINAL EMOTION CONTENT (Khám phá cảm xúc - Dưới đây) -->
+        <h2 class="section-title" style="margin-top: 5rem;">KHÁM PHÁ CÁC LOẠI CẢM XÚC</h2>
+        
+        <div class="emotions-grid">
+            <div class="emotion-card happy">
+                <div class="emotion-icon-container">😄</div>
+                <h3 class="emotion-title">Hạnh Phúc</h3>
+                <p class="emotion-description">Cảm giác vui vẻ, mãn nguyện khi mọi thứ diễn ra như mong muốn.</p>
+                <div class="fun-fact">💡 Cười 100 lần = tập thể dục 15 phút!</div>
+            </div>
+
+            <div class="emotion-card sad">
+                <div class="emotion-icon-container">😢</div>
+                <h3 class="emotion-title">Buồn Bã</h3>
+                <p class="emotion-description">Cảm xúc khi mất mát, thất vọng hoặc cô đơn.</p>
+                <div class="fun-fact">💡 Khóc giúp giải tỏa hormone stress!</div>
+            </div>
+
+            <div class="emotion-card angry">
+                <div class="emotion-icon-container">😠</div>
+                <h3 class="emotion-title">Tức Giận</h3>
+                <p class="emotion-description">Phản ứng khi bị đối xử bất công hoặc vi phạm ranh giới.</p>
+                <div class="fun-fact">💡 Tim đập nhanh hơn 30 nhịp/phút!</div>
+            </div>
+
+            <div class="emotion-card excited">
+                <div class="emotion-icon-container">🤩</div>
+                <h3 class="emotion-title">Hào Hứng</h3>
+                <p class="emotion-description">Năng lượng tích cực, tràn đầy hy vọng về tương lai.</p>
+                <div class="fun-fact">💡 Trẻ em học nhanh hơn 40% khi hào hứng!</div>
+            </div>
+
+            <div class="emotion-card confused">
+                <div class="emotion-icon-container">🤔</div>
+                <h3 class="emotion-title">Bối Rối</h3>
+                <p class="emotion-description">Khi đối mặt với quá nhiều lựa chọn hoặc thông tin mâu thuẫn.</p>
+                <div class="fun-fact">💡 Einstein: "Tôi chỉ tò mò đam mê!"</div>
+            </div>
+
+            <div class="emotion-card peaceful">
+                <div class="emotion-icon-container">😌</div>
+                <h3 class="emotion-title">Bình Yên</h3>
+                <p class="emotion-description">Trạng thái tâm trí thư thái, không lo âu.</p>
+                <div class="fun-fact">💡 10 phút thiền = 1 giờ ngủ ngon!</div>
+            </div>
+
+            <div class="emotion-card nervous">
+                <div class="emotion-icon-container">😰</div>
+                <h3 class="emotion-title">Lo Lắng</h3>
+                <p class="emotion-description">Cảm giác bất an về tương lai không chắc chắn.</p>
+                <div class="fun-fact">💡 85% điều lo lắng sẽ KHÔNG xảy ra!</div>
+            </div>
+
+            <div class="emotion-card loved">
+                <div class="emotion-icon-container">🥰</div>
+                <h3 class="emotion-title">Được Yêu Thương</h3>
+                <p class="emotion-description">Cảm giác ấm áp khi được quan tâm, trân trọng.</p>
+                <div class="fun-fact">💡 Ôm 20 giây mỗi ngày giúp sống thọ hơn!</div>
+            </div>
+        </div>
+
+        <!-- 6. ORIGINAL FACTS SECTION (Sự Thật Thú Vị) -->
+        <section class="facts-section">
+            <div class="facts-container">
+                <h2 class="section-title">SỰ THẬT THÚ VỊ</h2>
+                <div class="facts-grid">
+                    <div class="fact-card">
+                        <div class="fact-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3 class="fact-title">Não Bộ</h3>
+                        <p class="fact-text">Não xử lý cảm xúc nhanh hơn 6 lần so với suy nghĩ logic.</p>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-number">27</div>
-                        <div class="stat-label">Sự thật thú vị</div>
+                    <div class="fact-card">
+                        <div class="fact-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3 class="fact-title">Tim & Cảm Xúc</h3>
+                        <p class="fact-text">Tim có hệ thần kinh riêng, có thể "cảm nhận" cảm xúc độc lập.</p>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-number">100%</div>
-                        <div class="stat-label">Xứng đáng trải nghiệm</div>
+                    <div class="fact-card">
+                        <div class="fact-icon">
+                            <i class="fas fa-baby"></i>
+                        </div>
+                        <h3 class="fact-title">Trẻ Sơ Sinh</h3>
+                        <p class="fact-text">Trẻ sơ sinh có thể nhận biết 7 loại cảm xúc cơ bản từ khi mới sinh.</p>
+                    </div>
+                    <div class="fact-card">
+                        <div class="fact-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3 class="fact-title">Toàn Cầu</h3>
+                        <p class="fact-text">Có 6 cảm xúc cơ bản được công nhận trên toàn thế giới.</p>
                     </div>
                 </div>
             </div>
         </section>
+    </main>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <h2 class="section-title">CÁC LOẠI CẢM XÚC</h2>
-            
-            <div class="emotions-grid">
-                <div class="emotion-card happy">
-                    <div class="emotion-icon-container">😄</div>
-                    <h3 class="emotion-title">Hạnh Phúc</h3>
-                    <p class="emotion-description">Cảm giác vui vẻ, mãn nguyện khi mọi thứ diễn ra như mong muốn.</p>
-                    <div class="fun-fact">💡 Cười 100 lần = tập thể dục 15 phút!</div>
-                </div>
+    <!-- The Modal (Pop-up) -->
+    <div id="post-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3 style="text-align: center;"><i class="fas fa-share-alt"></i> CHIA SẺ TRẠNG THÁI</h3>
 
-                <div class="emotion-card sad">
-                    <div class="emotion-icon-container">😢</div>
-                    <h3 class="emotion-title">Buồn Bã</h3>
-                    <p class="emotion-description">Cảm xúc khi mất mát, thất vọng hoặc cô đơn.</p>
-                    <div class="fun-fact">💡 Khóc giúp giải tỏa hormone stress!</div>
-                </div>
-
-                <div class="emotion-card angry">
-                    <div class="emotion-icon-container">😠</div>
-                    <h3 class="emotion-title">Tức Giận</h3>
-                    <p class="emotion-description">Phản ứng khi bị đối xử bất công hoặc vi phạm ranh giới.</p>
-                    <div class="fun-fact">💡 Tim đập nhanh hơn 30 nhịp/phút!</div>
-                </div>
-
-                <div class="emotion-card excited">
-                    <div class="emotion-icon-container">🤩</div>
-                    <h3 class="emotion-title">Hào Hứng</h3>
-                    <p class="emotion-description">Năng lượng tích cực, tràn đầy hy vọng về tương lai.</p>
-                    <div class="fun-fact">💡 Trẻ em học nhanh hơn 40% khi hào hứng!</div>
-                </div>
-
-                <div class="emotion-card confused">
-                    <div class="emotion-icon-container">🤔</div>
-                    <h3 class="emotion-title">Bối Rối</h3>
-                    <p class="emotion-description">Khi đối mặt với quá nhiều lựa chọn hoặc thông tin mâu thuẫn.</p>
-                    <div class="fun-fact">💡 Einstein: "Tôi chỉ tò mò đam mê!"</div>
-                </div>
-
-                <div class="emotion-card peaceful">
-                    <div class="emotion-icon-container">😌</div>
-                    <h3 class="emotion-title">Bình Yên</h3>
-                    <p class="emotion-description">Trạng thái tâm trí thư thái, không lo âu.</p>
-                    <div class="fun-fact">💡 10 phút thiền = 1 giờ ngủ ngon!</div>
-                </div>
-
-                <div class="emotion-card nervous">
-                    <div class="emotion-icon-container">😰</div>
-                    <h3 class="emotion-title">Lo Lắng</h3>
-                    <p class="emotion-description">Cảm giác bất an về tương lai không chắc chắn.</p>
-                    <div class="fun-fact">💡 85% điều lo lắng sẽ KHÔNG xảy ra!</div>
-                </div>
-
-                <div class="emotion-card loved">
-                    <div class="emotion-icon-container">🥰</div>
-                    <h3 class="emotion-title">Được Yêu Thương</h3>
-                    <p class="emotion-description">Cảm giác ấm áp khi được quan tâm, trân trọng.</p>
-                    <div class="fun-fact">💡 Ôm 20 giây mỗi ngày giúp sống thọ hơn!</div>
-                </div>
+            <div class="form-group">
+                <label for="modal-name-input">Tên (Tùy chọn)</label>
+                <input type="text" id="modal-name-input" placeholder="Nhập tên của bạn (hoặc để trống)">
             </div>
-
-            <!-- Facts Section -->
-            <section class="facts-section">
-                <div class="facts-container">
-                    <h2 class="section-title">SỰ THẬT THÚ VỊ</h2>
-                    <div class="facts-grid">
-                        <div class="fact-card">
-                            <div class="fact-icon">
-                                <i class="fas fa-brain"></i>
-                            </div>
-                            <h3 class="fact-title">Não Bộ</h3>
-                            <p class="fact-text">Não xử lý cảm xúc nhanh hơn 6 lần so với suy nghĩ logic.</p>
-                        </div>
-                        <div class="fact-card">
-                            <div class="fact-icon">
-                                <i class="fas fa-heart"></i>
-                            </div>
-                            <h3 class="fact-title">Tim & Cảm Xúc</h3>
-                            <p class="fact-text">Tim có hệ thần kinh riêng, có thể "cảm nhận" cảm xúc độc lập.</p>
-                        </div>
-                        <div class="fact-card">
-                            <div class="fact-icon">
-                                <i class="fas fa-baby"></i>
-                            </div>
-                            <h3 class="fact-title">Trẻ Sơ Sinh</h3>
-                            <p class="fact-text">Trẻ sơ sinh có thể nhận biết 7 loại cảm xúc cơ bản từ khi mới sinh.</p>
-                        </div>
-                        <div class="fact-card">
-                            <div class="fact-icon">
-                                <i class="fas fa-globe"></i>
-                            </div>
-                            <h3 class="fact-title">Toàn Cầu</h3>
-                            <p class="fact-text">Có 6 cảm xúc cơ bản được công nhận trên toàn thế giới.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
+            <div class="form-group">
+                <label for="modal-content-input">Nội dung Trạng thái *</label>
+                <textarea id="modal-content-input" rows="4" placeholder="Bạn đang cảm thấy thế nào? (Nội dung không thể xóa sau khi đăng)" required></textarea>
+            </div>
+            <button id="modal-submit-btn" class="submit-btn" style="background: linear-gradient(135deg, var(--accent1), var(--accent2));">ĐĂNG LÊN TƯỜNG</button>
+        </div>
     </div>
 
-    <!-- Happy Page -->
-    <div id="happy" class="subpage-content">
-        <main class="main-content">
-            <div class="subpage-header">
-                <div class="subpage-icon">😄</div>
-                <h2 class="subpage-title">HẠNH PHÚC</h2>
-                <p class="subpage-description">Cảm giác vui vẻ, mãn nguyện khi mọi thứ diễn ra như mong muốn. Hạnh phúc là trạng thái tinh thần tích cực nhất của con người.</p>
-            </div>
-            
-            <div class="content-grid">
-                <div class="content-card">
-                    <h3>Siêu Năng Lực</h3>
-                    <p>Làm sáng bừng cả căn phòng! Khi bạn hạnh phúc, não bộ tiết ra endorphin - "thuốc giảm đau tự nhiên" của cơ thể.</p>
-                </div>
-                <div class="content-card">
-                    <h3>Sự Thật Thú Vị</h3>
-                    <p>Cười 100 lần tương đương với 15 phút tập thể dục. Hạnh phúc còn giúp tăng cường hệ miễn dịch và kéo dài tuổi thọ.</p>
-                </div>
-                <div class="content-card">
-                    <h3>Cách Nuôi Dưỡng</h3>
-                    <p>Thực hành lòng biết ơn hàng ngày, dành thời gian cho người thân yêu, và tìm niềm vui trong những điều nhỏ bé.</p>
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <!-- Sad Page -->
-    <div id="sad" class="subpage-content">
-        <main class="main-content">
-            <div class="subpage-header">
-                <div class="subpage-icon">😢</div>
-                <h2 class="subpage-title">BUỒN BÃ</h2>
-                <p class="subpage-description">Cảm xúc khi mất mát, thất vọng hoặc cô đơn. Buồn bã giúp ta suy ngẫm sâu sắc và trưởng thành hơn.</p>
-            </div>
-            
-            <div class="content-grid">
-                <div class="content-card">
-                    <h3>Siêu Năng Lực</h3>
-                    <p>Giúp ta suy ngẫm sâu sắc! Nước mắt chứa hormone stress - khóc giúp giải tỏa độc tố cảm xúc và làm sạch tâm hồn.</p>
-                </div>
-                <div class="content-card">
-                    <h3>Sự Thật Thú Vị</h3>
-                    <p>Người trưởng thành khóc trung bình 72 lần mỗi năm. Phụ nữ khóc nhiều hơn nam giới khoảng 4-5 lần.</p>
-                </div>
-                <div class="content-card">
-                    <h3>Cách Chữa Lành</h3>
-                    <p>Cho phép bản thân cảm nhận nỗi buồn, chia sẻ với người tin cậy, và nhớ rằng mọi cảm xúc đều sẽ qua đi.</p>
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <!-- Angry Page -->
-    <div id="angry" class="subpage-content">
-        <main class="main-content">
-            <div class="subpage-header">
-                <div class="subpage-icon">😠</div>
-                <h2 class="subpage-title">TỨC GIẬN</h2>
-                <p class="subpage-description">Phản ứng khi bị đối xử bất công hoặc vi phạm ranh giới. Giận dữ là tín hiệu cho thấy ranh giới của bạn đang bị xâm phạm.</p>
-            </div>
-            
-            <div class="content-grid">
-                <div class="content-card">
-                    <h3>Siêu Năng Lực</h3>
-                    <p>Tăng sức mạnh tức thời! Khi giận, cơ thể tiết adrenaline - giúp bạn mạnh mẽ như siêu nhân trong 30 giây.</p>
-                </div>
-                <div class="content-card">
-                    <h3>Sự Thật Thú Vị</h3>
-                    <p>Tim đập nhanh hơn 20-30 nhịp/phút khi giận. Nhiệt độ cơ thể cũng tăng lên đáng kể trong cơn giận.</p>
-                </div>
-                <div class="content-card">
-                    <h3>Cách Điều Chỉnh</h3>
-                    <p>Hít thở sâu, đếm đến 10, hoặc rời khỏi tình huống gây giận. Hãy chuyển hóa năng lượng giận dữ thành hành động tích cực.</p>
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <!-- Excited Page -->
-    <div id="excited" class="subpage-content">
-        <main class="main-content">
-            <div class="subpage-header">
-                <div class="subpage-icon">🤩</div>
-                <h2 class="subpage-title">HÀO HỨNG</h2>
-                <p class="subpage-description">Năng lượng tích cực, tràn đầy hy vọng về tương lai. Hào hứng là chất xúc tác cho sự sáng tạo và học hỏi.</p>
-            </div>
-            
-            <div class="content-grid">
-                <div class="content-card">
-                    <h3>Siêu Năng Lực</h3>
-                    <p>Kích hoạt trí tưởng tượng! Não bộ giải phóng dopamine - "hormone hạnh phúc" giúp bạn sáng tạo không giới hạn.</p>
-                </div>
-                <div class="content-card">
-                    <h3>Sự Thật Thú Vị</h3>
-                    <p>Trẻ em hào hứng học nhanh hơn 40%. Hào hứng còn giúp tăng cường trí nhớ và khả năng giải quyết vấn đề.</p>
-                </div>
-                <div class="content-card">
-                    <h3>Cách Duy Trì</h3>
-                    <p>Đặt mục tiêu nhỏ, ăn mừng từng thành công, và luôn tìm kiếm điều mới mẻ để khám phá trong cuộc sống.</p>
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <!-- Peaceful Page -->
-    <div id="peaceful" class="subpage-content">
-        <main class="main-content">
-            <div class="subpage-header">
-                <div class="subpage-icon">😌</div>
-                <h2 class="subpage-title">BÌNH YÊN</h2>
-                <p class="subpage-description">Trạng thái tâm trí thư thái, không lo âu. Bình yên là nền tảng cho sự sáng suốt và hạnh phúc lâu dài.</p>
-            </div>
-            
-            <div class="content-grid">
-                <div class="content-card">
-                    <h3>Siêu Năng Lực</h3>
-                    <p>Tái tạo năng lượng! Trạng thái bình yên giúp cơ thể phục hồi 300% nhanh hơn sau stress và căng thẳng.</p>
-                </div>
-                <div class="content-card">
-                    <h3>Sự Thật Thú Vị</h3>
-                    <p>10 phút thiền mỗi ngày tương đương với 1 giờ ngủ ngon. Bình yên còn giúp giảm huyết áp và cải thiện giấc ngủ.</p>
-                </div>
-                <div class="content-card">
-                    <h3>Cách Tạo Dựng</h3>
-                    <p>Thiền định, đi bộ trong thiên nhiên, nghe nhạc nhẹ nhàng, hoặc đơn giản là ngồi yên và hít thở sâu.</p>
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <!-- Emotions Page -->
-    <div id="emotions" class="subpage-content">
-        <main class="main-content">
-            <div class="subpage-header">
-                <div class="subpage-icon">🎭</div>
-                <h2 class="subpage-title">THẾ GIỚI CẢM XÚC</h2>
-                <p class="subpage-description">Khám phá toàn bộ phổ cảm xúc của con người - từ cơ bản đến phức tạp, từ tích cực đến tiêu cực.</p>
-            </div>
-            
-            <div class="content-grid">
-                <div class="content-card">
-                    <h3>6 Cảm Xúc Cơ Bản</h3>
-                    <p>Vui, buồn, giận, sợ, ngạc nhiên, và ghê tởm. Đây là 6 cảm xúc được công nhận trên toàn thế giới, vượt qua mọi rào cản văn hóa.</p>
-                </div>
-                <div class="content-card">
-                    <h3>Cảm Xúc Phức Tạp</h3>
-                    <p>Ghen tuông, xấu hổ, tự hào, tội lỗi, hy vọng... Những cảm xúc này là sự kết hợp của nhiều cảm xúc cơ bản khác nhau.</p>
-                </div>
-                <div class="content-card">
-                    <h3>Vai Trò Của Cảm Xúc</h3>
-                    <p>Cảm xúc giúp chúng ta đưa ra quyết định, kết nối với người khác, và phản ứng phù hợp với môi trường xung quanh.</p>
-                </div>
-                <div class="content-card">
-                    <h3>Trí Tuệ Cảm Xúc</h3>
-                    <p>Khả năng nhận biết, hiểu và quản lý cảm xúc của bản thân và người khác. Đây là chìa khóa cho thành công trong cuộc sống.</p>
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <!-- Facts Page -->
-    <div id="facts" class="subpage-content">
-        <main class="main-content">
-            <div class="subpage-header">
-                <div class="subpage-icon">🔍</div>
-                <h2 class="subpage-title">SỰ THẬT THÚ VỊ VỀ CẢM XÚC</h2>
-                <p class="subpage-description">Những điều kỳ diệu mà khoa học đã khám phá về thế giới cảm xúc của con người.</p>
-            </div>
-            
-            <div class="content-grid">
-                <div class="content-card">
-                    <h3>Não Bộ & Cảm Xúc</h3>
-                    <p>Não xử lý cảm xúc nhanh hơn 6 lần so với suy nghĩ logic. Hệ limbic là trung tâm điều khiển cảm xúc của não bộ.</p>
-                </div>
-                <div class="content-card">
-                    <h3>Tim Có Trí Tuệ Riêng</h3>
-                    <p>Tim có hệ thần kinh riêng với hơn 40.000 tế bào thần kinh, có thể "cảm nhận" và phản ứng với cảm xúc độc lập.</p>
-                </div>
-                <div class="content-card">
-                    <h3>Trẻ Sơ Sinh</h3>
-                    <p>Trẻ sơ sinh có thể nhận biết 7 loại cảm xúc cơ bản từ khi mới sinh, và bắt đầu thể hiện cảm xúc từ tuần thứ 6.</p>
-                </div>
-                <div class="content-card">
-                    <h3>Văn Hóa & Cảm Xúc</h3>
-                    <p>Một số nền văn hóa có những cảm xúc đặc biệt không tồn tại ở nơi khác, như "Schadenfreude" (vui khi người khác gặp xui) trong tiếng Đức.</p>
-                </div>
-                <div class="content-card">
-                    <h3>Cảm Xúc & Sức Khỏe</h3>
-                    <p>Cảm xúc tiêu cực kéo dài có thể gây ra các vấn đề sức khỏe như tăng huyết áp, suy giảm miễn dịch, và rối loạn tiêu hóa.</p>
-                </div>
-                <div class="content-card">
-                    <h3>Ngôn Ngữ Cảm Xúc</h3>
-                    <p>Có hơn 300 từ tiếng Anh để mô tả cảm xúc, nhưng nhiều nền văn hóa có những từ độc đáo không thể dịch sang ngôn ngữ khác.</p>
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <!-- About Page -->
-    <div id="about" class="subpage-content">
-        <main class="main-content">
-            <div class="subpage-header">
-                <div class="about-image">
-                    <i class="fas fa-heart"></i>
-                </div>
-                <h2 class="subpage-title">GIỚI THIỆU</h2>
-                <p class="subpage-description">Chúng tôi tin rằng mọi cảm xúc đều có giá trị và xứng đáng được lắng nghe.</p>
-            </div>
-            
-            <div class="about-content">
-                <div class="content-card">
-                    <h3>Sứ Mệnh Của Chúng Tôi</h3>
-                    <p>Thế Giới Cảm Xúc được tạo ra với sứ mệnh giúp mọi người hiểu, chấp nhận và trân trọng tất cả các loại cảm xúc của mình. Chúng tôi tin rằng không có cảm xúc nào là "xấu" hay "tốt" - mỗi cảm xúc đều mang một thông điệp và giá trị riêng.</p>
-                </div>
-                <div class="content-card">
-                    <h3>Tại Sao Cảm Xúc Quan Trọng?</h3>
-                    <p>Cảm xúc là phần cốt lõi làm nên con người chúng ta. Chúng giúp chúng ta kết nối với người khác, đưa ra quyết định, và trải nghiệm cuộc sống một cách trọn vẹn. Hiểu được cảm xúc của bản thân là bước đầu tiên để sống một cuộc đời ý nghĩa và hạnh phúc.</p>
-                </div>
-                <div class="content-card">
-                    <h3>Triết Lý Của Chúng Tôi</h3>
-                    <p>"Hãy để cảm xúc dẫn lối, đừng để chúng điều khiển." Chúng tôi khuyến khích việc lắng nghe cảm xúc, học hỏi từ chúng, và sử dụng chúng như công cụ để phát triển bản thân thay vì bị chúng chi phối.</p>
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <!-- Contact Page -->
-    <div id="contact" class="subpage-content">
-        <main class="main-content">
-            <div class="subpage-header">
-                <div class="subpage-icon">📞</div>
-                <h2 class="subpage-title">LIÊN HỆ VỚI CHÚNG TÔI</h2>
-                <p class="subpage-description">Chia sẻ cảm xúc, đặt câu hỏi, hoặc góp ý để chúng tôi phục vụ bạn tốt hơn!</p>
-            </div>
-            
-            <form name="contact" netlify netlify-honeypot="bot-field" method="POST">
-                <input type="hidden" name="form-name" value="contact" />
-                <div class="form-group">
-                    <label for="name">Họ và Tên</label>
-                    <input type="text" id="name" name="name" placeholder="Nhập họ và tên của bạn" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="Nhập địa chỉ email của bạn" required>
-                </div>
-                <div class="form-group">
-                    <label for="message">Tin Nhắn</label>
-                    <textarea id="message" name="message" rows="5" placeholder="Chia sẻ cảm xúc hoặc để lại tin nhắn của bạn..." required></textarea>
-                </div>
-                <button type="submit" class="submit-btn">GỬI TIN NHẮN</button>
-            </form>
-            
-            <div style="text-align: center; margin-top: 3rem;">
-                <h3>Thông Tin Liên Hệ</h3>
-                <p style="margin-top: 1rem; color: #666;">
-                    <i class="fas fa-envelope"></i> infographic2vn@gmail.com<br>
-                </p>
-            </div>
-        </main>
-    </div>
+    <!-- Custom Message Box placeholder -->
+    <div id="message-box" class="message-box" style="display: none;"></div>
 
     <!-- Footer -->
     <div id="footer-placeholder"></div>
 
     <script src="js/script.js"></script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { 
+            getFirestore, collection, onSnapshot, query, orderBy, where, 
+            Timestamp, addDoc, serverTimestamp 
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global environment variables
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        let db, auth;
+        let postsCollectionRef;
+        let isLoading = false;
+        let currentFilterDate = null;
+        let isAuthReady = false;
+
+        const postsContainer = document.getElementById('posts-container');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        const dateFilterInput = document.getElementById('date-filter');
+        const clearFilterBtn = document.getElementById('clear-filter');
+        
+        // Modal elements
+        const modal = document.getElementById("post-modal");
+        const openModalBtn = document.getElementById("open-post-modal");
+        const closeModalBtn = document.getElementsByClassName("close-btn")[0];
+        const modalNameInput = document.getElementById('modal-name-input');
+        const modalContentInput = document.getElementById('modal-content-input');
+        const modalSubmitBtn = document.getElementById('modal-submit-btn');
+
+
+        // --- UTILITY FUNCTIONS ---
+        /** Shows a temporary success or error message using a custom UI element. */
+        function showMessage(message, isError = false) {
+            const messageBox = document.createElement('div');
+            messageBox.className = `message-box ${isError ? 'error' : ''}`;
+            messageBox.textContent = message;
+            document.body.appendChild(messageBox);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                messageBox.style.opacity = '0';
+                messageBox.style.transform = 'translate(-50%, -20px)';
+                messageBox.addEventListener('transitionend', () => messageBox.remove());
+            }, 3000);
+        }
+
+        function formatTimestamp(timestamp) {
+            if (!timestamp) return 'Vừa xong';
+            const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+            return date.toLocaleString('vi-VN', { 
+                day: '2-digit', month: '2-digit', year: 'numeric', 
+                hour: '2-digit', minute: '2-digit' 
+            });
+        }
+        
+        // --- FIREBASE INITIALIZATION & AUTHENTICATION ---
+        async function initializeFirebase() {
+            try {
+                if (Object.keys(firebaseConfig).length === 0) {
+                    throw new Error("Firebase config not found.");
+                }
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                postsCollectionRef = collection(db, 'artifacts', appId, 'public', 'data', 'statuses');
+
+                // Sign in logic
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+                
+                isAuthReady = true;
+                
+                // Load initial posts
+                fetchPosts();
+
+            } catch (error) {
+                console.error("Lỗi khi khởi tạo Firebase:", error);
+                loadingIndicator.textContent = "Lỗi kết nối. Không thể tải trạng thái.";
+                showMessage("Lỗi: Không thể kết nối với hệ thống trạng thái.", true);
+            }
+        }
+
+        // --- DATA FETCHING AND RENDERING ---
+
+        /** Fetches and listens to posts based on current filters. */
+        function fetchPosts() {
+            if (isLoading) return;
+            isLoading = true;
+            loadingIndicator.style.display = 'block';
+            postsContainer.innerHTML = ''; 
+
+            let q;
+            let baseQuery = postsCollectionRef;
+            
+            // 1. Add Date Filtering (if selected)
+            if (currentFilterDate) {
+                const startOfDay = currentFilterDate;
+                const endOfDay = new Date(currentFilterDate);
+                endOfDay.setUTCDate(startOfDay.getUTCDate() + 1);
+
+                q = query(
+                    baseQuery, 
+                    where('timestamp', '>=', Timestamp.fromDate(startOfDay)),
+                    where('timestamp', '<', Timestamp.fromDate(endOfDay)),
+                    orderBy('timestamp', 'desc')
+                );
+            } else {
+                // 2. Default Query (No filtering, just newest first)
+                q = query(
+                    baseQuery, 
+                    orderBy('timestamp', 'desc')
+                );
+            }
+
+            // Real-time listener
+            onSnapshot(q, (snapshot) => {
+                loadingIndicator.style.display = 'none';
+                isLoading = false;
+                postsContainer.innerHTML = ''; // Clear for fresh update
+
+                const posts = [];
+                if (snapshot.docs.length === 0) {
+                    postsContainer.innerHTML = '<p style="text-align: center; color: #888; padding: 2rem;">' + 
+                        (currentFilterDate ? 'Không tìm thấy trạng thái nào cho ngày này.' : 'Chưa có trạng thái nào được đăng. Hãy là người đầu tiên!') + 
+                        '</p>';
+                    return;
+                }
+
+                snapshot.docs.forEach(doc => {
+                    const data = doc.data();
+                    posts.push({
+                        id: doc.id,
+                        ...data,
+                        timestamp: data.timestamp ? data.timestamp.toMillis() : Date.now()
+                    });
+                });
+                
+                renderPosts(posts);
+
+            }, (error) => {
+                console.error("Lỗi khi lắng nghe trạng thái:", error);
+                loadingIndicator.textContent = "Lỗi khi tải trạng thái.";
+                isLoading = false;
+            });
+        }
+        
+        /** Renders the list of posts to the UI. */
+        function renderPosts(posts) {
+            posts.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.className = 'post-card';
+
+                const displayTime = formatTimestamp(post.timestamp);
+                const displayName = post.name || 'Người Dùng Ẩn Danh';
+                const icon = post.name ? '💌' : '👤';
+
+                postElement.innerHTML = `
+                    <div class="post-header">
+                        <span class="post-name">${displayName}</span>
+                        <span class="post-time">${displayTime}</span>
+                    </div>
+                    <div class="post-icon">${icon}</div>
+                    <p class="post-content">${post.content}</p>
+                `;
+                postsContainer.appendChild(postElement);
+            });
+        }
+        
+        /** Handles submitting a new post from the modal. */
+        async function handlePostSubmit() {
+            if (!isAuthReady || !postsCollectionRef) {
+                showMessage("Hệ thống chưa sẵn sàng. Vui lòng chờ kết nối.", true);
+                return;
+            }
+
+            const name = modalNameInput.value.trim();
+            const content = modalContentInput.value.trim();
+
+            if (content.length < 5) {
+                showMessage("Nội dung trạng thái phải có ít nhất 5 ký tự.", true);
+                return;
+            }
+
+            modalSubmitBtn.disabled = true;
+            modalSubmitBtn.textContent = 'Đang đăng...';
+
+            try {
+                const newPost = {
+                    name: name,
+                    content: content,
+                    timestamp: serverTimestamp(), 
+                    userId: auth.currentUser ? auth.currentUser.uid : 'anonymous'
+                };
+
+                await addDoc(postsCollectionRef, newPost);
+
+                showMessage("Đã đăng trạng thái thành công! Cảm ơn bạn đã chia sẻ.");
+                
+                // Clear inputs and close modal
+                modalNameInput.value = '';
+                modalContentInput.value = '';
+                modal.style.display = "none"; 
+
+            } catch (e) {
+                console.error("Lỗi khi gửi trạng thái:", e);
+                showMessage(`Lỗi: Không thể đăng trạng thái. Chi tiết: ${e.message}`, true);
+            } finally {
+                modalSubmitBtn.disabled = false;
+                modalSubmitBtn.textContent = 'ĐĂNG LÊN TƯỜNG';
+            }
+        }
+
+        // --- EVENT HANDLERS ---
+        
+        // Open Modal
+        openModalBtn.addEventListener('click', () => {
+            modal.style.display = "block";
+            // Focus on content input for quick entry
+            modalContentInput.focus();
+        });
+
+        // Close Modal via X button
+        closeModalBtn.addEventListener('click', () => {
+            modal.style.display = "none";
+        });
+
+        // Close Modal via outside click
+        window.addEventListener('click', (event) => {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        });
+
+        // Handle Modal Form Submission
+        modalSubmitBtn.addEventListener('click', handlePostSubmit);
+
+        /** Handles the date filter change. */
+        dateFilterInput.addEventListener('change', (e) => {
+            const dateString = e.target.value;
+            if (dateString) {
+                const parts = dateString.split('-');
+                const selectedDate = new Date(Date.UTC(parts[0], parts[1] - 1, parts[2]));
+                currentFilterDate = selectedDate;
+                fetchPosts();
+            } else {
+                currentFilterDate = null;
+                fetchPosts();
+            }
+        });
+
+        /** Handles clearing the date filter. */
+        clearFilterBtn.addEventListener('click', () => {
+            dateFilterInput.value = '';
+            currentFilterDate = null;
+            fetchPosts();
+        });
+        
+        // --- INITIALIZATION ---
+        initializeFirebase();
+
+    </script>
 </body>
 </html>
