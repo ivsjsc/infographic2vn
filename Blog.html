@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Tự Do - Nơi Chia Sẻ Câu Chuyện</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <!-- Theme Color for PWA -->
+    <meta name="theme-color" content="#4f46e5"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <style>
+        :root { --background-light: #f7f8fc; --background-dark: #111827; --text-light: #1f2937; --text-dark: #f9fafb; }
+        html.dark { --background-light: #111827; --background-dark: #f7f8fc; --text-light: #f9fafb; --text-dark: #1f2937;}
+        body { font-family: 'Poppins', sans-serif; background-color: var(--background-light); color: var(--text-light); transition: background-color 0.3s, color 0.3s; }
+        .post-content h1, .post-content h2, .post-content h3 { font-weight: 700; margin-top: 1.5rem; margin-bottom: 1rem; }
+        .post-content h1 { font-size: 2em; } .post-content h2 { font-size: 1.5em; } .post-content h3 { font-size: 1.25em; }
+        .post-content p { margin-bottom: 1em; line-height: 1.7; } .post-content a { color: #4f46e5; text-decoration: underline; }
+        html.dark .post-content a { color: #818cf8; }
+        .post-content ul, .post-content ol { padding-left: 1.5rem; margin-bottom: 1em; list-style-position: inside; }
+        .post-content blockquote { border-left: 4px solid #d1d5db; padding-left: 1rem; margin: 1rem 0; font-style: italic; color: #4b5563; }
+        html.dark .post-content blockquote { border-color: #4b5563; color: #d1d5db; }
+        .responsive-iframe-container { position: relative; overflow: hidden; width: 100%; padding-top: 56.25%; margin: 1.5rem 0; border-radius: 12px; }
+        .responsive-iframe-container iframe { position: absolute; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height: 100%; border: none; }
+        .modal-enter { opacity: 0; transform: scale(0.95); }
+        .modal-enter-active { opacity: 1; transform: scale(1); transition: all 0.2s ease-out; }
+        .modal-leave-active { opacity: 0; transform: scale(0.95); transition: all 0.2s ease-in; }
+        .posts-grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 2rem; }
+        @media (min-width: 768px) { .posts-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1024px) { .posts-grid { grid-template-columns: repeat(3, 1fr); } }
+        .post-card-grid { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column; cursor: pointer; }
+        html.dark .post-card-grid { background: #1f2937; }
+        .post-card-grid:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); }
+        .post-image { width: 100%; height: 200px; object-fit: cover; }
+        .post-card-content { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
+        .post-title { font-size: 1.25rem; font-weight: 700; line-height: 1.3; color: #111827; margin-bottom: 0.75rem; }
+        html.dark .post-title { color: #f9fafb; }
+        .post-meta { font-size: 0.875rem; color: #6b7280; margin-top: auto; }
+        html.dark .post-meta { color: #9ca3af; }
+        .topic-btn { padding: 0.5rem 1rem; border-radius: 9999px; font-weight: 500; transition: background-color 0.2s, color 0.2s; border: 1px solid #d1d5db; }
+        html.dark .topic-btn { border-color: #4b5563; }
+        .topic-btn.active { background-color: #4f46e5; color: white; border-color: #4f46e5; }
+    </style>
+</head>
+<body>
+    <!-- Main Container -->
+    <div class="container mx-auto max-w-7xl px-4 py-8">
+        <header class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white">Blog Tự Do</h1>
+            <p class="text-gray-600 dark:text-gray-300 mt-3 text-lg">Nơi mỗi câu chuyện đều được lắng nghe.</p>
+        </header>
+
+        <!-- Controls Section: Search, Filter, Dark Mode -->
+        <div class="mb-8 p-4 bg-white dark:bg-gray-800 rounded-lg shadow flex flex-col md:flex-row items-center gap-4">
+            <div class="relative flex-grow w-full">
+                <input type="search" id="search-input" placeholder="Tìm kiếm bài viết..." class="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900 dark:text-gray-100">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <i data-feather="search" class="h-5 w-5 text-gray-400"></i>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="write.html" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition-colors flex items-center gap-2">
+                    <i data-feather="plus" class="h-5 w-5"></i>
+                    <span>Viết bài mới</span>
+                </a>
+                <button id="dark-mode-toggle" class="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300">
+                    <i data-feather="moon" class="h-5 w-5 block dark:hidden"></i>
+                    <i data-feather="sun" class="h-5 w-5 hidden dark:block"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Topics/Statistics Section -->
+        <div id="topics-container" class="mb-8 flex flex-wrap items-center gap-2"></div>
+        
+        <div id="loading" class="text-center py-12">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto"></div>
+            <p class="mt-4 text-gray-600 dark:text-gray-300">Đang tải các bài viết...</p>
+        </div>
+        
+        <main id="posts-container" class="posts-grid"></main>
+    </div>
+
+    <!-- Modal for Viewing Full Post -->
+    <div id="detail-modal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 hidden">
+        <article id="detail-modal-content" class="bg-white dark:bg-gray-800 rounded-lg shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col modal-enter">
+            <header class="p-6 flex justify-between items-start">
+                <div>
+                    <h1 id="detail-title" class="text-2xl md:text-3xl font-bold leading-tight"></h1>
+                    <p id="detail-meta" class="text-sm text-gray-500 dark:text-gray-400 mt-2"></p>
+                </div>
+                <button id="close-detail-modal-btn" class="text-gray-400 hover:text-gray-600 flex-shrink-0 ml-4"><i data-feather="x" class="h-6 w-6"></i></button>
+            </header>
+            <div class="px-6 pb-8 overflow-y-auto">
+                <img id="detail-image" src="" alt="" class="w-full h-auto max-h-80 object-cover rounded-md mb-6 bg-gray-200 dark:bg-gray-700">
+                <div id="detail-content" class="post-content prose prose-lg max-w-none"></div>
+            </div>
+        </article>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        
+        const firebaseConfig = {
+          // DÁN CẤU HÌNH FIREBASE CỦA BẠN VÀO ĐÂY
+          apiKey: "AIzaSyDnOGA4RF7M-AMw4ZYEdhR5csIH2A1NHno",
+          authDomain: "worldofemotions-5ac0a.firebaseapp.com",
+          projectId: "worldofemotions-5ac0a",
+          storageBucket: "worldofemotions-5ac0a.firebasestorage.app",
+          messagingSenderId: "923244408713",
+          appId: "1:923244408713:web:d239a0c99722b483913b58"
+        };
+        const appId = firebaseConfig.projectId;
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        
+        let allPosts = [];
+        let topicStats = {};
+
+        const UI = {
+            postsContainer: document.getElementById('posts-container'),
+            loadingSpinner: document.getElementById('loading'),
+            searchInput: document.getElementById('search-input'),
+            topicsContainer: document.getElementById('topics-container'),
+            darkModeToggle: document.getElementById('dark-mode-toggle'),
+            detailModal: document.getElementById('detail-modal'),
+            detailModalContent: document.getElementById('detail-modal-content'),
+            closeDetailModalBtn: document.getElementById('close-detail-modal-btn'),
+            detailTitle: document.getElementById('detail-title'),
+            detailMeta: document.getElementById('detail-meta'),
+            detailImage: document.getElementById('detail-image'),
+            detailContent: document.getElementById('detail-content'),
+        };
+
+        const formatContent = (text = '') => {
+            const processEmbeds = (txt) => {
+                return txt.split('\n').map(line => {
+                    const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+                    const youtubeMatch = line.match(youtubeRegex);
+                    if (youtubeMatch?.[1]) return `<div class="responsive-iframe-container"><iframe src="https://www.youtube.com/embed/${youtubeMatch[1]}" frameborder="0" allowfullscreen></iframe></div>`;
+                    
+                    const facebookRegex = /(?:https?:\/\/)?(?:www\.)?facebook\.com\/(?:watch\?v=|.*?\/videos\/)(\d{10,})/;
+                    const facebookMatch = line.match(facebookRegex);
+                    if (facebookMatch?.[0]) return `<div class="responsive-iframe-container"><iframe src="https://www.facebook.com/plugins/video.php?height=314&href=${encodeURIComponent(facebookMatch[0])}&show_text=false&width=560&t=0" scrolling="no" frameborder="0" allowfullscreen="true"></iframe></div>`;
+                    
+                    return line;
+                }).join('\n');
+            };
+            return marked.parse(processEmbeds(text));
+        };
+
+        const renderPosts = (posts) => {
+            UI.postsContainer.innerHTML = '';
+            if (posts.length === 0) {
+                 UI.postsContainer.innerHTML = `<div class="text-center text-gray-500 py-16 md:col-span-3"><i data-feather="search" class="h-16 w-16 mx-auto mb-6"></i><h3 class="text-2xl font-semibold">Không tìm thấy bài viết.</h3><p class="mt-2 text-lg">Hãy thử một từ khóa hoặc chủ đề khác.</p></div>`;
+            } else {
+                 posts.forEach(post => {
+                    const postEl = document.createElement('article');
+                    postEl.className = 'post-card-grid';
+                    postEl.dataset.id = post.id;
+                    const postDate = post.timestamp ? post.timestamp.toDate().toLocaleDateString('vi-VN') : 'Vừa xong';
+                    const placeholderImg = `https://placehold.co/600x400/e2e8f0/334155?text=${encodeURIComponent(post.title)}`;
+                    
+                    postEl.innerHTML = `
+                        <img src="${post.imageUrl || placeholderImg}" alt="${post.title}" class="post-image" onerror="this.src='${placeholderImg}';">
+                        <div class="post-card-content">
+                            <h2 class="post-title">${post.title}</h2>
+                            <p class="post-meta">bởi <strong>${post.author || 'Người kể chuyện'}</strong> • ${postDate}</p>
+                        </div>`;
+                    UI.postsContainer.appendChild(postEl);
+                });
+            }
+            feather.replace();
+        };
+
+        const renderTopics = () => {
+            topicStats = allPosts.reduce((acc, post) => {
+                (post.topics || []).forEach(topic => {
+                    if(topic) acc[topic] = (acc[topic] || 0) + 1;
+                });
+                return acc;
+            }, {});
+
+            const sortedTopics = Object.entries(topicStats).sort((a, b) => b[1] - a[1]);
+            
+            UI.topicsContainer.innerHTML = `<button class="topic-btn active" data-topic="all">Tất cả (${allPosts.length})</button>` + 
+            sortedTopics.map(([topic, count]) => 
+                `<button class="topic-btn" data-topic="${topic}">${topic} (${count})</button>`
+            ).join('');
+        };
+        
+        const filterAndRender = () => {
+            const searchTerm = UI.searchInput.value.toLowerCase();
+            const activeTopic = document.querySelector('.topic-btn.active')?.dataset.topic || 'all';
+
+            const filteredPosts = allPosts.filter(post => {
+                const titleMatch = post.title?.toLowerCase().includes(searchTerm) || false;
+                const contentMatch = post.content?.toLowerCase().includes(searchTerm) || false;
+                const authorMatch = post.author?.toLowerCase().includes(searchTerm) || false;
+                const matchesSearch = titleMatch || contentMatch || authorMatch;
+                
+                const matchesTopic = activeTopic === 'all' || (post.topics || []).includes(activeTopic);
+                return matchesSearch && matchesTopic;
+            });
+            renderPosts(filteredPosts);
+        };
+
+        const blogsCollection = collection(db, `artifacts/${appId}/public/data/blogs`);
+        const q = query(blogsCollection, orderBy('timestamp', 'desc'));
+
+        onSnapshot(q, (snapshot) => {
+            UI.loadingSpinner.style.display = 'none';
+            allPosts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            filterAndRender();
+            renderTopics();
+        }, (error) => {
+            console.error("Firebase connection error: ", error);
+            UI.loadingSpinner.innerHTML = '<p class="text-red-500">Lỗi kết nối Firebase. Vui lòng kiểm tra cấu hình và Firestore rules.</p>';
+        });
+
+        // Event Listeners
+        UI.searchInput.addEventListener('input', filterAndRender);
+        UI.topicsContainer.addEventListener('click', e => {
+            if (e.target.classList.contains('topic-btn')) {
+                document.querySelectorAll('.topic-btn').forEach(btn => btn.classList.remove('active', 'bg-indigo-600', 'text-white'));
+                e.target.classList.add('active', 'bg-indigo-600', 'text-white');
+                filterAndRender();
+            }
+        });
+
+        const detailModal = {
+            open: (post) => {
+                UI.detailTitle.textContent = post.title;
+                const postDate = post.timestamp ? post.timestamp.toDate().toLocaleString('vi-VN') : 'Vừa xong';
+                UI.detailMeta.innerHTML = `bởi <strong class="text-indigo-600 dark:text-indigo-400">${post.author || 'Người kể chuyện'}</strong> • ${postDate}`;
+                const placeholderImg = `https://placehold.co/800x400/e2e8f0/334155?text=${encodeURIComponent(post.title)}`;
+                UI.detailImage.src = post.imageUrl || placeholderImg;
+                UI.detailImage.style.display = post.imageUrl ? 'block' : 'none';
+                UI.detailContent.innerHTML = formatContent(post.content);
+                UI.detailModal.classList.remove('hidden');
+                setTimeout(() => UI.detailModalContent.classList.add('modal-enter-active'), 10);
+            },
+            close: () => {
+                UI.detailModalContent.classList.remove('modal-enter-active');
+                setTimeout(() => UI.detailModal.classList.add('hidden'), 200);
+            }
+        };
+
+        UI.postsContainer.addEventListener('click', e => {
+            const card = e.target.closest('.post-card-grid');
+            if (card) {
+                const post = allPosts.find(p => p.id === card.dataset.id);
+                if (post) detailModal.open(post);
+            }
+        });
+        UI.closeDetailModalBtn.addEventListener('click', detailModal.close);
+        UI.detailModal.addEventListener('click', e => { if (e.target === UI.detailModal) detailModal.close(); });
+        
+        // Dark Mode Logic
+        const applyTheme = (theme) => {
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+            localStorage.setItem('theme', theme);
+            feather.replace();
+        };
+        UI.darkModeToggle.addEventListener('click', () => {
+            const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+            applyTheme(newTheme);
+        });
+        applyTheme(localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+
+        // PWA Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js').then(registration => {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, err => {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+        
+        feather.replace();
+    </script>
+</body>
+</html>
+

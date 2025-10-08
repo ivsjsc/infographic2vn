@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viết Bài Mới - Blog Tự Do</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <style>
+        :root { --background-light: #f7f8fc; --background-dark: #111827; --text-light: #1f2937; --text-dark: #f9fafb; }
+        html.dark { --background-light: #111827; --background-dark: #f7f8fc; --text-light: #f9fafb; --text-dark: #1f2937;}
+        body { font-family: 'Poppins', sans-serif; background-color: var(--background-light); color: var(--text-light); transition: background-color 0.3s, color 0.3s; }
+        .post-content h1, .post-content h2, .post-content h3 { font-weight: 700; margin-top: 1.5rem; margin-bottom: 1rem; }
+        .post-content h1 { font-size: 2em; } .post-content h2 { font-size: 1.5em; } .post-content h3 { font-size: 1.25em; }
+        .post-content p { margin-bottom: 1em; line-height: 1.7; } .post-content a { color: #4f46e5; text-decoration: underline; }
+        html.dark .post-content a { color: #818cf8; }
+        .post-content ul, .post-content ol { padding-left: 1.5rem; margin-bottom: 1em; list-style-position: inside; }
+        .post-content blockquote { border-left: 4px solid #d1d5db; padding-left: 1rem; margin: 1rem 0; font-style: italic; color: #4b5563; }
+        html.dark .post-content blockquote { border-color: #4b5563; color: #d1d5db; }
+        .toast { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); padding: 1rem 1.5rem; background-color: #22c55e; color: white; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); font-weight: 600; transition: bottom 0.5s ease-in-out; z-index: 100; }
+        .toast.show { bottom: 20px; }
+        .toolbar-btn { padding: 0.5rem; border-radius: 0.25rem; transition: background-color 0.2s; }
+        .toolbar-btn:hover { background-color: #e5e7eb; }
+        html.dark .toolbar-btn:hover { background-color: #374151; }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto max-w-4xl px-4 py-8">
+        <header class="flex justify-between items-center mb-8">
+            <a href="blog.html" class="flex items-center gap-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400">
+                <i data-feather="arrow-left" class="h-5 w-5"></i>
+                <span>Quay lại trang Blog</span>
+            </a>
+            <button id="dark-mode-toggle" class="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300">
+                <i data-feather="moon" class="h-5 w-5 block dark:hidden"></i>
+                <i data-feather="sun" class="h-5 w-5 hidden dark:block"></i>
+            </button>
+        </header>
+
+        <main class="bg-white dark:bg-gray-800 p-6 md:p-8 rounded-lg shadow-lg">
+            <h1 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Viết bài mới</h1>
+            <form id="post-form">
+                <div class="space-y-6">
+                    <div>
+                        <label for="title" class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">Tiêu đề</label>
+                        <input type="text" id="title" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900 dark:text-gray-100" required>
+                    </div>
+                    <div>
+                        <label for="author" class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">Tên tác giả</label>
+                        <input type="text" id="author" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900 dark:text-gray-100" placeholder="Người kể chuyện">
+                    </div>
+                    <div>
+                        <label for="imageUrl" class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">Link ảnh minh họa</label>
+                        <input type="url" id="imageUrl" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900 dark:text-gray-100">
+                    </div>
+                     <div>
+                        <label for="topics" class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">Chủ đề (cách nhau bởi dấu phẩy)</label>
+                        <input type="text" id="topics" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900 dark:text-gray-100" placeholder="Công nghệ, Cuộc sống, AI...">
+                    </div>
+                    
+                    <div>
+                         <div class="border-b border-gray-200 dark:border-gray-700 mb-4">
+                            <nav class="-mb-px flex space-x-6" aria-label="Tabs">
+                                <button type="button" id="write-tab" class="whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm text-indigo-600 border-indigo-500">Viết</button>
+                                <button type="button" id="preview-tab" class="whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300 border-transparent">Xem trước</button>
+                            </nav>
+                        </div>
+                        <div id="editor-container">
+                             <div class="border border-b-0 border-gray-300 dark:border-gray-600 rounded-t-md p-2 flex items-center space-x-2 bg-gray-50 dark:bg-gray-700">
+                                <button type="button" class="toolbar-btn" data-markdown="bold" title="In đậm"><i data-feather="bold" class="h-4 w-4"></i></button>
+                                <button type="button" class="toolbar-btn" data-markdown="italic" title="In nghiêng"><i data-feather="italic" class="h-4 w-4"></i></button>
+                                <button type="button" class="toolbar-btn" data-markdown="link" title="Chèn liên kết"><i data-feather="link" class="h-4 w-4"></i></button>
+                                <button type="button" class="toolbar-btn" data-markdown="list" title="Danh sách"><i data-feather="list" class="h-4 w-4"></i></button>
+                                <button type="button" class="toolbar-btn" data-markdown="quote" title="Trích dẫn"><i data-feather="chevrons-right" class="h-4 w-4"></i></button>
+                            </div>
+                            <textarea id="content" rows="12" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-b-md bg-white dark:bg-gray-700 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900 dark:text-gray-100" required></textarea>
+                        </div>
+                         <div id="preview-container" class="hidden p-3 border border-gray-300 dark:border-gray-600 rounded-md bg-gray-50 dark:bg-gray-700 min-h-[316px] post-content prose prose-invert"></div>
+                    </div>
+                </div>
+
+                <div class="mt-8 flex justify-end">
+                     <button type="submit" id="submit-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-md transition-colors disabled:bg-gray-400 flex items-center gap-2">
+                        <i data-feather="send" class="h-5 w-5"></i>
+                        <span>Xuất bản</span>
+                    </button>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        
+        const firebaseConfig = {
+          // DÁN CẤU HÌNH FIREBASE CỦA BẠN VÀO ĐÂY
+          apiKey: "AIzaSyDnOGA4RF7M-AMw4ZYEdhR5csIH2A1NHno",
+          authDomain: "worldofemotions-5ac0a.firebaseapp.com",
+          projectId: "worldofemotions-5ac0a",
+          storageBucket: "worldofemotions-5ac0a.firebasestorage.app",
+          messagingSenderId: "923244408713",
+          appId: "1:923244408713:web:d239a0c99722b483913b58"
+        };
+        const appId = firebaseConfig.projectId;
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const blogsCollection = collection(db, `artifacts/${appId}/public/data/blogs`);
+
+        const UI = {
+            postForm: document.getElementById('post-form'),
+            submitBtn: document.getElementById('submit-btn'),
+            toast: document.getElementById('toast'),
+            writeTab: document.getElementById('write-tab'),
+            previewTab: document.getElementById('preview-tab'),
+            editorContainer: document.getElementById('editor-container'),
+            previewContainer: document.getElementById('preview-container'),
+            contentInput: document.getElementById('content'),
+            darkModeToggle: document.getElementById('dark-mode-toggle'),
+        };
+
+        const showToast = (message) => {
+            UI.toast.textContent = message;
+            UI.toast.classList.add('show');
+            setTimeout(() => UI.toast.classList.remove('show'), 3000);
+        };
+
+        const formatContent = (text = '') => { return marked.parse(text); };
+
+        UI.postForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            UI.submitBtn.disabled = true;
+            UI.submitBtn.querySelector('span').textContent = 'Đang xuất bản...';
+            
+            const topics = UI.postForm.topics.value.split(',').map(t => t.trim().toLowerCase()).filter(Boolean);
+
+            try {
+                await addDoc(blogsCollection, {
+                    author: UI.postForm.author.value.trim() || 'Người kể chuyện',
+                    title: UI.postForm.title.value.trim(),
+                    content: UI.postForm.content.value.trim(),
+                    imageUrl: UI.postForm.imageUrl.value.trim(),
+                    topics: topics,
+                    timestamp: serverTimestamp()
+                });
+                showToast('Đăng bài thành công! Đang chuyển hướng...');
+                setTimeout(() => window.location.href = 'blog.html', 1500);
+            } catch (error) {
+                console.error("Error adding document: ", error);
+                alert('Đã có lỗi xảy ra.');
+                UI.submitBtn.disabled = false;
+                UI.submitBtn.querySelector('span').textContent = 'Xuất bản';
+            }
+        });
+        
+        // Editor Logic
+        UI.writeTab.addEventListener('click', () => {
+            UI.editorContainer.classList.remove('hidden');
+            UI.previewContainer.classList.add('hidden');
+            UI.writeTab.classList.add('text-indigo-600', 'border-indigo-500', 'dark:text-indigo-400', 'dark:border-indigo-400');
+            UI.previewTab.classList.remove('text-indigo-600', 'border-indigo-500', 'dark:text-indigo-400', 'dark:border-indigo-400');
+        });
+        UI.previewTab.addEventListener('click', () => {
+            UI.previewContainer.innerHTML = formatContent(UI.contentInput.value) || '<p class="text-gray-400">Chưa có nội dung để xem trước.</p>';
+            UI.editorContainer.classList.add('hidden');
+            UI.previewContainer.classList.remove('hidden');
+            UI.previewTab.classList.add('text-indigo-600', 'border-indigo-500', 'dark:text-indigo-400', 'dark:border-indigo-400');
+            UI.writeTab.classList.remove('text-indigo-600', 'border-indigo-500', 'dark:text-indigo-400', 'dark:border-indigo-400');
+        });
+
+        // Toolbar Logic
+        document.querySelectorAll('.toolbar-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const textarea = UI.contentInput;
+                const type = btn.dataset.markdown;
+                const start = textarea.selectionStart;
+                const end = textarea.selectionEnd;
+                const selectedText = textarea.value.substring(start, end);
+                let markdown;
+                switch (type) {
+                    case 'bold': markdown = `**${selectedText || 'văn bản đậm'}**`; break;
+                    case 'italic': markdown = `*${selectedText || 'văn bản nghiêng'}*`; break;
+                    case 'link': markdown = `[${selectedText || 'tiêu đề link'}](${prompt('Nhập URL:', 'https://') || ''})`; break;
+                    case 'list': markdown = `\n- Mục 1\n- Mục 2`; break;
+                    case 'quote': markdown = `> ${selectedText || 'trích dẫn'}`; break;
+                }
+                textarea.setRangeText(markdown, start, end, 'end');
+                textarea.focus();
+            });
+        });
+        
+        // Dark Mode Logic
+        const applyTheme = (theme) => {
+            if (theme === 'dark') document.documentElement.classList.add('dark');
+            else document.documentElement.classList.remove('dark');
+            localStorage.setItem('theme', theme);
+            feather.replace();
+        };
+        UI.darkModeToggle.addEventListener('click', () => {
+            const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+            applyTheme(newTheme);
+        });
+        applyTheme(localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+
+        feather.replace();
+    </script>
+</body>
+</html>
+
