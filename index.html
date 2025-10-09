@@ -10,9 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/home.css">
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            display: none; /* Hide old header section */
-        }
+    <style>
 
         /* --- NEW MODAL STYLES --- */
         .modal {
@@ -284,9 +282,9 @@
                     <a class="btn-ghost" href="#emotion-catalog">🎭 Khám phá cảm xúc</a>
                 </div>
                 <ul class="hero-stats" aria-label="Thống kê nhanh">
-                    <li class="hero-stat"><strong>1500+</strong><span>Nhật ký cảm xúc đã được chia sẻ</span></li>
-                    <li class="hero-stat"><strong>28</strong><span>Công cụ & bài tập thực hành</span></li>
-                    <li class="hero-stat"><strong>24/7</strong><span>Bức tường cảm xúc luôn mở</span></li>
+                    <li class="hero-stat"><strong id="stat-posts">⏳</strong><span>Nhật ký cảm xúc đã được chia sẻ</span></li>
+                    <li class="hero-stat"><strong id="stat-tools">⏳</strong><span>Công cụ & bài tập thực hành</span></li>
+                    <li class="hero-stat"><strong id="stat-status">⏳</strong><span>Trạng thái đã chia sẻ</span></li>
                 </ul>
             </div>
             <div class="hero-visual" aria-hidden="true">
@@ -424,6 +422,62 @@
     <div id="footer-placeholder"></div>
 
     <script src="js/script.js" defer></script>
+    
+    <!-- Real-time Stats Counter -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, collection, getCountFromServer } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        
+        const firebaseConfig = {
+          apiKey: "AIzaSyDnOGA4RF7M-AMw4ZYEdhR5csIH2A1NHno",
+          authDomain: "worldofemotions-5ac0a.firebaseapp.com",
+          projectId: "worldofemotions-5ac0a",
+          storageBucket: "worldofemotions-5ac0a.firebasestorage.app",
+          messagingSenderId: "923244408713",
+          appId: "1:923244408713:web:d239a0c99722b483913b58"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        
+        // Đếm số công cụ thực tế (số trang tool có thể dùng)
+        const toolPages = [
+            'emotion-wheel.html', 'eq-quiz.html', 'emotions.html', 
+            'kham_pha_cam_xuc.html', 'facts.html', 'resources.html',
+            'happy.html', 'sad.html', 'angry.html', 'fear.html', 
+            'love.html', 'excited.html', 'peaceful.html', 'surprise.html',
+            'Blog.html', 'write.html', 'public_status_board.html', 
+            'status_list.html', 'about.html', 'faq.html', 'contact.html'
+        ];
+        const totalTools = toolPages.length;
+        
+        async function updateRealStats() {
+            try {
+                // Đếm posts (Blog/nhật ký)
+                const postsSnapshot = await getCountFromServer(collection(db, "posts"));
+                const postsCount = postsSnapshot.data().count;
+                
+                // Đếm statuses (bức tường cảm xúc)
+                const statusesSnapshot = await getCountFromServer(collection(db, "statuses"));
+                const statusesCount = statusesSnapshot.data().count;
+                
+                // Hiển thị số thực
+                document.getElementById('stat-posts').textContent = postsCount > 0 ? `${postsCount}+` : '0';
+                document.getElementById('stat-tools').textContent = totalTools;
+                document.getElementById('stat-status').textContent = statusesCount > 0 ? `${statusesCount}+` : '0';
+                
+            } catch (error) {
+                console.error("Lỗi khi đếm stats:", error);
+                // Fallback nếu không kết nối được
+                document.getElementById('stat-posts').textContent = '0';
+                document.getElementById('stat-tools').textContent = totalTools;
+                document.getElementById('stat-status').textContent = '0';
+            }
+        }
+        
+        // Chạy khi trang load xong
+        updateRealStats();
+    </script>
 </body>
 </html>
 
