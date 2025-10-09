@@ -150,6 +150,16 @@ body.no-scroll::before {
     color: rgba(255, 255, 255, 0.95);
 }
 
+/* Keep the checkbox visually hidden but focusable and toggleable via label/JS fallback.
+   Avoid the `display:none`/hidden behavior which can interfere with some browsers. */
+#nav-toggle {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
+
 @media (max-width: 768px) {
     .logo-emoji {
         width: 40px;
