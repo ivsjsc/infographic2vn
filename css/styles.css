@@ -449,7 +449,7 @@ html.dark .icon-dark {
         transition: transform 0.35s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         padding-top: 90px;
         overflow-y: auto;
-        z-index: 1100;
+        z-index: 1140; /* above header backdrop but below nav-toggle (1150) */
         -webkit-overflow-scrolling: touch;
     }
 
