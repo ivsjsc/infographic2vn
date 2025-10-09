@@ -3,432 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang Chủ - Dòng Thời Gian Cảm Xúc & Khám Phá</title>
+    <title>infoGraphic.io.vn — Bản đồ cảm xúc và kết nối</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Fredoka+One&family=Comic+Neue:wght@400;700&display=swap&subset=vietnamese" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/styles.css">
-    
-    <style>
-        /* ========== HERO MAIN SECTION (Giống hình mẫu) ========== */
-        .hero-main {
-            background: linear-gradient(135deg, #5fedd8 0%, #a8b9ec 50%, #d4a5dd 100%);
-            padding: 4rem 2rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            margin-top: -2rem; /* Nối liền với header */
-        }
-        
-        /* Decorative stars */
-        .hero-main::after {
-            content: '✨';
-            position: absolute;
-            bottom: 20px;
-            right: 40px;
-            font-size: 3rem;
-            animation: twinkle 2s ease-in-out infinite;
-        }
-        
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.2); }
-        }
-        
-        /* Brand Logo Circle */
-        .hero-branding {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.8rem;
-            margin-bottom: 2rem;
-        }
-        
-        .brand-logo-circle {
-            width: 100px; /* <-- Chỉnh kích thước chiều rộng ở đây */
-            height: 100px; /* <-- và chiều cao ở đây */
-            background: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            animation: float 3s ease-in-out infinite;
-        }
-        
-        .hero-logo-img {
-            width: 100%;
-            height: 100%;
-            padding: 10px; /* Khoảng đệm để logo không bị sát viền */
-            object-fit: contain;
-            border-radius: 50%;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        /* Main Title */
-        .hero-main-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: white;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-bottom: 3rem;
-            letter-spacing: 1px;
-            line-height: 1.2;
-            animation: fadeInDown 0.8s ease-out;
-        }
-        
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        /* ========== FEATURE CARDS (3 Cards) ========== */
-        .feature-cards-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            max-width: 900px;
-            margin: 0 auto 3rem;
-            animation: fadeInUp 1s ease-out 0.3s both;
-        }
-        
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .feature-card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 16px;
-            padding: 2rem 1.5rem;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-        }
-        
-        /* Feature Icons - CSS Only */
-        .feature-icon {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 1.5rem;
-            position: relative;
-        }
-        
-        /* Icon 1: Lock (Khóa) */
-        .feature-icon-lock {
-            background: linear-gradient(135deg, #b8e6d5, #8fd9c3);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .lock-body {
-            width: 35px;
-            height: 40px;
-            background: white;
-            border-radius: 6px;
-            position: relative;
-            top: 8px;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
-        }
-        
-        .lock-body::after {
-            content: '';
-            width: 8px;
-            height: 8px;
-            background: #667eea;
-            border-radius: 50%;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-        
-        .lock-shackle {
-            width: 25px;
-            height: 25px;
-            border: 5px solid white;
-            border-bottom: 0;
-            border-radius: 25px 25px 0 0;
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        
-        /* Icon 2: Note with Face (Giấy note cười) */
-        .feature-icon-note {
-            background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-        
-        .note-lines {
-            width: 45px;
-            height: 50px;
-            background: white;
-            border-radius: 6px;
-            position: relative;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
-        }
-        
-        .note-lines::before,
-        .note-lines::after {
-            content: '';
-            position: absolute;
-            left: 8px;
-            right: 8px;
-            height: 2px;
-            background: #ddd;
-        }
-        
-        .note-lines::before {
-            top: 12px;
-        }
-        
-        .note-lines::after {
-            top: 20px;
-        }
-        
-        .note-face {
-            position: absolute;
-        }
-        
-        .note-eyes {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 8px;
-        }
-        
-        .note-eyes span {
-            width: 6px;
-            height: 6px;
-            background: #333;
-            border-radius: 50%;
-            display: inline-block;
-        }
-        
-        .note-smile {
-            width: 20px;
-            height: 10px;
-            border: 2px solid #ff6b6b;
-            border-top: 0;
-            border-radius: 0 0 20px 20px;
-            margin: 0 auto;
-        }
-        
-        /* Icon 3: Brain with Emojis */
-        .feature-icon-brain {
-            background: linear-gradient(135deg, #c8b6ff, #b8acf6);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-        
-        .brain-emojis {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 5px;
-        }
-        
-        .brain-emojis span {
-            font-size: 1.5rem;
-            animation: emojiPop 2s ease-in-out infinite;
-        }
-        
-        .brain-emojis span:nth-child(1) { animation-delay: 0s; }
-        .brain-emojis span:nth-child(2) { animation-delay: 0.3s; }
-        .brain-emojis span:nth-child(3) { animation-delay: 0.6s; }
-        .brain-emojis span:nth-child(4) { animation-delay: 0.9s; }
-        
-        @keyframes emojiPop {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-        }
-        
-        /* Feature Title */
-        .feature-title {
-            font-size: 1rem;
-            font-weight: 700;
-            color: #2d3436;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        /* ========== CTA BUTTON ========== */
-        .hero-cta-button {
-            background: linear-gradient(135deg, #ff9a56, #ff6b6b);
-            color: white;
-            font-size: 1.3rem;
-            font-weight: 800;
-            padding: 1.2rem 3rem;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            animation: pulse 2s ease-in-out infinite;
-        }
-        
-        .hero-cta-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.6);
-        }
-        
-        .hero-cta-button:active {
-            transform: translateY(-2px);
-        }
-        
-        /* ========== QUICK STATS SECTION ========== */
-        .quick-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            max-width: 1000px;
-            margin: 3rem auto;
-            padding: 0 2rem;
-        }
-        
-        .stat-item {
-            background: white;
-            padding: 2rem;
-            border-radius: 16px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-        
-        .stat-item:hover {
-            transform: translateY(-5px);
-        }
-        
-        .stat-icon {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-        
-        .stat-label {
-            color: #666;
-            font-size: 0.95rem;
-        }
-        
-        /* ========== RESPONSIVE ========== */
-        @media (max-width: 768px) {
-            /* Reduce hero space so it doesn't fill entire first viewport */
-            .hero-main {
-                padding: 2rem 1rem;
-                margin-top: 0; /* avoid overlap on small screens */
-            }
-
-            .hero-main::after {
-                font-size: 2rem;
-                bottom: 12px;
-                right: 20px;
-            }
-
-            .hero-branding {
-                gap: 0.6rem;
-                margin-bottom: 1rem;
-            }
-
-            .brand-logo-circle {
-                width: 40px;
-                height: 40px;
-            }
-
-            .hero-main-title {
-                font-size: 1.6rem;
-                margin-bottom: 1.5rem;
-                padding: 0 0.75rem;
-                line-height: 1.15;
-            }
-
-            .feature-cards-container {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-                padding: 0 1rem;
-                margin-bottom: 2rem;
-            }
-
-            .feature-card {
-                padding: 1.25rem;
-            }
-
-            .feature-icon {
-                width: 84px;
-                height: 84px;
-                margin-bottom: 1rem;
-            }
-
-            .hero-cta-button {
-                font-size: 1rem;
-                padding: 0.9rem 1.75rem;
-            }
-
-            .quick-stats {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-        }
-
-        /* Extra small phones - tighten spacing further */
-        @media (max-width: 420px) {
-            .hero-main {
-                padding: 1.2rem 0.8rem;
-            }
-            .brand-url { font-size: 0.8rem; }
-            .brand-logo-circle { width: 36px; height: 36px; }
-            .hero-main-title { font-size: 1.4rem; margin-bottom: 1rem; }
-            .feature-icon { width: 72px; height: 72px; }
-            .feature-card { padding: 1rem; border-radius: 14px; }
-            .hero-cta-button { font-size: 0.95rem; padding: 0.75rem 1.4rem; }
-            .hero-main::after { display: none; } /* hide decorative on very small screens */
-        }
-        
-        /* Status List Page Styles */
-        .status-page-header {
-            text-align: center;
-            margin-bottom: 3rem;
-            padding: 2rem;
-            background: linear-gradient(135deg, var(--accent2), var(--accent3));
-            color: white;
-            border-radius: 15px;
+    <link rel="stylesheet" href="css/home.css">
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
             display: none; /* Hide old header section */
         }
@@ -689,510 +270,160 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
     <div id="header-placeholder"></div>
 
-    <main class="main-content">
-        <!-- 1. HERO SECTION - Giống hình mẫu -->
-        <section class="hero-main">
-            <div class="hero-branding">
-                <div class="brand-logo-circle">
-                    <img src="images/logo/worldemotions-logo.png" alt="Logo Cảm Xúc" class="hero-logo-img">
+    <main class="home-wrapper" id="top">
+        <section class="hero-section" aria-labelledby="hero-heading">
+            <div class="hero-content">
+                <span class="hero-tag">Không gian chữa lành cảm xúc</span>
+                <h1 class="hero-title" id="hero-heading">Lắng nghe chính mình, kể câu chuyện bạn muốn chia sẻ</h1>
+                <p class="hero-description">infoGraphic.io.vn là bản đồ cảm xúc mở, nơi bạn có thể đọc – viết – tương tác cùng cộng đồng đồng cảm. Khám phá kho cảm xúc đa sắc, viết blog trị liệu và dùng các công cụ tự phản chiếu để cân bằng chính mình.</p>
+                <div class="hero-cta">
+                    <a class="btn btn-primary" href="write.html">✍️ Chia sẻ câu chuyện</a>
+                    <a class="btn-ghost" href="Blog.html">📰 Đọc blog trị liệu</a>
+                    <a class="btn-ghost" href="#emotion-catalog">🎭 Khám phá cảm xúc</a>
                 </div>
+                <ul class="hero-stats" aria-label="Thống kê nhanh">
+                    <li class="hero-stat"><strong>1500+</strong><span>Nhật ký cảm xúc đã được chia sẻ</span></li>
+                    <li class="hero-stat"><strong>28</strong><span>Công cụ & bài tập thực hành</span></li>
+                    <li class="hero-stat"><strong>24/7</strong><span>Bức tường cảm xúc luôn mở</span></li>
+                </ul>
             </div>
-            
-            <h1 class="hero-main-title">MONG NHÌN THẤY ĐƯỢC DÒNG TRẠNG THÁI CỦA BẠN Ở ĐÂY</h1>
-            
-            <!-- 3 Feature Cards -->
-            <div class="feature-cards-container">
-                <div class="feature-card feature-card-1">
-                    <div class="feature-icon feature-icon-lock">
-                        <div class="lock-body"></div>
-                        <div class="lock-shackle"></div>
-                    </div>
-                    <h3 class="feature-title">KHÔNG CẦN ĐĂNG NHẬP</h3>
+            <div class="hero-visual" aria-hidden="true">
+                <div class="hero-emoji-cloud">
+                    <span class="hero-emoji">😊 Niềm vui</span>
+                    <span class="hero-emoji">😢 Thổn thức</span>
+                    <span class="hero-emoji">🤩 Hào hứng</span>
+                    <span class="hero-emoji">😌 Bình yên</span>
                 </div>
-                
-                <div class="feature-card feature-card-2">
-                    <div class="feature-icon feature-icon-note">
-                        <div class="note-lines"></div>
-                        <div class="note-face">
-                            <div class="note-eyes">
-                                <span></span>
-                                <span></span>
-                            </div>
-                            <div class="note-smile"></div>
-                        </div>
-                    </div>
-                    <h3 class="feature-title">KHÔNG THỂ XÓA</h3>
-                </div>
-                
-                <div class="feature-card feature-card-3">
-                    <div class="feature-icon feature-icon-brain">
-                        <div class="brain-emojis">
-                            <span>😊</span>
-                            <span>🎭</span>
-                            <span>💭</span>
-                            <span>❤️</span>
-                        </div>
-                    </div>
-                    <h3 class="feature-title">THỂ HIỆN CÁ TÍNH RIÊNG</h3>
-                </div>
-            </div>
-            
-            <!-- CTA Button -->
-            <button class="hero-cta-button" id="open-post-modal">
-                Chia sẻ trạng thái
-            </button>
-            
-            <!-- Giải thích nhỏ -->
-            <p style="margin-top: 1rem; font-size: 0.9rem; color: rgba(255,255,255,0.8); text-align: center; max-width: 600px; margin-left: auto; margin-right: auto;">
-                Cảm xúc bạn chia sẻ ở đây sẽ xuất hiện ở bên dưới, và trên trang Bức Tường.
-            </p>
-        </section>
-
-        <!-- Quick Stats Section -->
-        <section class="quick-stats">
-            <div class="stat-item">
-                <div class="stat-icon">📝</div>
-                <div class="stat-number" id="total-posts-stat">0</div>
-                <div class="stat-label">Trạng thái đã chia sẻ</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-icon">❤️</div>
-                <div class="stat-number">8</div>
-                <div class="stat-label">Loại cảm xúc</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-icon">🌟</div>
-                <div class="stat-number" id="today-posts-stat">0</div>
-                <div class="stat-label">Hôm nay</div>
             </div>
         </section>
 
-        <!-- NEW: Blog Introduction Section -->
-        <section style="text-align: center; padding: 4rem 2rem; background: #fff; border-radius: 20px; max-width: 1000px; margin: 4rem auto; box-shadow: 0 10px 40px rgba(0,0,0,0.1);">
-            <h2 class="section-title" style="margin-bottom: 1.5rem;">Ghé thăm trang Blog của chúng ta!!</h2>
-            <p style="font-size: 1.2rem; color: #666; max-width: 700px; margin: 0 auto 2.5rem;">
-                Khám phá "Blog Tự Do" - nơi chúng ta cùng nhau chia sẻ những câu chuyện, kiến thức và hành trình cảm xúc sâu sắc. Mọi người đều có thể viết bài mà không cần tài khoản! Đăng bài đăng báo tùy ý
-            </p>
-            <a href="blog.html" class="cta-button" style="background: linear-gradient(45deg, var(--accent2), #3dbbaf); font-size: 1.1rem; padding: 1rem 2.5rem; animation: none;">
-                <i class="fas fa-newspaper"></i> ĐỌC BLOG NGAY
-            </a>
+        <section class="feature-section" aria-labelledby="feature-heading">
+            <div class="section-heading">
+                <h2 id="feature-heading">Điểm hẹn cảm xúc dành riêng cho bạn</h2>
+                <p>Khởi tạo thói quen ghi nhận cảm xúc và kết nối với cộng đồng đồng cảm qua bộ công cụ thiết kế riêng cho hành trình chữa lành và tự khám phá.</p>
+            </div>
+            <div class="feature-grid">
+                <article class="feature-card">
+                    <div class="feature-icon">🧭</div>
+                    <h3>Hành trình cảm xúc</h3>
+                    <p>Lọc cảm xúc theo chủ đề, hoàn cảnh và nhu cầu để hiểu sâu điều bạn đang trải qua, kèm gợi ý chuyển hoá phù hợp.</p>
+                    <a href="kham_pha_cam_xuc.html">Bắt đầu khám phá →</a>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h3>Bức tường cảm xúc</h3>
+                    <p>Ghi lại trạng thái trong ngày, thả emoji và đồng hành cùng những tâm hồn đồng điệu trên bức tường mở 24/7.</p>
+                    <a href="public_status_board.html">Đi tới bức tường →</a>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>Công cụ tự chữa lành</h3>
+                    <p>Sử dụng bánh xe cảm xúc, bài trắc nghiệm EQ và bộ thẻ gợi ý để luyện tập kỹ năng gọi tên & dẫn dắt cảm xúc.</p>
+                    <a href="emotion-wheel.html">Trải nghiệm ngay →</a>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon">🪄</div>
+                    <h3>Blog trị liệu</h3>
+                    <p>Chọn đọc các câu chuyện nhiều chiều, ghi chú cảm nhận và lưu thành bộ sưu tập cá nhân để nhắc nhớ chính mình.</p>
+                    <a href="Blog.html">Mở trang Blog →</a>
+                </article>
+            </div>
         </section>
-        
-        <h2 class="section-title" style="margin-bottom: 2rem;">DÒNG THỜI GIAN CẢM XÚC GẦN ĐÂY</h2>
-        
-        <!-- POSTS TIMELINE (Danh sách trạng thái) -->
-        <div id="posts-container">
-            <!-- Posts will be loaded here -->
-        </div>
-        
-        <!-- Nút chuyển đến Trang Bức Tường -->
-        <div style="text-align: center; margin-top: 3rem;">
-             <a href="public_status_board.html" class="cta-button" style="
-                display: inline-block;
-                padding: 1rem 2.5rem;
-                background: linear-gradient(45deg, var(--accent1), var(--primary));
-                color: white;
-                font-weight: 700;
-                font-size: 1.1rem;
-                border-radius: 30px;
-                text-decoration: none;
-                box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-                transition: transform 0.3s ease;
-                animation: none;
-            ">
-                <i class="fas fa-arrow-right"></i> XEM TOÀN BỘ BỨC TƯỜNG
-            </a>
-        </div>
 
+        <section class="feature-section" aria-labelledby="emotion-heading">
+            <div class="section-heading">
+                <h2 id="emotion-heading">Thư viện cảm xúc sống động</h2>
+                <p>Chọn cảm xúc bạn đang chạm tới và nhận ngay gợi ý chuyển hoá, audio chánh niệm và bài tập journaling ngắn.</p>
+            </div>
+            <div class="emotion-catalog" id="emotion-catalog">
+                <a class="emotion-card happy" href="happy.html"><span>😊</span><strong>Vui vẻ</strong><small>Ghi nhớ điều khiến bạn mỉm cười, chia sẻ niềm hạnh phúc lan toả.</small></a>
+                <a class="emotion-card sad" href="sad.html"><span>😢</span><strong>Buồn bã</strong><small>Được phép yếu đuối, để nước mắt chảy và viết ra điều bạn muốn nhắn gửi.</small></a>
+                <a class="emotion-card angry" href="angry.html"><span>😠</span><strong>Giận dữ</strong><small>Hít sâu, nhận diện điều khiến bạn mất kiểm soát và tìm kênh xả an toàn.</small></a>
+                <a class="emotion-card fear" href="fear.html"><span>😨</span><strong>Sợ hãi</strong><small>Viết ra nỗi sợ và các phương án bạn có thể nắm quyền trở lại.</small></a>
+                <a class="emotion-card love" href="love.html"><span>❤️</span><strong>Yêu thương</strong><small>Lan toả sự tử tế, viết thư cảm ơn và gửi lời thương tới chính mình.</small></a>
+                <a class="emotion-card excited" href="excited.html"><span>🤩</span><strong>Hào hứng</strong><small>Ghi lại các ý tưởng mới cùng danh sách điều bạn mong chờ.</small></a>
+                <a class="emotion-card peaceful" href="peaceful.html"><span>😌</span><strong>Bình yên</strong><small>Chậm lại, thưởng trà và lưu giữ khoảnh khắc cân bằng đầy dịu dàng.</small></a>
+                <a class="emotion-card surprise" href="surprise.html"><span>😲</span><strong>Ngạc nhiên</strong><small>Đón nhận điều mới, tái cấu trúc niềm tin và mở ra góc nhìn khác biệt.</small></a>
+            </div>
+        </section>
 
-        <div id="loading-indicator">Đang tải trạng thái...</div>
-
-        <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0)); margin: 5rem 0;">
-
-        <!-- ORIGINAL EMOTION CONTENT (Khám phá cảm xúc - Dưới đây) -->
-        <h2 class="section-title" style="margin-top: 5rem;">KHÁM PHÁ CÁC LOẠI CẢM XÚC</h2>
-        
-        <div class="emotions-grid">
-            <a href="happy.html" class="emotion-card happy" style="text-decoration: none;">
-                <div class="emotion-icon-container">😄</div>
-                <h3 class="emotion-title">Hạnh Phúc</h3>
-                <p class="emotion-description">Cảm giác vui vẻ, mãn nguyện khi mọi thứ diễn ra như mong muốn.</p>
-                <div class="fun-fact">💡 Cười 100 lần = tập thể dục 15 phút!</div>
-            </a>
-
-            <a href="sad.html" class="emotion-card sad" style="text-decoration: none;">
-                <div class="emotion-icon-container">😢</div>
-                <h3 class="emotion-title">Buồn Bã</h3>
-                <p class="emotion-description">Cảm xúc khi mất mát, thất vọng hoặc cô đơn.</p>
-                <div class="fun-fact">💡 Khóc giúp giải tỏa hormone stress!</div>
-            </a>
-             <a href="angry.html" class="emotion-card angry" style="text-decoration: none;">
-                <div class="emotion-icon-container">😠</div>
-                <h3 class="emotion-title">Tức Giận</h3>
-                <p class="emotion-description">Phản ứng khi bị đối xử bất công hoặc vi phạm ranh giới.</p>
-                <div class="fun-fact">💡 Tim đập nhanh hơn 30 nhịp/phút!</div>
-            </a>
-        </div>
-
-        <!-- ORIGINAL FACTS SECTION (Sự Thật Thú Vị) -->
-        <section class="facts-section">
-            <div class="facts-container">
-                <h2 class="section-title">SỰ THẬT THÚ VỊ</h2>
-                 <div class="facts-grid">
-                        <div class="fact-card">
-                            <div class="fact-icon">
-                                <i class="fas fa-brain"></i>
-                            </div>
-                            <h3 class="fact-title">Não Bộ</h3>
-                            <p class="fact-text">Não xử lý cảm xúc nhanh hơn 6 lần so với suy nghĩ logic.</p>
-                        </div>
-                        <div class="fact-card">
-                            <div class="fact-icon">
-                                <i class="fas fa-heart"></i>
-                            </div>
-                            <h3 class="fact-title">Tim & Cảm Xúc</h3>
-                            <p class="fact-text">Tim có hệ thần kinh riêng, có thể "cảm nhận" cảm xúc độc lập.</p>
-                        </div>
-                        <div class="fact-card">
-                            <div class="fact-icon">
-                                <i class="fas fa-baby"></i>
-                            </div>
-                            <h3 class="fact-title">Trẻ Sơ Sinh</h3>
-                            <p class="fact-text">Trẻ sơ sinh có thể nhận biết 7 loại cảm xúc cơ bản từ khi mới sinh.</p>
-                        </div>
-                        <div class="fact-card">
-                            <div class="fact-icon">
-                                <i class="fas fa-globe"></i>
-                            </div>
-                            <h3 class="fact-title">Toàn Cầu</h3>
-                            <p class="fact-text">Có 6 cảm xúc cơ bản được công nhận trên toàn thế giới.</p>
-                        </div>
+        <section class="feature-section" aria-labelledby="blog-preview-heading">
+            <div class="section-heading">
+                <h2 id="blog-preview-heading">Góc đọc & viết nổi bật</h2>
+                <p>Các bản nháp được cộng đồng yêu thích tuần này. Nhấp để đọc toàn bộ trên trang Blog tự do.</p>
+            </div>
+            <div class="blog-preview-grid">
+                <a class="blog-card" href="Blog.html?featured=healing-notes">
+                    <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80" alt="Trang nhật ký viết tay">
+                    <div class="blog-card-body">
+                        <span class="hero-tag">Journaling</span>
+                        <h3>Viết cho chính mình 5 phút mỗi ngày</h3>
+                        <p>Khơi lại thói quen nhật ký cảm xúc với 3 câu hỏi nhỏ giúp bạn gỡ từng nút thắt.</p>
+                        <div class="blog-card-meta"><span>Đọc ngay</span><span>5 phút</span></div>
                     </div>
+                </a>
+                <a class="blog-card" href="Blog.html?featured=emotion-lab">
+                    <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=900&q=80" alt="Nhóm người trò chuyện">
+                    <div class="blog-card-body">
+                        <span class="hero-tag">Chia sẻ</span>
+                        <h3>Cuộc trò chuyện mở về sự mong manh</h3>
+                        <p>Một buổi tròn trịa, nơi mọi người cùng kể về điều khiến họ thấy yếu mềm nhất.</p>
+                        <div class="blog-card-meta"><span>Đọc ngay</span><span>7 phút</span></div>
+                    </div>
+                </a>
+                <a class="blog-card" href="Blog.html?featured=breath">
+                    <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=900&q=80" alt="Người đang tập thở">
+                    <div class="blog-card-body">
+                        <span class="hero-tag">Thực hành</span>
+                        <h3>Bài thở 4-7-8 giúp xoa dịu nội tâm</h3>
+                        <p>Bài hướng dẫn ngắn gọn kèm audio giúp bạn quay về nhịp thở an toàn khi hoảng loạn.</p>
+                        <div class="blog-card-meta"><span>Đọc ngay</span><span>4 phút</span></div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section class="feature-section" aria-labelledby="community-heading">
+            <div class="section-heading">
+                <h2 id="community-heading">Kết nối & đồng hành cùng cộng đồng</h2>
+                <p>Mỗi công cụ đều có bảng hoạt động riêng để bạn không chỉ đọc – viết mà còn tương tác, phản hồi và cùng nhau lớn lên.</p>
+            </div>
+            <div class="community-section">
+                <article class="community-card">
+                    <h3>📌 Bảng trạng thái</h3>
+                    <p>Cập nhật cảm xúc theo từng ngày, đánh dấu thói quen mới và tạo bản đồ tiến bộ của riêng bạn.</p>
+                    <a href="status_list.html">Xem bảng trạng thái →</a>
+                </article>
+                <article class="community-card">
+                    <h3>🤝 Không gian kết nối</h3>
+                    <p>Tham gia các phòng trò chuyện nhỏ, gửi lời động viên và nhận phản hồi tinh tế từ cộng đồng.</p>
+                    <a href="public_status_board.html">Vào phòng chung →</a>
+                </article>
+                <article class="community-card">
+                    <h3>🛡️ Vùng an toàn</h3>
+                    <p>Quy tắc ứng xử rõ ràng, mọi chia sẻ đều được tôn trọng tuyệt đối và chỉ hiển thị công khai khi bạn muốn.</p>
+                    <a href="faq.html#safe-space">Tìm hiểu quy tắc →</a>
+                </article>
+            </div>
+        </section>
+
+        <section class="join-banner" aria-labelledby="join-heading">
+            <div>
+                <h2 id="join-heading">Bắt đầu hành trình tự chữa lành ngay hôm nay</h2>
+                <p>Lưu lại những điều nhỏ bé, viết cho chính mình và kết nối với những người đang bước đi trên hành trình tương tự. Mỗi dòng chữ đều đáng được lắng nghe.</p>
+            </div>
+            <div class="join-actions">
+                <a class="btn btn-primary" href="write.html">Bắt đầu viết ngay</a>
+                <a class="btn-ghost" href="Blog.html">Khám phá blog chữa lành</a>
             </div>
         </section>
     </main>
 
-    <!-- The Modal (Pop-up) -->
-    <div id="post-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h3 style="text-align: center;"><i class="fas fa-share-alt"></i> CHIA SẺ TRẠNG THÁI</h3>
-
-            <div class="form-group">
-                <label for="modal-name-input">Tên (Tùy chọn)</label>
-                <input type="text" id="modal-name-input" placeholder="Nhập tên của bạn (hoặc không)">
-            </div>
-            <div class="form-group">
-                <label for="modal-content-input">Nội dung Trạng thái</label>
-                <textarea id="modal-content-input" rows="4" placeholder="Ví dụ: **Hôm nay tôi vui** nhưng chẳng biết vì sao tôi vui. Người ta bảo tôi điên. Tôi: 'ừ'.
-                **in đậm**, *in nghiêng*, và [liên kết]" required></textarea>
-            </div>
-            <button id="modal-submit-btn" class="submit-btn" style="background: linear-gradient(135deg, var(--accent1), var(--accent2)); width: 100%;">ĐĂNG LÊN TƯỜNG</button>
-        </div>
-    </div>
-
-    <!-- Custom Message Box placeholder -->
-    <div id="message-box" class="message-box" style="display: none;"></div>
-
-    <!-- Footer -->
     <div id="footer-placeholder"></div>
 
-    <script src="js/script.js"></script>
-    
-    <!-- Thư viện Markdown -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { 
-            getFirestore, collection, onSnapshot, query, orderBy, where, 
-            Timestamp, addDoc, serverTimestamp, limit, getDocs
-        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        // CẤU HÌNH FIREBASE TRỰC TIẾP
-        const firebaseConfig = {
-          apiKey: "AIzaSyDnOGA4RF7M-AMw4ZYEdhR5csIH2A1NHno",
-          authDomain: "worldofemotions-5ac0a.firebaseapp.com",
-          projectId: "worldofemotions-5ac0a",
-          storageBucket: "worldofemotions-5ac0a.firebasestorage.app",
-          messagingSenderId: "923244408713",
-          appId: "1:923244408713:web:d239a0c99722b483913b58"
-        };
-        // Global variables provided by the environment
-        const appId = firebaseConfig.projectId;
-
-        let db;
-        let postsCollectionRef;
-        let isReady = false;
-
-        const POSTS_LIMIT_HOME = 5; // Chỉ giới hạn 5 bài trên trang chủ
-
-        const postsContainer = document.getElementById('posts-container');
-        const loadingIndicator = document.getElementById('loading-indicator');
-        
-        // Modal elements
-        const modal = document.getElementById("post-modal");
-        const openModalBtn = document.getElementById("open-post-modal");
-        const closeModalBtn = document.getElementsByClassName("close-btn")[0];
-        const modalNameInput = document.getElementById('modal-name-input');
-        const modalContentInput = document.getElementById('modal-content-input');
-        const modalSubmitBtn = document.getElementById('modal-submit-btn');
-
-
-        // --- UTILITY FUNCTIONS ---
-        /** Shows a temporary success or error message using a custom UI element. */
-        function showMessage(message, isError = false) {
-            const messageBox = document.createElement('div');
-            messageBox.className = `message-box ${isError ? 'error' : ''}`;
-            messageBox.textContent = message;
-            document.body.appendChild(messageBox);
-
-            // Animate in
-             setTimeout(() => {
-                messageBox.style.opacity = '1';
-                messageBox.style.transform = 'translate(-50%, 0)';
-            }, 10);
-
-            // Animate out
-            setTimeout(() => {
-                messageBox.style.opacity = '0';
-                messageBox.style.transform = 'translate(-50%, -20px)';
-                setTimeout(() => messageBox.remove(), 300);
-            }, 3000);
-        }
-
-        function formatTimestamp(timestamp) {
-            if (!timestamp) return 'Vừa xong';
-            const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
-            return date.toLocaleString('vi-VN', { 
-                day: '2-digit', month: '2-digit', year: 'numeric', 
-                hour: '2-digit', minute: '2-digit' 
-            });
-        }
-        
-        /** Toggles the read more/collapse function. */
-        function toggleReadMore(button) {
-            const wrapper = button.previousElementSibling;
-            const isExpanded = wrapper.classList.toggle('expanded');
-            button.textContent = isExpanded ? 'Rút gọn' : '... Đọc thêm';
-        }
-
-        // --- FIREBASE INITIALIZATION ---
-        async function initializeFirebase() {
-            try {
-                if (typeof marked === 'undefined') {
-                    console.error("Marked.js is not loaded. Markdown functionality disabled.");
-                }
-                
-                const app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                postsCollectionRef = collection(db, 'artifacts', appId, 'public', 'data', 'statuses');
-                
-                isReady = true;
-                
-                // Load initial posts
-                fetchPosts();
-                
-                // Fetch total stats separately
-                fetchTotalStats();
-
-            } catch (error) {
-                console.error("Lỗi khi khởi tạo Firebase:", error);
-                loadingIndicator.textContent = "Lỗi kết nối. Không thể tải trạng thái.";
-                showMessage("Lỗi: Không thể kết nối với hệ thống trạng thái. Vui lòng kiểm tra cấu hình Firebase.", true);
-            }
-        }
-        
-        /** Fetch total count for stats (separate from timeline). */
-        async function fetchTotalStats() {
-            try {
-                // Query all posts for stats
-                const statsQuery = query(postsCollectionRef);
-                 onSnapshot(statsQuery, (snapshot) => {
-                    const totalPostsStat = document.getElementById('total-posts-stat');
-                    const todayPostsStat = document.getElementById('today-posts-stat');
-                    
-                    if (totalPostsStat) {
-                        animateNumber(totalPostsStat, snapshot.size);
-                    }
-                    
-                    if (todayPostsStat) {
-                        const today = new Date();
-                        today.setHours(0, 0, 0, 0);
-                        
-                        let todayCount = 0;
-                        snapshot.docs.forEach(doc => {
-                            const data = doc.data();
-                            if (data.timestamp) {
-                                const postDate = new Date(data.timestamp.toMillis());
-                                postDate.setHours(0, 0, 0, 0);
-                                if (postDate.getTime() === today.getTime()) {
-                                    todayCount++;
-                                }
-                            }
-                        });
-                        
-                        animateNumber(todayPostsStat, todayCount);
-                    }
-                });
-            } catch (error) {
-                console.error("Error fetching stats:", error);
-            }
-        }
-
-        // --- DATA FETCHING AND RENDERING ---
-
-        /** Fetches and listens to posts based on current filters. */
-        function fetchPosts() {
-            if (!isReady) return; 
-            loadingIndicator.style.display = 'block';
-            postsContainer.innerHTML = ''; 
-
-            const q = query(postsCollectionRef, orderBy('timestamp', 'desc'), limit(POSTS_LIMIT_HOME));
-
-            // Real-time listener
-            onSnapshot(q, (snapshot) => {
-                loadingIndicator.style.display = 'none';
-                postsContainer.innerHTML = ''; // Clear for fresh update
-
-                const posts = [];
-                if (snapshot.docs.length === 0) {
-                    postsContainer.innerHTML = '<p style="text-align: center; color: #888; padding: 2rem;">Chưa có trạng thái nào được đăng. Hãy là người đầu tiên!</p>';
-                    return;
-                }
-
-                snapshot.docs.forEach(doc => {
-                    const data = doc.data();
-                    posts.push({
-                        id: doc.id,
-                        ...data,
-                        timestamp: data.timestamp ? data.timestamp.toMillis() : Date.now()
-                    });
-                });
-                
-                renderPosts(posts);
-
-            }, (error) => {
-                console.error("Lỗi khi lắng nghe trạng thái:", error);
-                loadingIndicator.textContent = "Lỗi khi tải trạng thái.";
-                showMessage("Lỗi khi tải trạng thái. (Kiểm tra Firestore Rules)", true);
-            });
-        }
-        
-        /** Animate number counting up. */
-        function animateNumber(element, target) {
-            let start = parseInt(element.textContent) || 0;
-            if (start === target) return;
-            const duration = 1000;
-            let startTimestamp = null;
-            const step = (timestamp) => {
-                if (!startTimestamp) startTimestamp = timestamp;
-                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                element.textContent = Math.floor(progress * (target - start) + start);
-                if (progress < 1) {
-                    window.requestAnimationFrame(step);
-                }
-            };
-            window.requestAnimationFrame(step);
-        }
-        
-        /** Renders the list of posts to the UI. */
-        function renderPosts(posts) {
-            posts.forEach(post => {
-                const postElement = document.createElement('div');
-                postElement.className = 'post-card';
-
-                const displayTime = formatTimestamp(post.timestamp);
-                const displayName = post.name || 'Người Dùng Ẩn Danh';
-                const icon = post.name ? '💌' : '👤';
-                const rawContent = post.content || '';
-                
-                const htmlContent = marked.parse(rawContent);
-
-                let contentHTML = `<div class="post-content">${htmlContent}</div>`;
-                if (rawContent.length > 200) { 
-                    contentHTML = `
-                        <div class="content-wrapper">
-                            <div class="post-content">${htmlContent}</div>
-                        </div>
-                        <button class="read-more-btn" data-action="toggle">... Đọc thêm</button>
-                    `;
-                }
-
-                postElement.innerHTML = `
-                    <div class="post-header">
-                        <span class="post-name">${displayName}</span>
-                        <span class="post-time">${displayTime}</span>
-                    </div>
-                    <div class="post-icon">${icon}</div>
-                    ${contentHTML}
-                `;
-                postsContainer.appendChild(postElement);
-            });
-            
-            document.querySelectorAll('.read-more-btn').forEach(button => {
-                button.addEventListener('click', () => toggleReadMore(button));
-            });
-        }
-        
-        /** Handles submitting a new post from the modal. */
-        async function handlePostSubmit() {
-            if (!isReady) {
-                showMessage("Hệ thống chưa sẵn sàng.", true);
-                return;
-            }
-
-            const name = modalNameInput.value.trim();
-            const content = modalContentInput.value.trim();
-
-            if (content.length < 5) {
-                showMessage("Nội dung phải có ít nhất 5 ký tự.", true);
-                return;
-            }
-
-            modalSubmitBtn.disabled = true;
-            modalSubmitBtn.textContent = 'Đang đăng...';
-
-            try {
-                await addDoc(postsCollectionRef, {
-                    name: name,
-                    content: content,
-                    timestamp: serverTimestamp(), 
-                    userId: crypto.randomUUID()
-                });
-
-                showMessage("Đăng trạng thái thành công!");
-                modalNameInput.value = '';
-                modalContentInput.value = '';
-                modal.style.display = "none"; 
-
-            } catch (e) {
-                console.error("Lỗi khi gửi trạng thái:", e);
-                showMessage(`Lỗi: ${e.message}`, true);
-            } finally {
-                modalSubmitBtn.disabled = false;
-                modalSubmitBtn.textContent = 'ĐĂNG LÊN TƯỜNG';
-            }
-        }
-
-        // --- EVENT HANDLERS ---
-        openModalBtn.addEventListener('click', () => {
-            modal.style.display = "block";
-            modalContentInput.focus();
-        });
-
-        closeModalBtn.addEventListener('click', () => modal.style.display = "none");
-        window.addEventListener('click', (event) => {
-            if (event.target == modal) modal.style.display = "none";
-        });
-        modalSubmitBtn.addEventListener('click', handlePostSubmit);
-        
-        // --- INITIALIZATION ---
-        initializeFirebase();
-    </script>
+    <script src="js/script.js" defer></script>
 </body>
 </html>
 

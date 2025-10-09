@@ -93,10 +93,11 @@
 
     <!-- Modal for Viewing Full Post -->
     <div id="detail-modal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 hidden">
-        <article id="detail-modal-content" class="bg-white dark:bg-gray-800 rounded-lg shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col modal-enter">
-            <header class="p-6 flex justify-between items-start">
-                <div>
-                    <h1 id="detail-title" class="text-2xl md:text-3xl font-bold leading-tight"></h1>
+        <article id="detail-modal-content" class="bg-white dark:bg-gray-800 rounded-lg shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col modal-enter overflow-hidden">
+            <header class="p-4 md:p-6 flex justify-between items-start">
+                <button id="back-detail-modal-btn" class="text-gray-400 hover:text-gray-600 flex-shrink-0 mr-4"><i data-feather="arrow-left" class="h-6 w-6"></i></button>
+                <div class="flex-grow">
+                    <h1 id="detail-title" class="text-xl md:text-2xl lg:text-3xl font-bold leading-tight"></h1>
                     <p id="detail-meta" class="text-sm text-gray-500 dark:text-gray-400 mt-2"></p>
                 </div>
                 <button id="close-detail-modal-btn" class="text-gray-400 hover:text-gray-600 flex-shrink-0 ml-4"><i data-feather="x" class="h-6 w-6"></i></button>
@@ -232,6 +233,7 @@
             detailModal: document.getElementById('detail-modal'),
             detailModalContent: document.getElementById('detail-modal-content'),
             closeDetailModalBtn: document.getElementById('close-detail-modal-btn'),
+            backDetailModalBtn: document.getElementById('back-detail-modal-btn'),
             detailTitle: document.getElementById('detail-title'),
             detailMeta: document.getElementById('detail-meta'),
             detailImage: document.getElementById('detail-image'),
@@ -316,8 +318,13 @@
 
         const blogsCollection = collection(db, `artifacts/${appId}/public/data/blogs`);
 
+        let _lastFocusedElement = null;
+        let _pushedState = false; // whether we pushed a state when opening
+
         const detailModal = {
-            open: (post) => {
+            open: (post, options = {}) => {
+                // remember the element that had focus so we can restore it
+                _lastFocusedElement = document.activeElement && document.activeElement !== document.body ? document.activeElement : null;
                 UI.detailTitle.textContent = post.title;
                 const postDate = post.timestamp ? post.timestamp.toDate().toLocaleString('vi-VN') : 'Vừa xong';
                 UI.detailMeta.innerHTML = `bởi <strong class="text-indigo-600 dark:text-indigo-400">${post.author || 'Người kể chuyện'}</strong> • ${postDate}`;
@@ -338,11 +345,35 @@
                 UI.detailModal.classList.remove('hidden');
                 setTimeout(() => UI.detailModalContent.classList.add('modal-enter-active'), 10);
                 feather.replace();
+
+                // push history state only if not already present in URL
+                const urlParams = new URLSearchParams(window.location.search);
+                if (!urlParams.get('post')) {
+                    history.pushState({ modal: true, postId: post.id }, '', `?post=${post.id}`);
+                    _pushedState = true;
+                } else {
+                    _pushedState = false;
+                }
+                // focus close button for easy keyboard dismissal
+                UI.closeDetailModalBtn.focus();
             },
             close: () => {
                 UI.detailModalContent.classList.remove('modal-enter-active');
-                history.pushState(null, '', window.location.pathname); // Clear URL parameter
-                setTimeout(() => UI.detailModal.classList.add('hidden'), 200);
+                // If we pushed a history entry when opening, go back to restore previous URL; otherwise clear param
+                if (_pushedState && window.history && window.history.length > 1) {
+                    // Use history.back to return to the previous state
+                    history.back();
+                } else {
+                    history.pushState(null, '', window.location.pathname); // Clear URL parameter
+                }
+
+                setTimeout(() => {
+                    UI.detailModal.classList.add('hidden');
+                    // restore focus to last element if possible
+                    if (_lastFocusedElement && typeof _lastFocusedElement.focus === 'function') {
+                        _lastFocusedElement.focus();
+                    }
+                }, 200);
             }
         };
         
@@ -409,6 +440,7 @@
             }
         });
         UI.closeDetailModalBtn.addEventListener('click', detailModal.close);
+        UI.backDetailModalBtn.addEventListener('click', detailModal.close);
         UI.detailModal.addEventListener('click', e => { if (e.target === UI.detailModal) detailModal.close(); });
 
         UI.copyLinkBtn.addEventListener('click', function() {
@@ -417,6 +449,21 @@
             }).catch(err => {
                 console.error('Failed to copy: ', err);
             });
+        });
+        
+        // Close modal when browser back/forward is used
+        window.addEventListener('popstate', (e) => {
+            const params = new URLSearchParams(window.location.search);
+            if (!params.get('post')) {
+                // URL no longer has post param -> close modal
+                if (!UI.detailModal.classList.contains('hidden')) {
+                    UI.detailModalContent.classList.remove('modal-enter-active');
+                    setTimeout(() => UI.detailModal.classList.add('hidden'), 180);
+                }
+            } else {
+                // If post param present and modal not open, try open
+                if (UI.detailModal.classList.contains('hidden')) checkUrlForPost();
+            }
         });
         
         // Dark Mode Logic
@@ -441,5 +488,10 @@
         init();
         feather.replace();
     </script>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <script src="js/script.js"></script>
 </body>
 </html>

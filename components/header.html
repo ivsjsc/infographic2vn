@@ -1,66 +1,112 @@
 <!-- Header -->
-<header>
+<header class="site-header" data-component="global-header">
     <div class="header-container">
-        <div class="logo">
+        <div class="header-brand">
             <a href="index.html" class="logo-link" aria-label="infoGraphic.io.vn — Trang chủ">
+                <span class="logo-badge" aria-hidden="true">🌈</span>
                 <span class="logo-text">infoGraphic.io.vn</span>
             </a>
         </div>
 
         <input id="nav-toggle" type="checkbox" hidden aria-controls="main-nav" aria-expanded="false" />
-        <label for="nav-toggle" class="nav-toggle" aria-label="Mở menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </label>
 
-        <nav id="main-nav" role="navigation" aria-hidden="true">
-            <ul>
-                <!-- Chia sẻ -->
-                <li><a href="public_status_board.html" class="cta-nav-link">📤 Chia sẻ</a></li>
-                
-                <!-- Viết Bài -->
-                <li><a href="write.html" class="cta-nav-link">✍️ Viết Bài</a></li>
-                
-                <!-- Trang Chủ -->
-                <li><a href="index.html">🏠 Trang Chủ</a></li>
+        <div class="header-actions-mobile">
+            <button id="header-theme-toggle" class="icon-button" type="button" aria-label="Đổi chế độ sáng/tối">
+                <span class="icon-light" aria-hidden="true">☀️</span>
+                <span class="icon-dark" aria-hidden="true">🌙</span>
+            </button>
+            <label for="nav-toggle" class="nav-toggle" aria-label="Mở menu toàn trang">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+        </div>
 
-                <!-- Khám Phá Cảm Xúc (Dropdown) -->
-                <li class="has-dropdown">
-                    <a href="emotions.html">🎭 Khám Phá <i class="fas fa-chevron-down dropdown-icon"></i></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="happy.html">😊 Vui</a></li>
-                        <li><a href="sad.html">😢 Buồn</a></li>
-                        <li><a href="angry.html">😠 Giận</a></li>
-                        <li><a href="fear.html">😨 Sợ</a></li>
-                        <li><a href="surprise.html">😲 Ngạc Nhiên</a></li>
-                        <li><a href="love.html">❤️ Yêu</a></li>
-                        <li><a href="excited.html">🤩 Hào Hứng</a></li>
-                        <li><a href="peaceful.html">😌 Bình Yên</a></li>
-                    </ul>
-                </li>
-                
-                <!-- Công Cụ & Kiến Thức (Dropdown) -->
-                <li class="has-dropdown">
-                    <a href="#">🛠️ Công Cụ <i class="fas fa-chevron-down dropdown-icon"></i></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="emotion-wheel.html">🎡 Bánh Xe Cảm Xúc</a></li>
-                        <li><a href="eq-quiz.html">🧠 Trắc Nghiệm EQ</a></li>
-                        <li><a href="facts.html">💡 Sự Thật Thú Vị</a></li>
-                    </ul>
+        <nav id="main-nav" class="main-navigation" role="navigation" aria-hidden="true">
+            <ul class="nav-level-1">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">🏠 Trang chủ</a>
                 </li>
 
-                <!-- Thông Tin (Dropdown) -->
-                <li class="has-dropdown">
-                    <a href="#">📚 Thông Tin <i class="fas fa-chevron-down dropdown-icon"></i></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="resources.html">📚 Tài Nguyên</a></li>
-                        <li><a href="faq.html">❓ FAQ</a></li>
-                        <li><a href="about.html">ℹ️ Giới Thiệu</a></li>
-                        <li><a href="contact.html">📞 Liên Hệ</a></li>
-                    </ul>
+                <li class="nav-item has-dropdown">
+                    <button class="dropdown-toggle" id="nav-explore" aria-expanded="false" aria-controls="submenu-explore">
+                        🎭 Khám phá
+                        <span class="dropdown-icon" aria-hidden="true">▾</span>
+                    </button>
+                    <div id="submenu-explore" class="dropdown-panel" role="menu">
+                        <div class="dropdown-section" aria-label="Dải cảm xúc">
+                            <p class="dropdown-title">Dải cảm xúc</p>
+                            <ul class="dropdown-list">
+                                <li><a href="happy.html">😊 Vui</a></li>
+                                <li><a href="sad.html">😢 Buồn</a></li>
+                                <li><a href="angry.html">😠 Giận</a></li>
+                                <li><a href="fear.html">😨 Sợ</a></li>
+                                <li><a href="surprise.html">😲 Ngạc nhiên</a></li>
+                                <li><a href="love.html">❤️ Yêu thương</a></li>
+                                <li><a href="excited.html">🤩 Hào hứng</a></li>
+                                <li><a href="peaceful.html">😌 Bình yên</a></li>
+                            </ul>
+                        </div>
+                        <div class="dropdown-section accent" aria-label="Khám phá chuyên sâu">
+                            <p class="dropdown-title">Khám phá chuyên sâu</p>
+                            <ul class="dropdown-list">
+                                <li><a href="emotion-wheel.html">🎡 Bánh xe cảm xúc</a></li>
+                                <li><a href="emotions.html">🌈 Thư viện cảm xúc</a></li>
+                                <li><a href="kham_pha_cam_xuc.html">🔎 Hành trình cảm xúc</a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </li>
 
+                <li class="nav-item has-dropdown">
+                    <button class="dropdown-toggle" id="nav-community" aria-expanded="false" aria-controls="submenu-community">
+                        � Không gian
+                        <span class="dropdown-icon" aria-hidden="true">▾</span>
+                    </button>
+                    <div id="submenu-community" class="dropdown-panel" role="menu">
+                        <ul class="dropdown-list">
+                            <li><a href="Blog.html">📰 Blog tự do</a></li>
+                            <li><a href="public_status_board.html">🧱 Bức tường cảm xúc</a></li>
+                            <li><a href="status_list.html">📜 Dòng trạng thái</a></li>
+                            <li><a href="write.html">✍️ Viết bài mới</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item has-dropdown">
+                    <button class="dropdown-toggle" id="nav-tools" aria-expanded="false" aria-controls="submenu-tools">
+                        🛠️ Công cụ
+                        <span class="dropdown-icon" aria-hidden="true">▾</span>
+                    </button>
+                    <div id="submenu-tools" class="dropdown-panel" role="menu">
+                        <ul class="dropdown-list">
+                            <li><a href="eq-quiz.html">🧠 Trắc nghiệm EQ</a></li>
+                            <li><a href="facts.html">💡 Sự thật thú vị</a></li>
+                            <li><a href="resources.html">📚 Tài nguyên chữa lành</a></li>
+                            <li><a href="emotion-wheel.html">🌐 Khám phá tương tác</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item has-dropdown">
+                    <button class="dropdown-toggle" id="nav-info" aria-expanded="false" aria-controls="submenu-info">
+                        � Giới thiệu
+                        <span class="dropdown-icon" aria-hidden="true">▾</span>
+                    </button>
+                    <div id="submenu-info" class="dropdown-panel" role="menu">
+                        <ul class="dropdown-list">
+                            <li><a href="about.html">ℹ️ Về infoGraphic.io.vn</a></li>
+                            <li><a href="faq.html">❓ Câu hỏi thường gặp</a></li>
+                            <li><a href="contact.html">📞 Liên hệ & hỗ trợ</a></li>
+                            <li><a href="facts.html#how-to">🧭 Hướng dẫn sử dụng</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item nav-cta-group">
+                    <a href="write.html" class="btn btn-primary">✍️ Viết bài</a>
+                    <a href="public_status_board.html" class="btn btn-outline">📤 Chia sẻ cảm xúc</a>
+                </li>
             </ul>
         </nav>
     </div>
