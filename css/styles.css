@@ -49,21 +49,18 @@ body.no-scroll {
     width: 100%;
 }
 
-/* Mobile nav backdrop */
-.nav-backdrop {
-    display: none;
+body.no-scroll::before {
+    content: '';
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.5);
     z-index: 1050;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    animation: fadeIn 0.3s ease;
 }
 
-#nav-toggle:checked ~ .nav-backdrop,
-.main-navigation.is-open ~ .nav-backdrop {
-    display: block;
-    opacity: 1;
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 /* Header Styles */
@@ -119,12 +116,50 @@ body.no-scroll {
     animation: float 3s ease-in-out infinite;
 }
 
+.logo-emoji {
+    width: 48px;
+    height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    font-size: 2rem;
+    background: rgba(255,255,255,0.22);
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.15),
+        inset 0 0 0 2px rgba(255,255,255,0.3);
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+.logo-emoji:hover {
+    transform: scale(1.1) rotate(5deg);
+    background: rgba(255,255,255,0.28);
+}
+
 .logo-text {
     font-family: 'Fredoka One', cursive;
     font-size: 1.25rem;
     letter-spacing: 0.02em;
     color: white;
     text-shadow: 0 4px 12px rgba(15, 23, 42, 0.3);
+    transition: color 0.3s ease;
+}
+
+.logo-link:hover .logo-text {
+    color: rgba(255, 255, 255, 0.95);
+}
+
+@media (max-width: 768px) {
+    .logo-emoji {
+        width: 40px;
+        height: 40px;
+        font-size: 1.6rem;
+    }
+    
+    .logo-text {
+        font-size: 1.05rem;
+    }
 }
 
 .header-actions {
@@ -206,20 +241,20 @@ html.dark .icon-dark {
     display: block;
 }
 
-#nav-toggle:checked ~ .header-actions .nav-toggle {
+#nav-toggle:checked + .header-actions .nav-toggle {
     background: rgba(255,255,255,0.35);
 }
 
-#nav-toggle:checked ~ .header-actions .nav-toggle span:nth-child(1) {
+#nav-toggle:checked + .header-actions .nav-toggle span:nth-child(1) {
     transform: translateY(9px) rotate(45deg);
 }
 
-#nav-toggle:checked ~ .header-actions .nav-toggle span:nth-child(2) {
+#nav-toggle:checked + .header-actions .nav-toggle span:nth-child(2) {
     opacity: 0;
     transform: scale(0);
 }
 
-#nav-toggle:checked ~ .header-actions .nav-toggle span:nth-child(3) {
+#nav-toggle:checked + .header-actions .nav-toggle span:nth-child(3) {
     transform: translateY(-9px) rotate(-45deg);
 }
 
