@@ -141,34 +141,8 @@ function initMobileNav() {
         document.body.classList.toggle('no-scroll', expanded);
     });
 
-    // JS fallback: make sure the visible hamburger label always toggles the nav
-    // (some browsers / environments may not toggle the hidden checkbox reliably)
-    const navLabel = document.querySelector('label.nav-toggle[for="nav-toggle"]');
-    if (navLabel) {
-        navLabel.addEventListener('click', (e) => {
-            // Prevent double-handling if label click already toggles checkbox
-            try {
-                const prev = navToggle.checked;
-                navToggle.checked = !prev;
-                // Dispatch change so other listeners run
-                navToggle.dispatchEvent(new Event('change', { bubbles: true }));
-                // Move focus to the hidden checkbox for accessibility
-                navToggle.focus({ preventScroll: true });
-                e.preventDefault();
-            } catch (err) {
-                // ignore
-            }
-        });
-
-        navLabel.addEventListener('keydown', (evt) => {
-            if (evt.key === 'Enter' || evt.key === ' ') {
-                evt.preventDefault();
-                navToggle.checked = !navToggle.checked;
-                navToggle.dispatchEvent(new Event('change', { bubbles: true }));
-            }
-        });
-    }
-
+    // The `change` event on the checkbox is the source of truth.
+    // No need for extra click/keydown handlers on the label.
     mainNav.addEventListener('click', (evt) => {
         if (evt.target.closest('a')) {
             closeNav();
