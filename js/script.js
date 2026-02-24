@@ -166,11 +166,46 @@ function initHeaderInteractions() {
     initMobileNav();
 }
 
+function initPulseFilter() {
+    const filter = document.getElementById('pulse-filter');
+    if (!filter) return;
+    const cards = document.querySelectorAll('.pulse-card');
+
+    const applyFilter = () => {
+        const value = filter.value;
+        cards.forEach(card => {
+            const topics = (card.dataset.topics || '').split(' ').filter(Boolean);
+            const matches = value === 'all' || topics.includes(value);
+            card.classList.toggle('is-hidden', !matches);
+        });
+    };
+
+    filter.addEventListener('change', applyFilter);
+    applyFilter();
+}
+
+function initPulseRefresh() {
+    const refreshBtn = document.querySelector('[data-action="refresh"]');
+    if (!refreshBtn) return;
+    const originalText = refreshBtn.textContent;
+
+    refreshBtn.addEventListener('click', () => {
+        refreshBtn.textContent = 'Đang cập nhật...';
+        refreshBtn.disabled = true;
+        setTimeout(() => {
+            refreshBtn.textContent = originalText;
+            refreshBtn.disabled = false;
+        }, 1200);
+    });
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
     await Promise.all([
         injectPartial('header-placeholder', 'components/header.html'),
         injectPartial('footer-placeholder', 'components/footer.html')
     ]);
     initHeaderInteractions();
+    initPulseFilter();
+    initPulseRefresh();
     updateHeaderOnScroll();
 });

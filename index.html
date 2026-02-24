@@ -12,262 +12,6 @@
     <link rel="stylesheet" href="css/home.css">
     <link rel="icon" type="image/svg+xml" href="images/logo/infographic-logo.svg">
     <link rel="alternate icon" href="images/logo/worldemotions-logo.png">
-    <style>
-
-        /* --- NEW MODAL STYLES --- */
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed;
-            z-index: 2000; /* Above header */
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
-            padding-top: 50px;
-        }
-
-        .modal-content {
-            background-color: #fefefe;
-            margin: 5% auto; /* 5% from top and centered */
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            max-width: 90%; /* Responsive width */
-            width: 500px;
-            position: relative;
-            animation: slideIn 0.3s ease-out;
-        }
-
-        .close-btn {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            transition: color 0.2s;
-        }
-
-        .close-btn:hover,
-        .close-btn:focus {
-            color: var(--accent1);
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .modal h3 {
-            margin-bottom: 1.5rem;
-            color: var(--primary);
-        }
-
-        /* --- NEW POST INPUT BAR (Replaces the CTA button on mobile) --- */
-        .post-input-bar {
-            max-width: 800px;
-            margin: 1rem auto 3rem; 
-            padding: 1rem;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            cursor: pointer;
-            border: 2px solid var(--accent2);
-            transition: box-shadow 0.3s ease, transform 0.3s ease;
-        }
-        .post-input-bar:hover {
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-            transform: translateY(-2px);
-        }
-        .post-input-bar-text {
-            flex-grow: 1;
-            color: #888;
-            font-size: 1rem;
-            font-weight: 500;
-        }
-        .post-input-bar i {
-            color: var(--primary);
-            font-size: 1.5rem;
-        }
-        
-        /* Filter/Search Bar */
-        .filter-bar {
-            max-width: 800px;
-            margin: 0 auto 3rem; 
-            padding: 1.5rem;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .filter-bar label {
-            font-weight: 600;
-            color: var(--dark);
-            width: 100%; 
-            text-align: center;
-        }
-
-        .filter-bar input[type="date"], .filter-bar button {
-            width: 100%;
-            box-sizing: border-box; 
-            max-width: 250px;
-        }
-
-        .filter-bar input[type="date"] {
-            padding: 0.6rem 1rem;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: border-color 0.3s;
-        }
-        
-        .filter-bar input[type="date"]:focus {
-            outline: none;
-            border-color: var(--accent2);
-        }
-
-        /* Posts Container */
-        #posts-container {
-            max-width: 800px;
-            margin: 0 auto;
-            min-height: 50vh;
-        }
-
-        .post-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            margin-bottom: 1.5rem;
-            border-left: 5px solid var(--accent1);
-            position: relative;
-            animation: fadeIn 0.5s ease-out;
-        }
-
-        .post-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.75rem;
-        }
-
-        .post-name {
-            font-weight: 700;
-            color: var(--primary);
-            font-size: 1.1rem;
-        }
-
-        .post-time {
-            color: #999;
-            font-size: 0.85rem;
-        }
-
-        /* Style cho nội dung rút gọn */
-        .post-content {
-            color: var(--dark);
-            word-wrap: break-word;
-            padding-top: 0.5rem;
-            border-top: 1px dashed #eee;
-        }
-        /* Style để Markdown HTML hiển thị đẹp hơn */
-        .post-content p {
-            margin-bottom: 1em;
-        }
-        .post-content ul, .post-content ol {
-            padding-left: 20px;
-            margin-bottom: 1em;
-        }
-        
-        .content-wrapper {
-            max-height: 7.5em; /* Giới hạn chiều cao: khoảng 5 dòng */
-            overflow: hidden;
-            transition: max-height 0.5s ease-in-out;
-            position: relative;
-        }
-        
-        .content-wrapper.expanded {
-            max-height: 2000px; /* Chiều cao lớn khi mở rộng */
-        }
-        
-        .read-more-btn {
-            background: none;
-            border: none;
-            color: var(--accent1);
-            font-weight: 600;
-            cursor: pointer;
-            padding: 0;
-            margin-top: 0.5rem;
-            display: block;
-        }
-
-        .post-icon {
-            position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            font-size: 1.5rem;
-            opacity: 0.3;
-        }
-        
-        #loading-indicator {
-            text-align: center;
-            padding: 1rem;
-            margin-bottom: 2rem;
-            font-weight: 600;
-            color: #666;
-        }
-        
-        /* Custom Message Box */
-        .message-box {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 15px 25px;
-            background-color: var(--accent2);
-            color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            z-index: 10000;
-            font-weight: 600;
-            opacity: 0;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-        .message-box.error {
-            background-color: var(--accent1);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @media (min-width: 600px) {
-            .filter-bar input[type="date"], .filter-bar button {
-                width: auto;
-                flex-grow: 1;
-                max-width: 200px;
-            }
-            .filter-bar label {
-                width: auto;
-                margin-right: 1rem;
-            }
-        }
-        @media (max-width: 550px) {
-            .modal-content {
-                margin: 20px auto;
-            }
-        }
-    </style>
 </head>
 <body>
     <div id="header-placeholder"></div>
@@ -282,14 +26,117 @@
                     <a class="btn btn-primary" href="write.html">✍️ Chia sẻ câu chuyện</a>
                     <a class="btn-ghost" href="Blog.html">📰 Đọc blog trị liệu</a>
                 </div>
+                <div class="hero-stats" role="region" aria-label="Thống kê hoạt động">
+                    <article class="stat-card">
+                        <span class="stat-value" id="stat-posts">0</span>
+                        <p class="stat-label">Blog &amp; nhật ký</p>
+                        <p class="stat-note">Câu chuyện được đọc &amp; nhân rộng mỗi ngày</p>
+                    </article>
+                    <article class="stat-card">
+                        <span class="stat-value" id="stat-tools">0</span>
+                        <p class="stat-label">Công cụ tương tác</p>
+                        <p class="stat-note">Bánh xe cảm xúc, quiz và tài nguyên chữa lành</p>
+                    </article>
+                    <article class="stat-card">
+                        <span class="stat-value" id="stat-status">0</span>
+                        <p class="stat-label">Trạng thái cộng đồng</p>
+                        <p class="stat-note">Những khoảnh khắc thực tế được ghi nhận</p>
+                    </article>
+                </div>
             </div>
             <div class="hero-visual" aria-hidden="true">
-                <div class="hero-emoji-cloud">
-                    <span class="hero-emoji">😊 Niềm vui</span>
-                    <span class="hero-emoji">😢 Thổn thức</span>
-                    <span class="hero-emoji">🤩 Hào hứng</span>
-                    <span class="hero-emoji">😌 Bình yên</span>
+                <div class="hero-orbs"></div>
+                <div class="hero-visual-card">
+                    <p class="hero-visual-label">Bạn đang ở đúng nơi</p>
+                    <h3>Hội đồng cảm</h3>
+                    <p>Cùng nhau chia sẻ, lắng nghe và trao những nấc thang mới để trở nên dịu dàng hơn với chính mình.</p>
+                    <div class="hero-visual-pill">
+                        <span>Đang trực tuyến</span>
+                        <strong>48 người</strong>
+                    </div>
                 </div>
+            </div>
+        </section>
+
+        <section class="post-input-row" aria-labelledby="post-input-heading">
+            <a class="post-input-bar" href="write.html">
+                <div>
+                    <p class="post-input-label" id="post-input-heading">Bạn đang có điều gì để thở ra?</p>
+                    <p class="post-input-hint">Chạm để mở bản trắng, viết ra bằng chữ hoặc giọng nói mà không cần đánh giá.</p>
+                </div>
+                <span class="post-input-icon" aria-hidden="true">↗️</span>
+            </a>
+        </section>
+
+        <section class="pulse-section" aria-labelledby="pulse-heading">
+            <div class="section-heading">
+                <h2 id="pulse-heading">Bức tranh cảm xúc hôm nay</h2>
+                <p>Những trạng thái đang lan toả. Lọc nhanh để tìm sự đồng hành hoặc ghi nhận cảm xúc nhỏ đang hiện hữu.</p>
+            </div>
+            <div class="filter-bar">
+                <label for="pulse-filter">Lọc theo chủ đề</label>
+                <select id="pulse-filter">
+                    <option value="all">Tất cả</option>
+                    <option value="joy">Vui vẻ</option>
+                    <option value="calm">Bình yên</option>
+                    <option value="storm">Giận dữ &amp; lo lắng</option>
+                </select>
+                <button type="button" class="btn btn-outline" data-action="refresh">Cập nhật mới</button>
+            </div>
+            <div class="pulse-grid">
+                <article class="pulse-card" data-topics="joy">
+                    <div class="pulse-card-meta">Hôm nay • 08:14</div>
+                    <h3>Mưa chiều, tự cho phép mình buông tay</h3>
+                    <p>Không cần lý giải, chỉ cần viết ra cảm xúc dâng trào và gửi vào bức tường đồng cảm.</p>
+                    <span class="pulse-card-tag">Vui vẻ</span>
+                </article>
+                <article class="pulse-card" data-topics="storm">
+                    <div class="pulse-card-meta">Hôm nay • 07:30</div>
+                    <h3>Giận dữ vì sự bất công</h3>
+                    <p>Gửi lời nhắn nhỏ tới chính mình: mình đang được phép căng thẳng và tìm đường xả an toàn.</p>
+                    <span class="pulse-card-tag">Giận dữ</span>
+                </article>
+                <article class="pulse-card" data-topics="calm">
+                    <div class="pulse-card-meta">Hôm nay • 09:05</div>
+                    <h3>Uống trà sáng, nghe lòng quay về</h3>
+                    <p>Ghi nhận từng hơi thở đều đặn và gửi lời cảm ơn tới bản thân đang cố gắng.</p>
+                    <span class="pulse-card-tag">Bình yên</span>
+                </article>
+                <article class="pulse-card" data-topics="joy calm">
+                    <div class="pulse-card-meta">Hôm nay • 06:58</div>
+                    <h3>Cả cộng đồng chia sẻ niềm hạnh phúc nhỏ</h3>
+                    <p>Những câu chuyện nhỏ như hạt giống yêu thương, được lưu lại để nhớ rằng mình không đi một mình.</p>
+                    <span class="pulse-card-tag">Lan tỏa</span>
+                </article>
+            </div>
+        </section>
+
+        <section class="journey-section" aria-labelledby="journey-heading">
+            <div class="section-heading">
+                <h2 id="journey-heading">Chuỗi trải nghiệm tinh tế dành cho bạn</h2>
+                <p>4 bước đơn giản để gọi tên, hiểu và dẫn dắt cảm xúc mỗi ngày.</p>
+            </div>
+            <div class="journey-steps">
+                <article class="journey-step">
+                    <div class="journey-step-number">01</div>
+                    <h3>Nhận diện</h3>
+                    <p>Dùng bánh xe cảm xúc và quiz EQ để gọi tên những gì đang chuyển động bên trong.</p>
+                </article>
+                <article class="journey-step">
+                    <div class="journey-step-number">02</div>
+                    <h3>Ghi chép</h3>
+                    <p>Viết nhật ký ngắn trong blog trị liệu hoặc cập nhật trạng thái để giải toả tức thì.</p>
+                </article>
+                <article class="journey-step">
+                    <div class="journey-step-number">03</div>
+                    <h3>Kết nối</h3>
+                    <p>Nhận phản hồi tinh tế từ cộng đồng, gửi lời động viên và trao quyền cho nhau.</p>
+                </article>
+                <article class="journey-step">
+                    <div class="journey-step-number">04</div>
+                    <h3>Ghi nhớ</h3>
+                    <p>Lưu lại cảm xúc quan trọng, đánh dấu tiến độ và trở lại mỗi khi cần bám vào mạch sống.</p>
+                </article>
             </div>
         </section>
 
@@ -314,7 +161,7 @@
                 <article class="feature-card">
                     <div class="feature-icon">🧠</div>
                     <h3>Công cụ tự chữa lành</h3>
-                    <p>Sử dụng bánh xe cảm xúc, bài trắc nghiệm EQ và bộ thẻ gợi ý để luyện tập kỹ năng gọi tên & dẫn dắt cảm xúc.</p>
+                    <p>Sử dụng bánh xe cảm xúc, bài trắc nghiệm EQ và bộ thẻ gợi ý để luyện tập kỹ năng gọi tên &amp; dẫn dắt cảm xúc.</p>
                     <a href="emotion-wheel.html">Trải nghiệm ngay →</a>
                 </article>
                 <article class="feature-card">
@@ -345,7 +192,7 @@
 
         <section class="feature-section" aria-labelledby="blog-preview-heading">
             <div class="section-heading">
-                <h2 id="blog-preview-heading">Góc đọc & viết nổi bật</h2>
+                <h2 id="blog-preview-heading">Góc đọc &amp; viết nổi bật</h2>
                 <p>Các bản nháp được cộng đồng yêu thích tuần này. Nhấp để đọc toàn bộ trên trang Blog tự do.</p>
             </div>
             <div class="blog-preview-grid">
@@ -379,9 +226,9 @@
             </div>
         </section>
 
-        <section class="feature-section" aria-labelledby="community-heading">
+        <section class="feature-section community-feature" aria-labelledby="community-heading">
             <div class="section-heading">
-                <h2 id="community-heading">Kết nối & đồng hành cùng cộng đồng</h2>
+                <h2 id="community-heading">Kết nối &amp; đồng hành cùng cộng đồng</h2>
                 <p>Mỗi công cụ đều có bảng hoạt động riêng để bạn không chỉ đọc – viết mà còn tương tác, phản hồi và cùng nhau lớn lên.</p>
             </div>
             <div class="community-section">
