@@ -1,21 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Infographic2VN</title>
-  <script type="module" src="/src/main.js"></script>
-</head>
-<body class="bg-white text-gray-900">
-  <!-- Existing content can be imported via JS or placed here -->
-</body>
-</html>
-
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>infoGraphic.io.vn — Bản đồ cảm xúc và kết nối</title>
+    <meta name="description" content="infoGraphic.io.vn là bản đồ cảm xúc mở, nơi bạn có thể đọc – viết – tương tác cùng cộng đồng đồng cảm. Khám phá kho cảm xúc đa sắc, viết blog trị liệu và dùng các công cụ tự phản chiếu để cân bằng chính mình.">
+    <meta name="keywords" content="cảm xúc, blog trị liệu, journaling, chữa lành, sức khỏe tâm thần, cộng đồng">
+    <meta property="og:title" content="infoGraphic.io.vn — Bản đồ cảm xúc và kết nối">
+    <meta property="og:description" content="Không gian chữa lành cảm xúc – đọc, viết, và kết nối với cộng đồng đồng cảm.">
+    <meta property="og:type" content="website">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Fredoka+One&family=Comic+Neue:wght@400;700&display=swap&subset=vietnamese" rel="stylesheet">
@@ -24,6 +17,7 @@
     <link rel="stylesheet" href="css/home.css">
     <link rel="icon" type="image/svg+xml" href="images/logo/infographic-logo.svg">
     <link rel="alternate icon" href="images/logo/worldemotions-logo.png">
+    <link rel="manifest" href="manifest.json">
 </head>
 <body>
     <div id="header-placeholder"></div>
@@ -277,7 +271,7 @@
     <div id="footer-placeholder"></div>
 
     <script src="js/script.js" defer></script>
-    
+
     <!-- Real-time Stats Counter -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
@@ -295,7 +289,6 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         
-        // Đếm số công cụ thực tế (số trang tool có thể dùng)
         const toolPages = [
             'emotion-wheel.html', 'eq-quiz.html', 'emotions.html', 
             'kham_pha_cam_xuc.html', 'facts.html', 'resources.html',
@@ -308,32 +301,25 @@
         
         async function updateRealStats() {
             try {
-                // Đếm posts (Blog/nhật ký)
                 const postsSnapshot = await getCountFromServer(collection(db, "posts"));
                 const postsCount = postsSnapshot.data().count;
                 
-                // Đếm statuses (bức tường cảm xúc)
                 const statusesSnapshot = await getCountFromServer(collection(db, "statuses"));
                 const statusesCount = statusesSnapshot.data().count;
                 
-                // Hiển thị số thực
                 document.getElementById('stat-posts').textContent = postsCount > 0 ? `${postsCount}+` : '0';
                 document.getElementById('stat-tools').textContent = totalTools;
                 document.getElementById('stat-status').textContent = statusesCount > 0 ? `${statusesCount}+` : '0';
                 
             } catch (error) {
                 console.error("Lỗi khi đếm stats:", error);
-                // Fallback nếu không kết nối được
                 document.getElementById('stat-posts').textContent = '0';
                 document.getElementById('stat-tools').textContent = totalTools;
                 document.getElementById('stat-status').textContent = '0';
             }
         }
         
-        // Chạy khi trang load xong
         updateRealStats();
     </script>
 </body>
 </html>
-
-
