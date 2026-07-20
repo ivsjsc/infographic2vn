@@ -14,6 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/feather-icons"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.9/purify.min.js"></script>
 
     <style>
         :root { --background-light: #f7f8fc; --background-dark: #111827; --text-light: #1f2937; --text-dark: #f9fafb; }
@@ -38,7 +39,7 @@
 
     <div class="container mx-auto max-w-4xl px-4 py-8">
         <div class="mb-8">
-            <a href="blog.html" class="flex items-center gap-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400">
+            <a href="Blog.html" class="flex items-center gap-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400">
                 <i data-feather="arrow-left" class="h-5 w-5"></i>
                 <span>Quay lại trang Blog</span>
             </a>
@@ -137,7 +138,7 @@
             setTimeout(() => UI.toast.classList.remove('show'), 3000);
         };
 
-        const formatContent = (text = '') => { return marked.parse(text); };
+        const formatContent = (text = '') => { return DOMPurify.sanitize(marked.parse(text)); };
 
         UI.postForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -156,7 +157,7 @@
                     timestamp: serverTimestamp()
                 });
                 showToast('Đăng bài thành công! Đang chuyển hướng...');
-                setTimeout(() => window.location.href = 'blog.html', 1500);
+                setTimeout(() => window.location.href = 'Blog.html', 1500);
             } catch (error) {
                 console.error("Error adding document: ", error);
                 alert('Đã có lỗi xảy ra.');

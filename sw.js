@@ -1,12 +1,9 @@
 const CACHE_NAME = 'blog-tudo-cache-v1';
 const urlsToCache = [
   '/',
-  '/blog.html',
+  '/Blog.html',
   '/write.html',
-  '/css/styles.css', // Assuming you have a shared styles file
-  'https://cdn.tailwindcss.com',
-  'https://unpkg.com/feather-icons',
-  'https://cdn.jsdelivr.net/npm/marked/marked.min.js'
+  '/css/styles.css'
 ];
 
 self.addEventListener('install', event => {

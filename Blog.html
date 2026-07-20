@@ -13,6 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/feather-icons"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.9/purify.min.js"></script>
     <!-- CSS Chung -->
     <link rel="stylesheet" href="css/styles.css">
     <link rel="icon" type="image/svg+xml" href="images/logo/infographic-logo.svg">
@@ -59,7 +60,7 @@
     <div class="container mx-auto max-w-7xl px-4 py-8">
         <header class="text-center mb-8" style="display:flex;flex-direction:column;align-items:center;gap:0.6rem;">
             <div style="display:flex;align-items:center;gap:0.9rem;">
-                <img src="images/logo/logo.svg" alt="infoGraphic.io.vn" class="logo-img" style="width:64px;height:64px;" />
+                <img src="images/logo/infographic-logo.svg" alt="infoGraphic.io.vn" class="logo-img" style="width:64px;height:64px;" />
                 <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white">Blog Tự Do</h1>
             </div>
             <p class="text-gray-600 dark:text-gray-300 mt-3 text-lg">Nơi mỗi câu chuyện đều được lắng nghe.</p>
@@ -212,7 +213,7 @@
     </script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getFirestore, collection, query, orderBy, onSnapshot, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, query, orderBy, onSnapshot, doc, getDoc, limit } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         
         const firebaseConfig = {
           apiKey: "AIzaSyDnOGA4RF7M-AMw4ZYEdhR5csIH2A1NHno",
@@ -262,7 +263,11 @@
                     return line;
                 }).join('\n');
             };
-            return marked.parse(processEmbeds(text));
+            const parsedHtml = marked.parse(processEmbeds(text));
+            return DOMPurify.sanitize(parsedHtml, {
+                ADD_TAGS: ['iframe'],
+                ADD_ATTR: ['allowfullscreen', 'frameborder', 'scrolling']
+            });
         };
 
         const renderPosts = (posts) => {
@@ -275,14 +280,36 @@
                     postEl.className = 'post-card-grid';
                     postEl.dataset.id = post.id;
                     const postDate = post.timestamp ? post.timestamp.toDate().toLocaleDateString('vi-VN') : 'Vừa xong';
-                    const placeholderImg = `https://placehold.co/600x400/e2e8f0/334155?text=${encodeURIComponent(post.title)}`;
+                    const placeholderImg = `https://placehold.co/600x400/e2e8f0/334155?text=${encodeURIComponent(post.title || '')}`;
                     
-                    postEl.innerHTML = `
-                        <img src="${post.imageUrl || placeholderImg}" alt="${post.title}" class="post-image" onerror="this.src='${placeholderImg}';">
-                        <div class="post-card-content">
-                            <h2 class="post-title">${post.title}</h2>
-                            <p class="post-meta">bởi <strong>${post.author || 'Người kể chuyện'}</strong> • ${postDate}</p>
-                        </div>`;
+                    const img = document.createElement('img');
+                    img.src = post.imageUrl || placeholderImg;
+                    img.alt = post.title || 'Bài viết';
+                    img.className = 'post-image';
+                    img.onerror = () => { img.src = placeholderImg; };
+                    
+                    const cardContent = document.createElement('div');
+                    cardContent.className = 'post-card-content';
+                    
+                    const h2 = document.createElement('h2');
+                    h2.className = 'post-title';
+                    h2.textContent = post.title || 'Không có tiêu đề';
+                    
+                    const pMeta = document.createElement('p');
+                    pMeta.className = 'post-meta';
+                    pMeta.textContent = 'bởi ';
+                    
+                    const strongAuthor = document.createElement('strong');
+                    strongAuthor.textContent = post.author || 'Người kể chuyện';
+                    pMeta.appendChild(strongAuthor);
+                    pMeta.appendChild(document.createTextNode(` • ${postDate}`));
+                    
+                    cardContent.appendChild(h2);
+                    cardContent.appendChild(pMeta);
+                    
+                    postEl.appendChild(img);
+                    postEl.appendChild(cardContent);
+                    
                     UI.postsContainer.appendChild(postEl);
                 });
             }
@@ -332,8 +359,13 @@
                 _lastFocusedElement = document.activeElement && document.activeElement !== document.body ? document.activeElement : null;
                 UI.detailTitle.textContent = post.title;
                 const postDate = post.timestamp ? post.timestamp.toDate().toLocaleString('vi-VN') : 'Vừa xong';
-                UI.detailMeta.innerHTML = `bởi <strong class="text-indigo-600 dark:text-indigo-400">${post.author || 'Người kể chuyện'}</strong> • ${postDate}`;
-                const placeholderImg = `https://placehold.co/800x400/e2e8f0/334155?text=${encodeURIComponent(post.title)}`;
+                UI.detailMeta.textContent = 'bởi ';
+                const strongAuthor = document.createElement('strong');
+                strongAuthor.className = 'text-indigo-600 dark:text-indigo-400';
+                strongAuthor.textContent = post.author || 'Người kể chuyện';
+                UI.detailMeta.appendChild(strongAuthor);
+                UI.detailMeta.appendChild(document.createTextNode(` • ${postDate}`));
+                const placeholderImg = `https://placehold.co/800x400/e2e8f0/334155?text=${encodeURIComponent(post.title || '')}`;
                 UI.detailImage.src = post.imageUrl || placeholderImg;
                 UI.detailImage.style.display = post.imageUrl ? 'block' : 'none';
                 UI.detailContent.innerHTML = formatContent(post.content);
@@ -383,7 +415,7 @@
         };
         
         const init = async () => {
-            const q = query(blogsCollection, orderBy('timestamp', 'desc'));
+            const q = query(blogsCollection, orderBy('timestamp', 'desc'), limit(50));
             onSnapshot(q, (snapshot) => {
                 UI.loadingSpinner.style.display = 'none';
                 allPosts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -493,10 +525,5 @@
         init();
         feather.replace();
     </script>
-
-    <!-- Footer -->
-    <div id="footer-placeholder"></div>
-
-    <script src="js/script.js"></script>
 </body>
 </html>

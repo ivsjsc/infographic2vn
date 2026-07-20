@@ -245,7 +245,7 @@
     <main class="main-content">
         <div class="status-header">
             <i class="fas fa-bullhorn" style="font-size: 3rem; margin-bottom: 1rem;"></i>
-              <img src="images/logo/logo.svg" alt="infoGraphic.io.vn" class="logo-img" style="width:80px;height:80px;margin:0 auto 8px;display:block;" />
+              <img src="images/logo/infographic-logo.svg" alt="infoGraphic.io.vn" class="logo-img" style="width:80px;height:80px;margin:0 auto 8px;display:block;" />
               <h2>BỨC TƯỜNG CẢM XÚC CÔNG KHAI - MÃI MÃI</h2>
               <p>Đăng trạng thái nhanh chóng mà không cần tài khoản. Hãy tôn trọng cộng đồng khi chia sẻ.</p>
         </div>
@@ -283,13 +283,14 @@
     
     <!-- Thư viện Markdown -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.9/purify.min.js"></script>
     
     <!-- Firebase/Firestore Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { 
             getFirestore, collection, addDoc, onSnapshot, query,
-            serverTimestamp, orderBy 
+            serverTimestamp, orderBy, limit 
         } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // CẤU HÌNH FIREBASE TRỰC TIẾP
@@ -398,29 +399,54 @@
                 const icon = post.name ? '💌' : '👤';
                 const rawContent = post.content || '';
                 
-                // CHUYỂN ĐỔI MARKDOWN SANG HTML
-                const htmlContent = marked.parse(rawContent);
+                // CHUYỂN ĐỔI MARKDOWN SANG HTML VÀ PURIFY SANITIZE
+                const sanitizedHtml = DOMPurify.sanitize(marked.parse(rawContent));
+
+                const headerDiv = document.createElement('div');
+                headerDiv.className = 'post-header';
+                
+                const nameSpan = document.createElement('span');
+                nameSpan.className = 'post-name';
+                nameSpan.textContent = displayName;
+                
+                const timeSpan = document.createElement('span');
+                timeSpan.className = 'post-time';
+                timeSpan.textContent = displayTime;
+                
+                headerDiv.appendChild(nameSpan);
+                headerDiv.appendChild(timeSpan);
+                
+                const iconDiv = document.createElement('div');
+                iconDiv.className = 'post-icon';
+                iconDiv.textContent = icon;
+                
+                postElement.appendChild(headerDiv);
+                postElement.appendChild(iconDiv);
 
                 // Logic Read More
-                let contentHTML = `<div class="post-content">${htmlContent}</div>`;
-                if (rawContent.length > 200) { // Giới hạn 200 ký tự (khoảng 4-5 dòng)
-                    contentHTML = `
-                        <div class="content-wrapper">
-                            <div class="post-content">${htmlContent}</div>
-                        </div>
-                        <button class="read-more-btn" data-action="toggle">... Đọc thêm</button>
-                    `;
+                if (rawContent.length > 200) {
+                    const wrapperDiv = document.createElement('div');
+                    wrapperDiv.className = 'content-wrapper';
+                    
+                    const contentDiv = document.createElement('div');
+                    contentDiv.className = 'post-content';
+                    contentDiv.innerHTML = sanitizedHtml;
+                    
+                    wrapperDiv.appendChild(contentDiv);
+                    postElement.appendChild(wrapperDiv);
+                    
+                    const toggleBtn = document.createElement('button');
+                    toggleBtn.className = 'read-more-btn';
+                    toggleBtn.dataset.action = 'toggle';
+                    toggleBtn.textContent = '... Đọc thêm';
+                    postElement.appendChild(toggleBtn);
+                } else {
+                    const contentDiv = document.createElement('div');
+                    contentDiv.className = 'post-content';
+                    contentDiv.innerHTML = sanitizedHtml;
+                    postElement.appendChild(contentDiv);
                 }
 
-
-                postElement.innerHTML = `
-                    <div class="post-header">
-                        <span class="post-name">${displayName}</span>
-                        <span class="post-time">${displayTime}</span>
-                    </div>
-                    <div class="post-icon">${icon}</div>
-                    ${contentHTML}
-                `;
                 postsContainer.appendChild(postElement);
             });
             
@@ -434,8 +460,8 @@
         function setupRealtimeListener() {
             if (!postsCollectionRef) return;
             
-            // Querying the collection, ordered by newest first. KHÔNG GIỚI HẠN SỐ LƯỢNG
-            const postsQuery = query(postsCollectionRef, orderBy('timestamp', 'desc'));
+            // Querying the collection, ordered by newest first, limited to 50 items
+            const postsQuery = query(postsCollectionRef, orderBy('timestamp', 'desc'), limit(50));
 
             onSnapshot(postsQuery, (snapshot) => {
                 loadingIndicator.style.display = 'none'; 
