@@ -1,89 +1,327 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>infoGraphic.io.vn — Bản đồ cảm xúc và kết nối</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Fredoka+One&family=Comic+Neue:wght@400;700&display=swap&subset=vietnamese" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="icon" type="image/svg+xml" href="images/logo/infographic-logo.svg">
+    <link rel="alternate icon" href="images/logo/worldemotions-logo.png">
+</head>
+<body>
+    <div id="header-placeholder"></div>
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/12.16.0/firebase-app-compat.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/12.16.0/firebase-auth-compat.js"></script>
-    <script defer src="/__/firebase/12.16.0/firebase-database-compat.js"></script>
-    <script defer src="/__/firebase/12.16.0/firebase-firestore-compat.js"></script>
-    <script defer src="/__/firebase/12.16.0/firebase-functions-compat.js"></script>
-    <script defer src="/__/firebase/12.16.0/firebase-messaging-compat.js"></script>
-    <script defer src="/__/firebase/12.16.0/firebase-storage-compat.js"></script>
-    <script defer src="/__/firebase/12.16.0/firebase-analytics-compat.js"></script>
-    <script defer src="/__/firebase/12.16.0/firebase-remote-config-compat.js"></script>
-    <script defer src="/__/firebase/12.16.0/firebase-performance-compat.js"></script>
-    <!-- 
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
-    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+    <main class="home-wrapper" id="top">
+        <section class="hero-section" aria-labelledby="hero-heading">
+            <div class="hero-content">
+                <span class="hero-tag">Không gian chữa lành cảm xúc</span>
+                <h1 class="hero-title" id="hero-heading">Lắng nghe chính mình, kể câu chuyện bạn muốn chia sẻ</h1>
+                <p class="hero-description">infoGraphic.io.vn là bản đồ cảm xúc mở, nơi bạn có thể đọc – viết – tương tác cùng cộng đồng đồng cảm. Khám phá kho cảm xúc đa sắc, viết blog trị liệu và dùng các công cụ tự phản chiếu để cân bằng chính mình.</p>
+                <div class="hero-cta">
+                    <a class="btn btn-primary" href="write.html">✍️ Chia sẻ câu chuyện</a>
+                    <a class="btn-ghost" href="Blog.html">📰 Đọc blog trị liệu</a>
+                </div>
+                <div class="hero-stats" role="region" aria-label="Thống kê hoạt động">
+                    <article class="stat-card">
+                        <span class="stat-value" id="stat-posts">0</span>
+                        <p class="stat-label">Blog &amp; nhật ký</p>
+                        <p class="stat-note">Câu chuyện được đọc &amp; nhân rộng mỗi ngày</p>
+                    </article>
+                    <article class="stat-card">
+                        <span class="stat-value" id="stat-tools">0</span>
+                        <p class="stat-label">Công cụ tương tác</p>
+                        <p class="stat-note">Bánh xe cảm xúc, quiz và tài nguyên chữa lành</p>
+                    </article>
+                    <article class="stat-card">
+                        <span class="stat-value" id="stat-status">0</span>
+                        <p class="stat-label">Trạng thái cộng đồng</p>
+                        <p class="stat-note">Những khoảnh khắc thực tế được ghi nhận</p>
+                    </article>
+                </div>
+            </div>
+            <div class="hero-visual" aria-hidden="true">
+                <div class="hero-orbs"></div>
+                <div class="hero-visual-card">
+                    <p class="hero-visual-label">Bạn đang ở đúng nơi</p>
+                    <h3>Hội đồng cảm</h3>
+                    <p>Cùng nhau chia sẻ, lắng nghe và trao những nấc thang mới để trở nên dịu dàng hơn với chính mình.</p>
+                    <div class="hero-visual-pill">
+                        <span>Đồng hành cùng bạn</span>
+                        <strong>Lắng nghe &amp; Chia sẻ</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
-    </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
+        <section class="post-input-row" aria-labelledby="post-input-heading">
+            <a class="post-input-bar" href="write.html">
+                <div>
+                    <p class="post-input-label" id="post-input-heading">Bạn đang có điều gì để thở ra?</p>
+                    <p class="post-input-hint">Chạm để mở bản trắng, viết ra bằng chữ hoặc giọng nói mà không cần đánh giá.</p>
+                </div>
+                <span class="post-input-icon" aria-hidden="true">↗️</span>
+            </a>
+        </section>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const loadEl = document.querySelector('#load');
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.firestore().doc('/foo/bar').get().then(() => { });
-        // firebase.functions().httpsCallable('yourFunction')().then(() => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        // firebase.analytics(); // call to activate
-        // firebase.analytics().logEvent('tutorial_completed');
-        // firebase.performance(); // call to activate
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+        <section class="pulse-section" aria-labelledby="pulse-heading">
+            <div class="section-heading">
+                <h2 id="pulse-heading">Bức tranh cảm xúc hôm nay</h2>
+                <p>Những trạng thái đang lan toả. Lọc nhanh để tìm sự đồng hành hoặc ghi nhận cảm xúc nhỏ đang hiện hữu.</p>
+            </div>
+            <div class="filter-bar">
+                <label for="pulse-filter">Lọc theo chủ đề</label>
+                <select id="pulse-filter">
+                    <option value="all">Tất cả</option>
+                    <option value="joy">Vui vẻ</option>
+                    <option value="calm">Bình yên</option>
+                    <option value="storm">Giận dữ &amp; lo lắng</option>
+                </select>
+                <button type="button" class="btn btn-outline" data-action="refresh">Cập nhật mới</button>
+            </div>
+            <div class="pulse-grid">
+                <article class="pulse-card" data-topics="joy">
+                    <div class="pulse-card-meta">Hôm nay • 08:14</div>
+                    <h3>Mưa chiều, tự cho phép mình buông tay</h3>
+                    <p>Không cần lý giải, chỉ cần viết ra cảm xúc dâng trào và gửi vào bức tường đồng cảm.</p>
+                    <span class="pulse-card-tag">Vui vẻ</span>
+                </article>
+                <article class="pulse-card" data-topics="storm">
+                    <div class="pulse-card-meta">Hôm nay • 07:30</div>
+                    <h3>Giận dữ vì sự bất công</h3>
+                    <p>Gửi lời nhắn nhỏ tới chính mình: mình đang được phép căng thẳng và tìm đường xả an toàn.</p>
+                    <span class="pulse-card-tag">Giận dữ</span>
+                </article>
+                <article class="pulse-card" data-topics="calm">
+                    <div class="pulse-card-meta">Hôm nay • 09:05</div>
+                    <h3>Uống trà sáng, nghe lòng quay về</h3>
+                    <p>Ghi nhận từng hơi thở đều đặn và gửi lời cảm ơn tới bản thân đang cố gắng.</p>
+                    <span class="pulse-card-tag">Bình yên</span>
+                </article>
+                <article class="pulse-card" data-topics="joy calm">
+                    <div class="pulse-card-meta">Hôm nay • 06:58</div>
+                    <h3>Cả cộng đồng chia sẻ niềm hạnh phúc nhỏ</h3>
+                    <p>Những câu chuyện nhỏ như hạt giống yêu thương, được lưu lại để nhớ rằng mình không đi một mình.</p>
+                    <span class="pulse-card-tag">Lan tỏa</span>
+                </article>
+            </div>
+        </section>
 
-        try {
-          let app = firebase.app();
-          let features = [
-            'auth', 
-            'database', 
-            'firestore',
-            'functions',
-            'messaging', 
-            'storage', 
-            'analytics', 
-            'remoteConfig',
-            'performance',
-          ].filter(feature => typeof app[feature] === 'function');
-          loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
+        <section class="journey-section" aria-labelledby="journey-heading">
+            <div class="section-heading">
+                <h2 id="journey-heading">Chuỗi trải nghiệm tinh tế dành cho bạn</h2>
+                <p>4 bước đơn giản để gọi tên, hiểu và dẫn dắt cảm xúc mỗi ngày.</p>
+            </div>
+            <div class="journey-steps">
+                <article class="journey-step">
+                    <div class="journey-step-number">01</div>
+                    <h3>Nhận diện</h3>
+                    <p>Dùng bánh xe cảm xúc và quiz EQ để gọi tên những gì đang chuyển động bên trong.</p>
+                </article>
+                <article class="journey-step">
+                    <div class="journey-step-number">02</div>
+                    <h3>Ghi chép</h3>
+                    <p>Viết nhật ký ngắn trong blog trị liệu hoặc cập nhật trạng thái để giải toả tức thì.</p>
+                </article>
+                <article class="journey-step">
+                    <div class="journey-step-number">03</div>
+                    <h3>Kết nối</h3>
+                    <p>Nhận phản hồi tinh tế từ cộng đồng, gửi lời động viên và trao quyền cho nhau.</p>
+                </article>
+                <article class="journey-step">
+                    <div class="journey-step-number">04</div>
+                    <h3>Ghi nhớ</h3>
+                    <p>Lưu lại cảm xúc quan trọng, đánh dấu tiến độ và trở lại mỗi khi cần bám vào mạch sống.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="feature-section" aria-labelledby="feature-heading">
+            <div class="section-heading">
+                <h2 id="feature-heading">Điểm hẹn cảm xúc dành riêng cho bạn</h2>
+                <p>Khởi tạo thói quen ghi nhận cảm xúc và kết nối với cộng đồng đồng cảm qua bộ công cụ thiết kế riêng cho hành trình chữa lành và tự khám phá.</p>
+            </div>
+            <div class="feature-grid">
+                <article class="feature-card">
+                    <div class="feature-icon">🧭</div>
+                    <h3>Hành trình cảm xúc</h3>
+                    <p>Lọc cảm xúc theo chủ đề, hoàn cảnh và nhu cầu để hiểu sâu điều bạn đang trải qua, kèm gợi ý chuyển hoá phù hợp.</p>
+                    <a href="kham_pha_cam_xuc.html">Bắt đầu khám phá →</a>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h3>Bức tường cảm xúc</h3>
+                    <p>Ghi lại trạng thái trong ngày, thả emoji và đồng hành cùng những tâm hồn đồng điệu trên bức tường mở 24/7.</p>
+                    <a href="public_status_board.html">Đi tới bức tường →</a>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>Công cụ tự chữa lành</h3>
+                    <p>Sử dụng bánh xe cảm xúc, bài trắc nghiệm EQ và bộ thẻ gợi ý để luyện tập kỹ năng gọi tên &amp; dẫn dắt cảm xúc.</p>
+                    <a href="emotion-wheel.html">Trải nghiệm ngay →</a>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon">🪄</div>
+                    <h3>Blog trị liệu</h3>
+                    <p>Chọn đọc các câu chuyện nhiều chiều, ghi chú cảm nhận và lưu thành bộ sưu tập cá nhân để nhắc nhớ chính mình.</p>
+                    <a href="Blog.html">Mở trang Blog →</a>
+                </article>
+            </div>
+        </section>
+
+        <section class="feature-section" aria-labelledby="emotion-heading">
+            <div class="section-heading">
+                <h2 id="emotion-heading">Thư viện cảm xúc sống động</h2>
+                <p>Chọn cảm xúc bạn đang chạm tới và nhận ngay gợi ý chuyển hoá, audio chánh niệm và bài tập journaling ngắn.</p>
+            </div>
+            <div class="emotion-catalog" id="emotion-catalog">
+                <a class="emotion-card happy" href="happy.html"><span>😊</span><strong>Vui vẻ</strong><small>Ghi nhớ điều khiến bạn mỉm cười, chia sẻ niềm hạnh phúc lan toả.</small></a>
+                <a class="emotion-card sad" href="sad.html"><span>😢</span><strong>Buồn bã</strong><small>Được phép yếu đuối, để nước mắt chảy và viết ra điều bạn muốn nhắn gửi.</small></a>
+                <a class="emotion-card angry" href="angry.html"><span>😠</span><strong>Giận dữ</strong><small>Hít sâu, nhận diện điều khiến bạn mất kiểm soát và tìm kênh xả an toàn.</small></a>
+                <a class="emotion-card fear" href="fear.html"><span>😨</span><strong>Sợ hãi</strong><small>Viết ra nỗi sợ và các phương án bạn có thể nắm quyền trở lại.</small></a>
+                <a class="emotion-card love" href="love.html"><span>❤️</span><strong>Yêu thương</strong><small>Lan toả sự tử tế, viết thư cảm ơn và gửi lời thương tới chính mình.</small></a>
+                <a class="emotion-card excited" href="excited.html"><span>🤩</span><strong>Hào hứng</strong><small>Ghi lại các ý tưởng mới cùng danh sách điều bạn mong chờ.</small></a>
+                <a class="emotion-card peaceful" href="peaceful.html"><span>😌</span><strong>Bình yên</strong><small>Chậm lại, thưởng trà và lưu giữ khoảnh khắc cân bằng đầy dịu dàng.</small></a>
+                <a class="emotion-card surprise" href="surprise.html"><span>😲</span><strong>Ngạc nhiên</strong><small>Đón nhận điều mới, tái cấu trúc niềm tin và mở ra góc nhìn khác biệt.</small></a>
+            </div>
+        </section>
+
+        <section class="feature-section" aria-labelledby="blog-preview-heading">
+            <div class="section-heading">
+                <h2 id="blog-preview-heading">Góc đọc &amp; viết nổi bật</h2>
+                <p>Các bản nháp được cộng đồng yêu thích tuần này. Nhấp để đọc toàn bộ trên trang Blog tự do.</p>
+            </div>
+            <div class="blog-preview-grid">
+                <a class="blog-card" href="Blog.html?featured=healing-notes">
+                    <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80" alt="Trang nhật ký viết tay">
+                    <div class="blog-card-body">
+                        <span class="hero-tag">Journaling</span>
+                        <h3>Viết cho chính mình 5 phút mỗi ngày</h3>
+                        <p>Khơi lại thói quen nhật ký cảm xúc với 3 câu hỏi nhỏ giúp bạn gỡ từng nút thắt.</p>
+                        <div class="blog-card-meta"><span>Đọc ngay</span><span>5 phút</span></div>
+                    </div>
+                </a>
+                <a class="blog-card" href="Blog.html?featured=emotion-lab">
+                    <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=900&q=80" alt="Nhóm người trò chuyện">
+                    <div class="blog-card-body">
+                        <span class="hero-tag">Chia sẻ</span>
+                        <h3>Cuộc trò chuyện mở về sự mong manh</h3>
+                        <p>Một buổi tròn trịa, nơi mọi người cùng kể về điều khiến họ thấy yếu mềm nhất.</p>
+                        <div class="blog-card-meta"><span>Đọc ngay</span><span>7 phút</span></div>
+                    </div>
+                </a>
+                <a class="blog-card" href="Blog.html?featured=breath">
+                    <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=900&q=80" alt="Người đang tập thở">
+                    <div class="blog-card-body">
+                        <span class="hero-tag">Thực hành</span>
+                        <h3>Bài thở 4-7-8 giúp xoa dịu nội tâm</h3>
+                        <p>Bài hướng dẫn ngắn gọn kèm audio giúp bạn quay về nhịp thở an toàn khi hoảng loạn.</p>
+                        <div class="blog-card-meta"><span>Đọc ngay</span><span>4 phút</span></div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section class="feature-section community-feature" aria-labelledby="community-heading">
+            <div class="section-heading">
+                <h2 id="community-heading">Kết nối &amp; đồng hành cùng cộng đồng</h2>
+                <p>Mỗi công cụ đều có bảng hoạt động riêng để bạn không chỉ đọc – viết mà còn tương tác, phản hồi và cùng nhau lớn lên.</p>
+            </div>
+            <div class="community-section">
+                <article class="community-card">
+                    <h3>📌 Bảng trạng thái</h3>
+                    <p>Cập nhật cảm xúc theo từng ngày, đánh dấu thói quen mới và tạo bản đồ tiến bộ của riêng bạn.</p>
+                    <a href="status_list.html">Xem bảng trạng thái →</a>
+                </article>
+                <article class="community-card">
+                    <h3>🤝 Không gian kết nối</h3>
+                    <p>Tham gia các phòng trò chuyện nhỏ, gửi lời động viên và nhận phản hồi tinh tế từ cộng đồng.</p>
+                    <a href="public_status_board.html">Vào phòng chung →</a>
+                </article>
+                <article class="community-card">
+                    <h3>🛡️ Vùng an toàn</h3>
+                    <p>Quy tắc ứng xử rõ ràng, mọi chia sẻ đều được tôn trọng tuyệt đối và chỉ hiển thị công khai khi bạn muốn.</p>
+                    <a href="faq.html#safe-space">Tìm hiểu quy tắc →</a>
+                </article>
+            </div>
+        </section>
+
+        <section class="join-banner" aria-labelledby="join-heading">
+            <div>
+                <h2 id="join-heading">Bắt đầu hành trình tự chữa lành ngay hôm nay</h2>
+                <p>Lưu lại những điều nhỏ bé, viết cho chính mình và kết nối với những người đang bước đi trên hành trình tương tự. Mỗi dòng chữ đều đáng được lắng nghe.</p>
+            </div>
+            <div class="join-actions">
+                <a class="btn btn-primary" href="write.html">Bắt đầu viết ngay</a>
+                <a class="btn-ghost" href="Blog.html">Khám phá blog chữa lành</a>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/script.js" defer></script>
+    
+    <!-- Real-time Stats Counter -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, collection, getCountFromServer } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        
+        const firebaseConfig = {
+          apiKey: "AIzaSyDnOGA4RF7M-AMw4ZYEdhR5csIH2A1NHno",
+          authDomain: "worldofemotions-5ac0a.firebaseapp.com",
+          projectId: "worldofemotions-5ac0a",
+          storageBucket: "worldofemotions-5ac0a.firebasestorage.app",
+          messagingSenderId: "923244408713",
+          appId: "1:923244408713:web:d239a0c99722b483913b58"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        
+        // Đếm số công cụ thực tế (số trang tool có thể dùng)
+        const toolPages = [
+            'emotion-wheel.html', 'eq-quiz.html', 'emotions.html', 
+            'kham_pha_cam_xuc.html', 'facts.html', 'resources.html',
+            'happy.html', 'sad.html', 'angry.html', 'fear.html', 
+            'love.html', 'excited.html', 'peaceful.html', 'surprise.html',
+            'Blog.html', 'write.html', 'public_status_board.html', 
+            'status_list.html', 'about.html', 'faq.html', 'contact.html'
+        ];
+        const totalTools = toolPages.length;
+        
+        async function updateRealStats() {
+            try {
+                // Đếm posts (Blog/nhật ký)
+                const postsSnapshot = await getCountFromServer(collection(db, "posts"));
+                const postsCount = postsSnapshot.data().count;
+                
+                // Đếm statuses (bức tường cảm xúc)
+                const statusesSnapshot = await getCountFromServer(collection(db, "statuses"));
+                const statusesCount = statusesSnapshot.data().count;
+                
+                // Hiển thị số thực
+                document.getElementById('stat-posts').textContent = postsCount > 0 ? `${postsCount}+` : '0';
+                document.getElementById('stat-tools').textContent = totalTools;
+                document.getElementById('stat-status').textContent = statusesCount > 0 ? `${statusesCount}+` : '0';
+                
+            } catch (error) {
+                console.error("Lỗi khi đếm stats:", error);
+                // Fallback nếu không kết nối được
+                document.getElementById('stat-posts').textContent = '0';
+                document.getElementById('stat-tools').textContent = totalTools;
+                document.getElementById('stat-status').textContent = '0';
+            }
         }
-      });
+        
+        // Chạy khi trang load xong
+        updateRealStats();
     </script>
-  </body>
+</body>
 </html>
+
+
